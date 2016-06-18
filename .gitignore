@@ -5,10 +5,10 @@
 #.gitignore
 
 ## [ Dossiers a ignorer ]
-03_software/3-1_test*/
-05_*/
-06_*/
-07_*/
+_3_software/_3-1_test*/
+_5_*/
+_6_*/
+_7_*/
 *_v/
 
 ## [ listes des extentions a ignorer ]

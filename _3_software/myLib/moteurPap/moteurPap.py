@@ -4,7 +4,7 @@
 """
    :Nom du fichier:     moteurPap.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160612
+   :Version:            20160614
 
 ----
 
@@ -121,7 +121,7 @@ class C_MoteurPap(object):
         """
         self.f_gpioDestructor()
         v_className = self.__class__.__name__
-        print("\n\t\tL'instance de la class {} est terminee".format(c_className))
+        print("\n\t\tL'instance de la class {} est terminee".format(v_className))
         
     def f_gpioInit(self, v_gpioA=17, v_gpioB=18, v_gpioC=27, v_gpioD=22):
         """

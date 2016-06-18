@@ -1,0 +1,2 @@
+C:\mntJeanCloud\Perso\LAB\Pierre\raspberryPi\projet\scanner3d\03_software
+C:\mntJeanCloud\Perso\LAB\Pierre\raspberryPi\projet\choupyBot\03_software

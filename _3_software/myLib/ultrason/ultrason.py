@@ -4,7 +4,7 @@
 """
    :Nom du fichier:     ultrason.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160611
+   :Version:            20160614
 
 ----
 
@@ -76,7 +76,7 @@ class C_ultrasonSensor(object) :
         """
         self.f_gpioDestructor()
         v_className = self.__class__.__name__
-        print("\n\t\tL'instance de la class {} est terminee".format(c_className))
+        print("\n\t\tL'instance de la class {} est terminee".format(v_className))
         
     def f_gpioDestructor(self):
         """
