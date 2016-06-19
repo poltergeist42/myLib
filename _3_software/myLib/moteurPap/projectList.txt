@@ -1,1 +1,3 @@
-D:\temp
+D:/temp/
+D:/temp1/
+D:/temp2/

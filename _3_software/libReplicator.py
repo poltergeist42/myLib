@@ -30,9 +30,12 @@ lexique
 
 import os, sys, shutil
 from os import system
+from distutils import dir_util
 """
     :liens web sbutil:
         https://docs.python.org/3.4/library/shutil.html
+    :liens web dir_util:
+        https://docs.python.org/3.4/distutils/apiref.html#module-distutils.dir_util
 """
 class C_bougeTonFile(object) :
     """ Class permettant de copier les diférentes librairies
@@ -83,14 +86,18 @@ class C_bougeTonFile(object) :
             v_project = v_subDirLocal + "/" + self.fichierTxt
             self.l_subDirProjectList.append(v_project)
             print("v_project - ", v_project)
-            l_parcourProject = []
+            l_parcourProject = [1]
             
             try :
                 v_projectTxt = open(v_project,'r')
+                # print("v_projectTxtSize = ", len(v_projectTxt))
                 for line in v_projectTxt :
+                    l_parcourProject[0] += 1
                     l_parcourProject.append(line.replace("\n", ""))
                     
             except :
+                l_parcourProject[0] += 1
+                l_parcourProject.append( False )
                 print("v_projectTxt - fichier non trouve")
                 
             finally :
@@ -100,7 +107,7 @@ class C_bougeTonFile(object) :
             print("l_subDirList - ", l_subDirList)
             self.d_fullFile[i] = l_parcourProject
             self.d_fullFile[i].append(l_subDirList)
-            print("l_subDirProjectList - ", self.l_subDirProjectList)
+            print("l_subDirProjectList - {}\n".format(self.l_subDirProjectList))
             
     def f_libVersion(self) :
         """ Permet d'identifier si la version de la lib distante
@@ -110,19 +117,28 @@ class C_bougeTonFile(object) :
         
     def f_copyAll(self) :
         """ Copie les différentes librairies dans les projet au quel elles appartiennent """
-        for key in self.d_fullFile :
-            print(key)
-            x= len(self.d_fullFile[key]) - 1
-            print("{} - {}".format(len(self.d_fullFile[key]), x))
-            for i in range(len(self.d_fullFile[key][x])) :
-                y = str(key) + ".py"
-                z = self.d_fullFile[key][x][i]
-                if y == z :
-                    print("y - {}".format(y))
-                    print("z - ", self.d_fullFile[key][x][i])
-                else :
-                    print("y ne correspond pas à z")
+        print("d_fullFile :\n", self.d_fullFile)
         
+        for key in self.d_fullFile :
+            print("key - ", key)
+            # x = len(self.d_fullFile[key]) - 1
+            # print("{} - {}".format(len(self.d_fullFile[key]), x))
+            print("d_fullFile[key][0] - {}".format(self.d_fullFile[key][0]))
+            v_src = self.localDir + "/" + key
+            print("v_src : {} - Type : {}".format(v_src, type(v_src)))
+            
+            for i in range(self.d_fullFile[key][0]) :
+                print("i : {} - self.d_fullFile[key][i] : {} - type : {}".format(i, self.d_fullFile[key][i], type(self.d_fullFile[key][i])))
+                if i == 0 : 
+                    pass
+                else :
+                    if self.d_fullFile[key][1] == False :
+                        pass
+                    else :
+                        # print("d_fullFile[key][i] - ", self.d_fullFile[key][i])
+                        dir_util.copy_tree(v_src, self.d_fullFile[key][i], preserve_mode=1, preserve_times=1, preserve_symlinks=0, update=0, verbose=0, dry_run=0)
+                        
+                        
 def main() :
     """ Fonction principale """
     print("\n\t\t## Creation de l'instance ##\n")
