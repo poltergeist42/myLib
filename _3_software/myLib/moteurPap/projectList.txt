@@ -1,3 +1,1 @@
-D:/temp/
-D:/temp1/
-D:/temp2/
+D:/temp

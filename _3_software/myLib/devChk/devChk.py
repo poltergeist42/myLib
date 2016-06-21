@@ -30,6 +30,8 @@ lexique
 
 """ Ensemble de class permettant le control et le debug """
 
+from os import system
+
 class C_DebugMsg(object) :
     """ class permettant d'intercepter et d'afficher les message de debug """
     

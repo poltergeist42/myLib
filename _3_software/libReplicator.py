@@ -83,7 +83,7 @@ class C_bougeTonFile(object) :
             et copie l'ensemble dans le dictionnaire : d_fullFile
         """
         # print("l_listDir = ", self.l_listDir)
-
+        
         for i in self.l_listDir :
             if i == "__pycache__" or i == "__init__.py" :
                 pass
@@ -94,21 +94,21 @@ class C_bougeTonFile(object) :
                 self.l_subDirProjectList.append(v_project)
                 # print("v_project - ", v_project)
                 l_parcourProject = [1]
-
+                v_chk = True
+                
                 try :
                     v_projectTxt = open(v_project,'r')
                     # print("v_projectTxtSize = ", len(v_projectTxt))
                     for line in v_projectTxt :
                         l_parcourProject[0] += 1
                         l_parcourProject.append(line.replace("\n", ""))
-                        
-                except :
-                    l_parcourProject[0] += 1
-                    l_parcourProject.append( False )
-                    print("v_projectTxt - fichier non trouve")
-                    
+
+                except FileNotFoundError :
+                    print("fichier non trouve")
+                    v_chk = False
+
                 finally :
-                    v_projectTxt.close()
+                    if v_chk : v_projectTxt.close()
 
                 self.d_fullFile[i] = l_parcourProject
                 # print("l_subDirProjectList - {}\n".format(self.l_subDirProjectList))
@@ -117,10 +117,32 @@ class C_bougeTonFile(object) :
         """ Permet d'identifier si la version de la lib distante
             est differente de la lib local
         """
+        v_boucle = True
+        v_copyLib = False
         v_local = self.f_libVersion(v_localLibFile)
         v_dist = self.f_libVersion(v_distLibFile)
-        print("L : {} - D : {}".format(v_local, v_dist))
         
+        if v_local == v_dist :
+            v_copyLib = False
+            print("les deux version sont identiques")
+        else :
+            while v_boucle :
+                print("\n\tversion locale : {} - version distante : {}\n".format(v_local, v_dist))
+                v_question = input("Voulez-vous remplacer la lib distante par la lib locale (O/N) ? ").lower()
+                
+                if v_question == 'o' or v_question == 'y' or v_question == "oui" or v_question == "yes" :
+                    v_copyLib = True
+                    v_boucle = False
+                    print("v_copyLib = ", v_copyLib)
+                elif v_question == 'n' or v_question == "non" or v_question == "no" :
+                    v_copyLib = False
+                    v_boucle = False
+                    print("v_copyLib = ", v_copyLib)
+                else :
+                    print("repondre par O ou N !")
+                    
+        return v_copyLib
+
         
     def f_libVersion(self, v_libFile) :
         v_chaine = ":Version:"
@@ -143,6 +165,7 @@ class C_bougeTonFile(object) :
         except FileNotFoundError :
             print("fichier non trouve")
             v_chk = False
+            
 
         finally :
             if v_chk : v_localLib.close()
@@ -151,7 +174,7 @@ class C_bougeTonFile(object) :
         
     def f_copyAll(self) :
         """ Copie les différentes librairies dans les projet au quel elles appartiennent """
-        # print("d_fullFile :\n", self.d_fullFile)
+        print("d_fullFile :\n", self.d_fullFile)
         
         for key in self.d_fullFile :
             # print("key - ", key)
@@ -161,17 +184,14 @@ class C_bougeTonFile(object) :
             
             for i in range(self.d_fullFile[key][0]) :
                 # print("i : {} - self.d_fullFile[key][i] : {} - type : {}".format(i, self.d_fullFile[key][i], type(self.d_fullFile[key][i])))
-                if i == 0 : 
-                    pass
-                else :
-                    if self.d_fullFile[key][1] == False :
+                if i == 0 or self.d_fullFile[key][1] == False :
                         pass
-                    else :
-                        v_dest = self.d_fullFile[key][i] + key
-                        v_localLibFile = v_src + "/" + key + ".py"
-                        v_distLibFile = v_dest + "/" + key + ".py"
-                        self.f_libVersionComparator(v_localLibFile, v_distLibFile)
-                        # print("v_dest = ", v_dest)
+                else :
+                    v_dest = self.d_fullFile[key][i] + "/" + key
+                    v_localLibFile = v_src + "/" + key + ".py"
+                    v_distLibFile = v_dest + "/" + key + ".py"
+                    if self.f_libVersionComparator(v_localLibFile, v_distLibFile):
+                        print("v_dest = ", v_dest)
                         dir_util.copy_tree(v_src, v_dest, preserve_mode=1, preserve_times=1, preserve_symlinks=0, update=0, verbose=0, dry_run=0)
                         
                         
@@ -183,7 +203,6 @@ def main() :
     i_replicator.f_osIdentifier()
     print("\n\t\t## Debut de f_arboList() ##\n")
     i_replicator.f_arboList()
-    print("\n\t\t## Debut de f_libVersion() ##\n")
     print("\n\t\t## Debut de f_copyAll() ##\n")
     i_replicator.f_copyAll()
     
