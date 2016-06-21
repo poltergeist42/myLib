@@ -67,3 +67,44 @@ class C_GitChk(object) :
         """
         v_className = self.__class__.__name__
         print("\n\t\tL'instance de la class {} est terminee".format(v_className))
+        
+    def f_gitBranchChk(self):
+        """ identifie la branch courante et emet une alerte
+        si elle est differente de '* master" """
+        system("git branch > chkBranch")
+        v_chaine = "* dev"
+        v_chk = True
+        v_vers = []
+        
+        try :
+            v_localLib = open("./chkBranch")
+            
+            for line in v_localLib : 
+                if v_chaine in line :                   
+                    print   (" ############################################\n",
+                             "#                                          #\n",
+                             "# Attention, vous êtes sur la branch 'dev' #\n",
+                             "#                                          #\n",
+                             "############################################\n"
+                            )
+
+        except FileNotFoundError :
+            print("fichier non trouve")
+            v_chk = False
+            
+        finally :
+            if v_chk : v_localLib.close()
+            
+        return v_vers
+
+    
+ ####
+
+def main():
+    """ Fonction principale """
+    system("cls")
+    i_git = C_GitChk()
+    i_git.f_gitBranchChk()
+    
+if __name__ == '__main__':
+    main()
