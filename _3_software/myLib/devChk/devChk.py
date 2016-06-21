@@ -38,6 +38,7 @@ class C_DebugMsg(object) :
     def __init__(self) :
         """ Init variables """
         self.affichage = True
+        self.debugNumber = 0
         
     def __del__(self) :
         """destructor
@@ -53,9 +54,9 @@ class C_DebugMsg(object) :
 ####
         
 class C_GitChk(object) :
-    def __init__(self) :
+    def __init__(self, control = True) :
         """ Init variables """
-        self.affichage = True
+        self.controlActif = control
         
     def __del__(self) :
         """destructor
@@ -71,39 +72,39 @@ class C_GitChk(object) :
     def f_gitBranchChk(self):
         """ identifie la branch courante et emet une alerte
         si elle est differente de '* master" """
-        system("git branch > chkBranch")
-        v_chaine = "* dev"
-        v_chk = True
-        v_vers = []
-        
-        try :
-            v_localLib = open("./chkBranch")
+        if self.controlActif :
+            system("git branch > chkBranch")
+            v_chaine = "* dev"
+            v_chk = True
             
-            for line in v_localLib : 
-                if v_chaine in line :                   
-                    print   (" ############################################\n",
-                             "#                                          #\n",
-                             "# Attention, vous êtes sur la branch 'dev' #\n",
-                             "#                                          #\n",
-                             "############################################\n"
-                            )
+            try :
+                v_localLib = open("./chkBranch")
+                
+                for line in v_localLib : 
+                    if v_chaine in line :                   
+                        print   (" ############################################\n",
+                                 "#                                          #\n",
+                                 "# Attention, vous êtes sur la branch 'dev' #\n",
+                                 "#                                          #\n",
+                                 "############################################\n"
+                                )
 
-        except FileNotFoundError :
-            print("fichier non trouve")
-            v_chk = False
+            except FileNotFoundError :
+                print("fichier non trouve")
+                v_chk = False
+                
+            finally :
+                if v_chk : v_localLib.close()
             
-        finally :
-            if v_chk : v_localLib.close()
-            
-        return v_vers
-
+        else :
+            print(" le control de branch est desactive")
     
  ####
 
 def main():
     """ Fonction principale """
     system("cls")
-    i_git = C_GitChk()
+    i_git = C_GitChk(False)
     i_git.f_gitBranchChk()
     
 if __name__ == '__main__':
