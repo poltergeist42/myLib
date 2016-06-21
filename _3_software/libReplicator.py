@@ -32,8 +32,20 @@ lexique
 from __future__ import absolute_import  # Permet d'importer en chemin abslolu ou relatif
                                         # doit etre importer en premier
 
-import os, sys, shutil
+import os, sys
 from os import system
+from myLib.devChk.devChk import C_GitChk
+                                        # Arboressence de l'import :
+                                        # _3_software           <-- origin du projet
+                                        #  |
+                                        #  +- myLib             <-- paquet
+                                        #  |  |
+                                        #  |  +- devChk         <-- sous-paquet
+                                        #  |  |  |
+                                        #  |  |  +- devChk.py   <-- librairie
+                                        #  |  |  |  |
+                                        #  |  |  |  +- C_GitChk <-- class 
+                                        #                           de la lib devChk.py   
 from distutils import dir_util
 """
     :liens web sbutil:
@@ -201,6 +213,8 @@ def main() :
     i_replicator = C_bougeTonFile()
     print("\n\t\t## Debut de f_osIdentifier() ##\n")
     i_replicator.f_osIdentifier()
+    i_git = C_GitChk()
+    i_git.f_gitBranchChk()
     print("\n\t\t## Debut de f_arboList() ##\n")
     i_replicator.f_arboList()
     print("\n\t\t## Debut de f_copyAll() ##\n")
