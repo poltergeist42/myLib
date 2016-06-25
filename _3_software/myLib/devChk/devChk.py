@@ -35,9 +35,9 @@ from os import system
 class C_DebugMsg(object) :
     """ class permettant d'intercepter et d'afficher les message de debug """
     
-    def __init__(self) :
+    def __init__(self, v_affichage = True) :
         """ Init variables """
-        self.affichage = True
+        self.affichage = v_affichage
         self.debugNumber = 0
         
     def __del__(self) :
@@ -50,6 +50,12 @@ class C_DebugMsg(object) :
         """
         v_className = self.__class__.__name__
         print("\n\t\tL'instance de la class {} est terminee".format(v_className))
+        
+    def dbgPrint(self, v_chk, v_varName, v_varValue) :
+        """ intercept les messages pour les formater de facon homogene """
+        if v_chk and self.affichage :
+            self.debugNumber += 1
+            print("dbgMsg[{}] : {} - {}".format(self.debugNumber, v_varName, v_varValue))
         
 ####
         
@@ -74,20 +80,19 @@ class C_GitChk(object) :
         si elle est differente de '* master" """
         if self.controlActif :
             system("git branch > chkBranch")
-            v_chaine = "* dev"
+            v_chaine = "* master"
             v_chk = True
+            v_chaineIsTrue = True
             
             try :
                 v_localLib = open("./chkBranch")
                 
                 for line in v_localLib : 
-                    if v_chaine in line :                   
-                        print   (" ############################################\n",
-                                 "#                                          #\n",
-                                 "# Attention, vous êtes sur la branch 'dev' #\n",
-                                 "#                                          #\n",
-                                 "############################################\n"
-                                )
+                    if not v_chaine in line : 
+                        v_chaineIsTrue = False
+                    else :
+                        v_chaineIsTrue = True
+                        break
 
             except FileNotFoundError :
                 print("fichier non trouve")
@@ -95,7 +100,15 @@ class C_GitChk(object) :
                 
             finally :
                 if v_chk : v_localLib.close()
-            
+                
+            if not v_chaineIsTrue :
+                print   (" #################################################\n",
+                         "#                                               #\n",
+                         "# Attention, vous n'êtes sur la branch 'master' #\n",
+                         "#                                               #\n",
+                         "#################################################\n"
+                        )
+
         else :
             print(" le control de branch est desactive")
     

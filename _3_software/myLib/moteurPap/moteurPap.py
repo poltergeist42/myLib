@@ -4,13 +4,17 @@
 """
    :Nom du fichier:     moteurPap.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160614
+   :Version:            20160625
 
 ----
 
    :Licence:            CC-BY-NC-SA
    :Liens:              https://creativecommons.org/licenses/by-nc-sa/4.0/
 
+----
+
+    :dev language:      Python 3.4
+    
 ----
 
 lexique
@@ -25,16 +29,17 @@ lexique
    :i_:                 Instance
    :m_:                 Module
 """
-#################### Taille maximum des commentaires (80 caracteres)######################
+#################### Taille maximum des commentaires (90 caracteres)######################
 
 
 """
-    #####  moteur pap ####
+    moteur pap
+    ==========
 
     Ce module permet de creer et de manipuler l'objet 'C_MoteurPap'
     
-     Une valeur positive fait
-    touner le moteur dans le sens horraire. Une valeur négative fait tourner le moteur
+    Une valeur positive fait touner le moteur dans le sens horraire.
+    Une valeur négative fait tourner le moteur
     dans le sens anti-horraire (si on ne s'est pas trompé dans le cablage)
 
     N.B : se PAP doit etre pilote par un driver comme le UNL2003
@@ -67,6 +72,11 @@ lexique
                 soit 1/64 de tour en sortie d'arbre.
 """
 
+import sys
+sys.path.insert(0,'..')         # ajouter le repertoire precedent au path (non definitif)
+                                # pour pouvoir importer les modules et paquets parent
+from devChk.devChk import C_DebugMsg
+
 try :
     import RPi.GPIO as GPIO
     
@@ -85,6 +95,9 @@ class C_MoteurPap(object):
         """
             Déclaration et intialisation des variables
         """
+        # Creation de l'instance pour les message de debug
+        self.i_dbg = C_DebugMsg()
+        
         # declaration des variables
         self.v_rotation = v_rotationInit.lower()
         self.v_dest = 1
@@ -128,6 +141,8 @@ class C_MoteurPap(object):
             Methode permettant de selectionner et d'activer les 4 ports du RPi
             necessaires au fonctionnement du moteur Pas a Pas.
             par défaut, les ports sont configures de la facon suivante :
+            ::
+            
                 v_gpioA = GPIO17
                 v_gpioB = GPIO18
                 v_gpioC = GPIO27
@@ -171,10 +186,15 @@ class C_MoteurPap(object):
             Methode permettant d'effectuer une rotation egale 
             a la valeur fournie degres
         """
+        v_dbg = True
+        
         # Récupération d'une valeur donnée en degrès puis convertion
         # de cette valeur en nombre de pas en sortie d'arbre
         self.v_dest = self.f_convertDegToStep( v_deg )
-        # print("dbgMsg[01]: self.v_dest [ + ] : ", self.v_dest)
+        
+        #dbg
+        self.i_dbg.dbgPrint(v_dbg, "self.v_dest [ + ]", self.v_dest)
+        
         self.f_sensDeRotation()
         self.f_move(self.v_dest, v_deg)
 
@@ -183,20 +203,28 @@ class C_MoteurPap(object):
             Methode permettant d'effectuer une rotation egale
             a la valeur fournie nombre de pas (en sortie d'arbre)
         """
+        v_dbg = True
+        
         # Recuperation d'une valeur donnee en nombre de pas en sortie d'arbre
         self.v_dest =  v_step
-        # print("dbgMsg[04]: self.v_dest [ + ] : ", self.v_dest)
+        
+        #dbg
+        self.i_dbg.dbgPrint(v_dbg, "self.v_dest [ + ]", self.v_dest)
+        
         self.f_sensDeRotation()
         self.f_move(self.v_dest, v_step)
 
     def f_moveCm(self, v_cm) :
         """ effectue une rotation egale a une distance en centimetre """
+        v_dbg = True
+        
         self.v_dest = self.f_convertCmToStep(v_cm)
         self.f_sensDeRotation()
         self.f_move(self.v_dest, v_cm)
                        
     def f_move(self, v_destMove, v_step) :
         """ Factorisation de la sequence de mouvement des PAP """
+        v_dbg = True
         
         if v_destMove > 0 :
             v_destMove+= 1
@@ -204,28 +232,41 @@ class C_MoteurPap(object):
         else :
             v_destMove -=1
             v_step = -1
-        # print("dbgMsg[04']: self.v_dest [ - ] : ", self.v_dest)
+            
+            #dbg
+            self.i_dbg.dbgPrint(v_dbg, "self.v_dest [ - ]", self.v_dest)
         
         for v_pas in range(0, v_destMove, v_step):
-                # print("dbgMsg[05]: v_pas : ", v_pas)
-                for v_sortie in range(4):
-                    v_sortieN = self.t_broches[v_sortie]
-                    
-                    try :
-                        if self.t_phase[self.v_compteurDePas][v_sortie] !=0 :
-                            # print("dbgMsg[06]: t_phase %i Activation v_sortie %i" %(self.v_compteurDePas, v_sortieN))
-                            GPIO.output(v_sortieN, True)
-                        else :
-                            GPIO.output(v_sortieN, False)
-                    except NameError :
-                        print("GPIO error : f_moveStep\n")
-                        print("dbgMsg[06]: t_phase %i Activation v_sortie %i" %(self.v_compteurDePas, v_sortieN))
-                        
-                if v_step == 1 : self.v_compteurDePas -= 1
-                elif v_step == -1 : self.v_compteurDePas +=1
+        
+            #dbg
+            self.i_dbg.dbgPrint(v_dbg, "v_pas : ", v_pas)
             
-                if (self.v_compteurDePas == self.v_ndp) : self.v_compteurDePas = 0
-                if (self.v_compteurDePas < 0) : self.v_compteurDePas = self.v_ndp-1       
+            for v_sortie in range(4):
+                v_sortieN = self.t_broches[v_sortie]
+                
+                try :
+                    if self.t_phase[self.v_compteurDePas][v_sortie] !=0 :
+                    
+                        #dbg
+                        self.i_dbg.dbgPrint(v_dbg, "t_phase", self.v_compteurDePas)
+                        self.i_dbg.dbgPrint(v_dbg, "Activation v_sortie", v_sortieN)
+                        
+                        GPIO.output(v_sortieN, True)
+                    else :
+                        GPIO.output(v_sortieN, False)
+                except NameError :
+                    print("GPIO error : f_move\n")
+                    
+                    #dbg
+                    self.i_dbg.dbgPrint(v_dbg, "t_phase", self.v_compteurDePas)
+                    self.i_dbg.dbgPrint(v_dbg, "Activation v_sortie", v_sortieN)
+                    
+            time.sleep(self.v_tempDePause)
+            if v_step == 1 : self.v_compteurDePas -= 1
+            elif v_step == -1 : self.v_compteurDePas +=1
+        
+            if (self.v_compteurDePas == self.v_ndp) : self.v_compteurDePas = 0
+            if (self.v_compteurDePas < 0) : self.v_compteurDePas = self.v_ndp-1       
                 
     def f_convertDegToStep(self, v_degToStep):
         """
@@ -314,55 +355,59 @@ class C_MoteurPap(object):
         if self.v_rotation == "antihorraire" :
             self.v_dest *= -1
 
+
            
 def main() :
     #######################
     # Instance par defaut #
     #######################
     print("Instance par defaut")
-    i_testClass = C_MoteurPap()
+    i_testClass1 = C_MoteurPap()
 
     input("f_gpioInit : ")
-    i_testClass.f_gpioInit()
+    i_testClass1.f_gpioInit()
         
-    input("f_moveDeg : ")
-    i_testClass.f_moveDeg(30)
+    input("f_moveDeg(30)")
+    i_testClass1.f_moveDeg(30)
     
-    input("f_moveStep : ")
-    i_testClass.f_moveStep(256)
+    input("f_moveStep(256)")
+    i_testClass1.f_moveStep(256)
     
     input("fin de l'instance")
-    del i_testClass
+    del i_testClass1
     
     #########################
     # Instance Anti-horaire #
     #########################
-    print("Instance Anti-horaire")
-    i_testClass = C_MoteurPap(v_rotationInit = "antihoraire")
+    print("Instance Anti-horraire")
+    i_testClass2 = C_MoteurPap(v_rotationInit = "antihorraire")
     
     input("f_gpioInit")
-    i_testClass.f_gpioInit()
+    i_testClass2.f_gpioInit()
         
-    input("f_moveDeg")
-    i_testClass.f_moveDeg(30)
+    input("f_moveDeg(30)")
+    i_testClass2.f_moveDeg(30)
     
-    input("f_moveStep")
-    i_testClass.f_moveStep(256)
+    input("f_moveStep(256)")
+    i_testClass2.f_moveStep(256)
     
     input("fin de l'instance")
-    del i_testClass
+    del i_testClass2
     
     ###############
     # Instance cm #
     ###############
     print("Instance Centimetre")
-    i_testClass = C_MoteurPap(v_rayonInit = 3)
+    i_testClass3 = C_MoteurPap(v_rayonInit = 3)
     
-    input("f_moveCm")
-    i_testClass.f_moveCm(4)
+    input("f_gpioInit")
+    i_testClass3.f_gpioInit()
+    
+    input("f_moveCm(4)")
+    i_testClass3.f_moveCm(4)
 
     input("fin de l'instance")
-    del i_testClass
+    del i_testClass3
     
           
 if __name__ == '__main__':
