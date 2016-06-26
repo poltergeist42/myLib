@@ -1,0 +1,278 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>devChk &mdash; documentation devChk 20160626</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '20160626',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="top" title="documentation devChk 20160626" href="index.html" />
+    <link rel="prev" title="devChk" href="README_devChk.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-_3_software.myLib.devChk.devChk">
+<span id="devchk"></span><h1>devChk<a class="headerlink" href="#module-_3_software.myLib.devChk.devChk" title="Lien permanent vers ce titre">¶</a></h1>
+<div class="section" id="id1">
+<h2>devChk<a class="headerlink" href="#id1" title="Lien permanent vers ce titre">¶</a></h2>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Nom du fichier:</th><td class="field-body">devChk.py</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Autheur:</th><td class="field-body"><a class="reference external" href="https://github.com/poltergeist42">Poltergeist42</a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Version:</th><td class="field-body">20160626</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<hr class="docutils" />
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Licence:</th><td class="field-body">CC-BY-NC-SA</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Liens:</th><td class="field-body"><a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">https://creativecommons.org/licenses/by-nc-sa/4.0/</a></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<hr class="docutils" />
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Dev Langage:</th><td class="field-body">Python 3.4</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<hr class="docutils" />
+<div class="section" id="lexique">
+<h3>lexique<a class="headerlink" href="#lexique" title="Lien permanent vers ce titre">¶</a></h3>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name"><a href="#id2"><span class="problematic" id="id3">v_</span></a>:</th><td class="field-body">variable</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><a href="#id4"><span class="problematic" id="id5">l_</span></a>:</th><td class="field-body">list</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><a href="#id6"><span class="problematic" id="id7">t_</span></a>:</th><td class="field-body">tuple</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><a href="#id8"><span class="problematic" id="id9">d_</span></a>:</th><td class="field-body">dictionnaire</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><a href="#id10"><span class="problematic" id="id11">f_</span></a>:</th><td class="field-body">fonction</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><a href="#id12"><span class="problematic" id="id13">C_</span></a>:</th><td class="field-body">Class</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><a href="#id14"><span class="problematic" id="id15">i_</span></a>:</th><td class="field-body">Instance</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><a href="#id16"><span class="problematic" id="id17">m_</span></a>:</th><td class="field-body">Module</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<hr class="docutils" />
+<div class="section" id="liste-des-class">
+<h3>Liste des Class<a class="headerlink" href="#liste-des-class" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Ensemble de class permettant le control et le debug.</p>
+<dl class="class">
+<dt id="_3_software.myLib.devChk.devChk.C_DebugMsg">
+<em class="property">class </em><code class="descclassname">_3_software.myLib.devChk.devChk.</code><code class="descname">C_DebugMsg</code><span class="sig-paren">(</span><em>v_affichage=True</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.devChk.devChk.C_DebugMsg" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><blockquote>
+<div>Class permettant d&#8217;intercepter et d&#8217;afficher les message de debug.</div></blockquote>
+<p>Cette Class doit être instancier dans la fonction <strong>__init__()</strong> pour une Class
+et instancier en premier dans la fontion <strong>main()</strong> pour les fonctions
+n&#8217;appartenenant pas a une Class.</p>
+<p>Le constructeur a un argument par defaut de type <strong>booleen</strong> qui est predefinis
+sur <strong>True</strong>. Si se parametres est a <strong>False</strong>,
+l&#8217;ensemble des messages seront masques.</p>
+<p>Creation de l&#8217;instance :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">i_monIstanceDbg</span> <span class="o">=</span> <span class="n">C_DebugMsg</span><span class="p">(</span> <span class="p">[</span><span class="n">booleen</span> <span class="p">(</span><span class="n">facultatif</span> <span class="n">si</span> <span class="o">==</span> <span class="kc">True</span><span class="p">)]</span> <span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="_3_software.myLib.devChk.devChk.C_DebugMsg.dbgPrint">
+<code class="descname">dbgPrint</code><span class="sig-paren">(</span><em>v_chk</em>, <em>v_varName</em>, <em>v_varValue</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.devChk.devChk.C_DebugMsg.dbgPrint" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Intercept les messages pour les formater de facon homogene.</p>
+<blockquote>
+<div>Pour permettre de masquer les messages d&#8217;une seule fonction a la fois,</div></blockquote>
+<p>il est conseille d&#8217;ajouter une variable local initialisee a <strong>True</strong>
+et de l&#8217;appeler a chaque fois que le debug et necessaire. Cette variable doit etre
+mise a <strong>False</strong> pour que l&#8217;affichage local soit desactive.</p>
+<p>Ex:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Affichage active</span>
+<span class="n">v_dbg</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">i_monIstanceDbg</span><span class="o">.</span><span class="n">dbgPrint</span><span class="p">(</span>   <span class="n">v_dbg</span><span class="p">,</span> 
+                        <span class="p">[</span><span class="s2">&quot;chaine_de_caractere&quot;</span><span class="p">],</span>
+                        <span class="p">[</span><span class="n">la_variable_a_controller</span><span class="p">]</span>
+                    <span class="p">)</span>
+                    
+<span class="c1"># Affichage desactive</span>
+<span class="n">v_dbg</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">i_monIstanceDbg</span><span class="o">.</span><span class="n">dbgPrint</span><span class="p">(</span>   <span class="n">v_dbg</span><span class="p">,</span> 
+                        <span class="p">[</span><span class="s2">&quot;chaine_de_caractere&quot;</span><span class="p">],</span>
+                        <span class="p">[</span><span class="n">la_variable_a_controller</span><span class="p">]</span>
+                    <span class="p">)</span>
+</pre></div>
+</div>
+<p>Pour desactiver l&#8217;affichage d&#8217;un seul message a la fois, on peut remplacer la
+variable locale par une valeur <strong>booleen</strong>. On peut aussi simplement commenter
+la ligne du message de debug.</p>
+<p>Ex:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Affichage desactive par une valeur booleen</span>
+<span class="n">v_dbg</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">i_monIstanceDbg</span><span class="o">.</span><span class="n">dbgPrint</span><span class="p">(</span>   <span class="kc">False</span><span class="p">,</span> 
+                        <span class="p">[</span><span class="s2">&quot;chaine_de_caractere&quot;</span><span class="p">],</span>
+                        <span class="p">[</span><span class="n">la_variable_a_controller</span><span class="p">]</span>
+                    <span class="p">)</span>
+                    
+<span class="c1"># Affichage desactive en commentant la ligne</span>
+<span class="n">v_dbg</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="c1"># i_monIstanceDbg.dbgPrint(   v_dbg, </span>
+                        <span class="c1"># [&quot;chaine_de_caractere&quot; ou varialbe_de_reference],</span>
+                        <span class="c1"># [la_variable_a_controller]</span>
+                    <span class="c1"># )</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="_3_software.myLib.devChk.devChk.C_GitChk">
+<em class="property">class </em><code class="descclassname">_3_software.myLib.devChk.devChk.</code><code class="descname">C_GitChk</code><span class="sig-paren">(</span><em>control=True</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.devChk.devChk.C_GitChk" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><blockquote>
+<div>Class permettant de tester la branch (git) sur la quelle on se trouve,</div></blockquote>
+<p>et nous informe si nous ne sommes pas sur la branch &#8216;Master&#8217;,
+afin d&#8217;éviter les opérations malheureuses.</p>
+<p>Cette Class doit être instancier dans la fonction <strong>main()</strong>.</p>
+<p>Le constructeur a un argument par defaut de type <strong>booleen</strong> qui est predefinis
+sur <strong>True</strong>. Si se parametres est a <strong>False</strong>, l&#8217;ensemble des messages seront masques.</p>
+<p>Creation de l&#8217;instance :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">i_monIstanceGitChk</span> <span class="o">=</span> <span class="n">C_GitChk</span><span class="p">(</span> <span class="p">[</span><span class="n">booleen</span> <span class="p">(</span><span class="n">facultatif</span> <span class="n">si</span> <span class="o">==</span> <span class="kc">True</span><span class="p">)]</span> <span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="_3_software.myLib.devChk.devChk.C_GitChk.f_gitBranchChk">
+<code class="descname">f_gitBranchChk</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.devChk.devChk.C_GitChk.f_gitBranchChk" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>identifie la branch courante et emet une alerte
+si elle est differente de &#8216;* master&#8217;</p>
+<p>N.B : Cette fonction doit être appeler sinon aucune action ne sera effectuée.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="_3_software.myLib.devChk.devChk.main">
+<code class="descclassname">_3_software.myLib.devChk.devChk.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.devChk.devChk.main" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Fonction principale</p>
+<p>Cette Fonction ne sert que pour tester les différentes Class
+et méthode de ce projet.</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table des Matières</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">devChk</a><ul>
+<li><a class="reference internal" href="#id1">devChk</a><ul>
+<li><a class="reference internal" href="#lexique">lexique</a></li>
+<li><a class="reference internal" href="#liste-des-class">Liste des Class</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="README_devChk.html" title="Chapitre précédent">devChk</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/devChk.txt"
+            rel="nofollow">Montrer le code source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Poltergeist42.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/devChk.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
