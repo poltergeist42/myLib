@@ -4,7 +4,7 @@
 """
    :Nom du fichier:     ultrason.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160614
+   :Version:            20160626
 
 ----
 
@@ -13,6 +13,9 @@
 
 ----
 
+    :dev langage:       Python 3.4
+
+----
 
 lexique
 -------
@@ -28,13 +31,17 @@ lexique
 """
 #################### Taille maximum des commentaires (80 caracteres)######################
 
+import sys
+sys.path.insert(0,'..')         # ajouter le repertoire precedent au path (non definitif)
+                                # pour pouvoir importer les modules et paquets parent
+from devChk.devChk import C_DebugMsg
 import RPi.GPIO as GPIO
 import time
 
 class C_ultrasonSensor(object) :
     """ Class permettant d'utiliser le capteur ultra son 
     
-    :Type de capteur: HC-SR04
+    :Type de capteur:   HC-SR04
     
     Trig
         En Sortie (hautparleur)
@@ -60,11 +67,15 @@ class C_ultrasonSensor(object) :
             et non la distance total parcourue par l'onde radio.
     - source : https://www.youtube.com/watch?v=xACy8l3LsXI
     """
-    def init(self) :
+    def __init__(self) :
         """ variables globales """
+        # Creation de l'instance pour les message de debug
+        self.i_dbg = C_DebugMsg()
+                
+        # declaration des variables
         self.v_trig = 0
         self.v_echo = 0
-        self.v_timeSpeed = 170
+        self.v_timeSpeed = 34300
         
     def __del__(self) :
         """destructor
@@ -85,6 +96,8 @@ class C_ultrasonSensor(object) :
             Cette methode doit etre appellee a la fin de l'utilisation
             des broches GPIO (avant de quiter le programe).
         """
+        v_dbg = True
+        
         try :
             GPIO.cleanup()
             
@@ -92,8 +105,10 @@ class C_ultrasonSensor(object) :
             print("GPIO error : f_gpioDestructor")
 
         
-    def f_ultraInit(self, v_gpioTrig = 7, v_gpioEcho = 12) :
+    def f_ultraInit(self, v_gpioTrig=7, v_gpioEcho=12) :
         """ initialisation des broches GPIO en entree (Echo) et en sortie (Trig) """
+        v_dbg = False
+        
         GPIO.setmode(GPIO.BCM)
         self.v_trig = v_gpioTrig
         self.v_echo = v_gpioEcho
@@ -101,43 +116,72 @@ class C_ultrasonSensor(object) :
         GPIO.setup(self.v_echo, GPIO.IN)
         GPIO.setup(self.v_trig, GPIO.OUT)
         
+        GPIO.output(self.v_trig, 0)
+        time.sleep(1)
+
+                
     def f_ultraMesure(self) :
         """ mersure de la distance entre le capteur et l'obstacle """
+        v_dbg = True
         
         # Emission de l'onde radio
-        time.sleep(0.1)
         GPIO.output(self.v_trig, 1)
+        # dbg
+        self.i_dbg.dbgPrint(False, "self.v_trig", self.v_trig)
         time.sleep(0.00001)
-        GPIO.output(self.v_trig, 1)
+        GPIO.output(self.v_trig, 0)
+        # dbg
+        self.i_dbg.dbgPrint(False, "self.v_trig", self.v_trig)
         
         # reception de l'echo radio
-        while GPIO.input(self.v_echo == 0) :
+        while GPIO.input(self.v_echo) == 0 :
             pass
             
-        v_start = timte.time()
+        v_start = time.time()
+        # dbg
+        self.i_dbg.dbgPrint(v_dbg, "v_start", v_start)
         
-        while GPIO.input(self.v_echo == 1)
+        while GPIO.input(self.v_echo) == 1 :
             pass
             
         v_stop = time.time()
+        # dbg
+        self.i_dbg.dbgPrint(v_dbg, "v_stop", v_stop)
         
-        return (stop - start) * self.v_timeSpeed
+        v_timeDiff = v_stop - v_start
+        # dbg
+        self.i_dbg.dbgPrint(v_dbg, "v_timeDiff", v_timeDiff)
+        
+        v_dist = (v_timeDiff * self.v_timeSpeed)/2
+        # dbg
+        self.i_dbg.dbgPrint(v_dbg, "v_dist", v_dist)
+        
+        return v_dist
  
- def main() :
+ 
+def main() :
     """ Fonction principal """
-    #######################
-    # Instance par defaut #
-    #######################
+    #####################
+    Instance par defaut #
+    #####################
     print("Instance par defaut")
-    i_testClass = C_ultrasonSensor
+    i_testClass = C_ultrasonSensor()
     
     input("f_ultraInit : ")
     i_testClass.f_ultraInit()
     
-    input("f_ultraMesure : )
-    i_testClass.f_ultraMesure()
-    
+    input("f_ultraMesure : ")
+    v_boucle = True
+    while v_boucle :
+        try :
+            i_testClass.f_ultraMesure()
+            time.sleep(0.1)
+
+        except KeyboardInterrupt :
+            print("\nLa boucle a ete interompue par l'utilisateur")
+            v_boucle = False
+
     del i_testClass
- 
- if __name__ == '__main__':
+  
+if __name__ == '__main__':
     main()
