@@ -4,7 +4,7 @@
 """
    :Nom du fichier:     ultrason.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160626
+   :Version:            20160702
 
 ----
 
@@ -29,7 +29,7 @@ lexique
    :i_:                 Instance
    :m_:                 Module
 """
-#################### Taille maximum des commentaires (80 caracteres)######################
+#################### Taille maximum des commentaires (90 caracteres)######################
 
 import sys
 sys.path.insert(0,'..')         # ajouter le repertoire precedent au path (non definitif)
@@ -56,13 +56,14 @@ class C_ultrasonSensor(object) :
             sur le RPi
                 
     Vitesse du son
-        Le son se déplace à une vitesse d'environ 340 m/s
+        Le son se déplace à une vitesse d'environ 343 m/s
+        soit 34300 cm / us (centimetre / micro seconde)
             
             
                 
     Distance
-        D = 170 x time
-            # 170 correspond a la vitesse du son / 2 (340/2).
+        D = 17150 x time
+            # 17150 correspond a la vitesse du son / 2 (34300/2).
             On divise par 2 car seule la distance en l'obstacle et le mur nous intéresse
             et non la distance total parcourue par l'onde radio.
     - source : https://www.youtube.com/watch?v=xACy8l3LsXI
@@ -75,7 +76,7 @@ class C_ultrasonSensor(object) :
         # declaration des variables
         self.v_trig = 0
         self.v_echo = 0
-        self.v_timeSpeed = 34300
+        self.v_timeSpeed = 17150
         
     def __del__(self) :
         """destructor
@@ -117,33 +118,31 @@ class C_ultrasonSensor(object) :
         GPIO.setup(self.v_trig, GPIO.OUT)
         
         GPIO.output(self.v_trig, 0)
-        time.sleep(1)
+        time.sleep(0.1)
 
                 
     def f_ultraMesure(self) :
         """ mersure de la distance entre le capteur et l'obstacle """
-        v_dbg = True
+        v_dbg = False
         
         # Emission de l'onde radio
         GPIO.output(self.v_trig, 1)
         # dbg
-        self.i_dbg.dbgPrint(False, "self.v_trig", self.v_trig)
+        self.i_dbg.dbgPrint(v_dbg, "self.v_trig", self.v_trig)
         time.sleep(0.00001)
         GPIO.output(self.v_trig, 0)
         # dbg
-        self.i_dbg.dbgPrint(False, "self.v_trig", self.v_trig)
+        self.i_dbg.dbgPrint(v_dbg, "self.v_trig", self.v_trig)
         
         # reception de l'echo radio
         while GPIO.input(self.v_echo) == 0 :
             pass
-            
         v_start = time.time()
         # dbg
         self.i_dbg.dbgPrint(v_dbg, "v_start", v_start)
         
         while GPIO.input(self.v_echo) == 1 :
             pass
-            
         v_stop = time.time()
         # dbg
         self.i_dbg.dbgPrint(v_dbg, "v_stop", v_stop)
@@ -152,7 +151,7 @@ class C_ultrasonSensor(object) :
         # dbg
         self.i_dbg.dbgPrint(v_dbg, "v_timeDiff", v_timeDiff)
         
-        v_dist = (v_timeDiff * self.v_timeSpeed)/2
+        v_dist = (v_timeDiff * self.v_timeSpeed)
         # dbg
         self.i_dbg.dbgPrint(v_dbg, "v_dist", v_dist)
         
@@ -161,21 +160,22 @@ class C_ultrasonSensor(object) :
  
 def main() :
     """ Fonction principal """
-    #####################
-    Instance par defaut #
-    #####################
+    
+    
+    # Instance par defaut
+    
     print("Instance par defaut")
     i_testClass = C_ultrasonSensor()
     
-    input("f_ultraInit : ")
+    print("f_ultraInit : ")
     i_testClass.f_ultraInit()
     
-    input("f_ultraMesure : ")
+    print("f_ultraMesure : ")
     v_boucle = True
     while v_boucle :
         try :
-            i_testClass.f_ultraMesure()
             time.sleep(0.1)
+            print(i_testClass.f_ultraMesure())
 
         except KeyboardInterrupt :
             print("\nLa boucle a ete interompue par l'utilisateur")
