@@ -4,37 +4,35 @@
 """
    :Nom du fichier:     moteurPap.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160625
+   :Version:            20160703
 
-----
+####
 
    :Licence:            CC-BY-NC-SA
    :Liens:              https://creativecommons.org/licenses/by-nc-sa/4.0/
 
-----
+####
 
     :dev language:      Python 3.4
     
-----
+####
 
 lexique
--------
+=======
 
-   :v_:                 variable
-   :l_:                 list
-   :t_:                 tuple
-   :d_:                 dictionnaire
-   :f_:                 fonction
-   :C_:                 Class
-   :i_:                 Instance
-   :m_:                 Module
-"""
-#################### Taille maximum des commentaires (90 caracteres)######################
+   :**v_**:                 variable
+   :**l_**:                 list
+   :**t_**:                 tuple
+   :**d_**:                 dictionnaire
+   :**f_**:                 fonction
+   :**C_**:                 Class
+   :**i_**:                 Instance
+   :**m_**:                 Module
 
+####
 
-"""
-    moteur pap
-    ==========
+moteurPap
+=========
 
     Ce module permet de creer et de manipuler l'objet 'C_MoteurPap'
     
@@ -44,32 +42,47 @@ lexique
 
     N.B : se PAP doit etre pilote par un driver comme le UNL2003
 
-        *** Specification ***
-            - reference du moteur Pas a Pas         : 28BJY-48
-            - angle par pas (moteur)                : 5.625°
-            - Nbe de pas / tours (moteur)           : 64 (360/5.625)
-            - ratio (demultiplicateur)              : 1/64
-            - angle par pas (en sortie d'abre)      : 0.087890625°
-            - Nbe de pas / tour (en sortie d'arbre) : 4096 
+    *** Specification ***
+    
+        :reference du moteur Pas a Pas:             28BJY-48
+        :angle par pas (moteur):                    5.625°
+        :Nbe de pas / tours (moteur):               64 (360/5.625)
+        :ratio (demultiplicateur):                  1/64
+        :angle par pas (en sortie d'abre):          0.087890625°
+        :Nbe de pas / tour (en sortie d'arbre):     4096 
 
-       *** Correspodanse entre le driver UNL2003 et les GPIO ***
-       
-           - BCM (GPIO) -   | - Serigraphie sur UNL2003 -
-               v_gpioA      |               N1
-               v_gpioB      |               N2
-               v_gpioC      |               N3
-               v_gpioD      |               N4
+   *** Correspodanse entre le driver UNL2003 et les GPIO ***
+   
+       +------------+-------------------------+
+       | BCM (GPIO) | Serigraphie sur UNL2003 |
+       +============+=========================+
+       |   v_gpioA  |           N1            |
+       +------------+-------------------------+
+       |   v_gpioB  |           N2            |
+       +------------+-------------------------+
+       |   v_gpioC  |           N3            |
+       +------------+-------------------------+
+       |   v_gpioD  |           N4            |
+       +------------+-------------------------+
 
-        *** t_phases ***
-                                |  --> CW Direction (1-2 phase )
-            - lead Wire color - |- 1 -|- 2 -|- 3 -|- 4 -|- 5 -|- 6 -|- 7 -|- 8 -
-                4 orange        |  x  |  x  |     |     |     |     |     |  x
-                3 yelow         |     |  x  |  x  |  x  |     |     |     |
-                2 pink          |     |     |     |  x  |  x  |  x  |     |
-                1 blue          |     |     |     |     |     |  x  |  x  |  x
-               
-            N.B : les 8 phases donnent 1 tour complet sur le moteur,
-                soit 1/64 de tour en sortie d'arbre.
+    *** t_phases ***
+    
+        +-----------------+---+---+---+---+---+---+---+---+
+        |                 | --> CW Direction (1-2 phase ) |
+        +=================+===+===+===+===+===+===+===+===+
+        | lead Wire color | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+        +-----------------+---+---+---+---+---+---+---+---+
+        |   4 orange      | x | x |   |   |   |   |   | x |
+        +-----------------+---+---+---+---+---+---+---+---+
+        |   3 yelow       |   | x | x | x |   |   |   |   |
+        +-----------------+---+---+---+---+---+---+---+---+
+        |   2 pink        |   |   |   | x | x | x |   |   |
+        +-----------------+---+---+---+---+---+---+---+---+
+        |   1 blue        |   |   |   |   |   | x | x | x |
+        +-----------------+---+---+---+---+---+---+---+---+
+           
+        N.B : les 8 phases donnent 1 tour complet sur le moteur,
+              soit 1/64 de tour en sortie d'arbre.
 """
 
 import sys
