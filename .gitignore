@@ -1,7 +1,7 @@
 ## [ .gitignore ]
 
 ## Liste des fichiers et dossiers à ignorer
-
+/chkBranch
 
 #.gitignore
 
@@ -12,7 +12,7 @@ _6_*/
 _7_*/
 *_v/
 __pycache__/
-chkBranch/
+
 
 ## [ listes des extentions a ignorer ]
 *.*~
