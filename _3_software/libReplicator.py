@@ -67,7 +67,7 @@ class C_bougeTonFile(object) :
         self.fichierTxt = "projectList.txt"
         self.d_fullFile = {}
         
-        self.i_dbg = C_DebugMsg()
+        self.i_dbg = C_DebugMsg(False)
         
 ####
     

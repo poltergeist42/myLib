@@ -8,32 +8,32 @@ devChk
 
    :Nom du fichier:     devChk.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160626
+   :Version:            201600706
 
-----
+####
 
    :Licence:            CC-BY-NC-SA
    :Liens:              https://creativecommons.org/licenses/by-nc-sa/4.0/
 
-----
+####
 
-    :Dev Langage:       Python 3.4
-
-----
+    :dev language:      Python 3.4
+    
+####
 
 lexique
 =======
 
-   :v_:                 variable
-   :l_:                 list
-   :t_:                 tuple
-   :d_:                 dictionnaire
-   :f_:                 fonction
-   :C_:                 Class
-   :i_:                 Instance
-   :m_:                 Module
-
-----
+   :**v_**:                 variable
+   :**l_**:                 list
+   :**t_**:                 tuple
+   :**d_**:                 dictionnaire
+   :**f_**:                 fonction
+   :**C_**:                 Class
+   :**i_**:                 Instance
+   :**m_**:                 Module
+   
+####
 
 Liste des Class
 ===============
