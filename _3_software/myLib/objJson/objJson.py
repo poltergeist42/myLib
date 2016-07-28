@@ -4,7 +4,7 @@
 """
    :Nom du fichier:     objJson.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160727
+   :Version:            20160728
 
 ####
 
@@ -84,7 +84,13 @@ class C_ObjJson (object):
         
             Permet de renseigner le chemin et le nom du fichier.
         """
+        v_dbg = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug(v_dbg, "f_setFileName", f_setFileName)
+        
         self.v_nomPlusChemin = str( v_cheminDuFichier ) + str( v_nomDuFichier )
+        ## dbg
+        i_debug(v_dbg, "f_setFileName", f_setFileName)
 
     def f_openRWFile( self, v_mode = 'r', v_nomPlusChemin = False ) :
         """ **f_openRWFile( str, str )**
@@ -99,6 +105,10 @@ class C_ObjJson (object):
             *N.B :* L'instance du fichier devra etre fermee avec '.close()' depuis
             l'endroit de l'appel de 'f_openRWFile()'
         """
+        v_dbg = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug(v_dbg, "f_openRWFile", f_openRWFile)
+        
         if not v_nomPlusChemin : 
             f_setFileName()
             v_nomPlusChemin = self.v_nomPlusChemin
@@ -134,6 +144,10 @@ class C_ObjJson (object):
                 
                 >>> Vous etes dans 'maFonction'
         """
+        v_dbg = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug(v_dbg, "f_dicoFuncRun", f_dicoFuncRun)
+        
         d_dicoFunc[v_dicoValueRead] ()
         
     def f_dicoSort( self ) :
@@ -143,6 +157,8 @@ class C_ObjJson (object):
             tries par ordre alphabetique
         """
         v_dbg = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug(v_dbg, "f_dicoSort", f_dicoSort)
         
         d_dicoWorkSpace = self.d_dicoWorkSpace
         l_listSortedWorkSpace = []
@@ -151,7 +167,7 @@ class C_ObjJson (object):
             l_listSortedWorkSpace.append( (clef, d_dicoWorkSpace[clef]) )
             
         #dbg
-        self.i_dbg.dbgPrint(v_dbg, "l_listSortedWorkSpace", l_listSortedWorkSpace)
+        i_debug(v_dbg, "l_listSortedWorkSpace", l_listSortedWorkSpace)
         
         return l_listSortedWorkSpace
         
@@ -165,6 +181,10 @@ class C_ObjJson (object):
             Par defaut le nom du fichier est : 'fichierJson.json' 
             Le chemin par defaut quant à lui se trouve dans le dossier local
         """
+        v_dbg = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug(v_dbg, "f_dumpJsonFile", f_dumpJsonFile)
+        
         f_openRWFile(mode = 'w')
         json.dump(self.d_dicoToStuff, self.i_monFichier, indent=4)
         self.i_monFichier.close()
@@ -177,6 +197,10 @@ class C_ObjJson (object):
             Permet de lire un fichier en gardant le type des donnees. C'est donnee sont
             ajouter au dictionnaire 'd_dicoWorkSpace'
         """
+        v_dbg = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug(v_dbg, "f_loadJson", f_loadJson)
+        
         f_openRWFile(mode = 'r')
         self.d_dicoWorkSpace = json.load( self.i_monFichier )
         self.i_monFichier.close()
@@ -189,16 +213,14 @@ class C_ObjJson (object):
             Permet de lire un fichier en considerant que toutes les donnee sont de 
             type : <str>. C'est donnee sont ajouter au dictionnaire 'd_dicoWorkSpace'
         """
+        v_dbg = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug(v_dbg, "f_loadStringJson", f_loadStringJson)
+        
         f_openRWFile(mode = 'r')
         self.d_dicoWorkSpace = json.loads( self.i_monFichier )
         self.i_monFichier.close()
         
-        
-        
-        
-        
-d_dicoToStuff = {"0000" : "f_avance", "0002" : "f_droite", "0001" : "f_gauche"}
-
     
 def main() :
     ##################################
@@ -209,9 +231,9 @@ def main() :
     def f_droite() : print( "Fonction Droite" )
     def f_gauche() : print( "Fonction Gauche" )
     
-    ############
-    # Instance #
-    ############
+    ##################################################################
+    # Creation de l'instance + mise en place de la structure de test #
+    ##################################################################
     i_testObjJson = C_ObjJson()
     
     ## Creation des dictionnaires :
