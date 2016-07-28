@@ -42,12 +42,10 @@ class C_ObjJson (object):
     """ La class permet de manipuler des objet formater en Json """
 
     def __init__(self) :
-    
         """ 
             **__init()**
         
             Creation et initialisation des variables globales de cette class
-            
         """
         
         ## Creation de l'instance pour les message de debug
@@ -112,7 +110,7 @@ class C_ObjJson (object):
             print( "Le chemin ou le nom demander n'a pas été trouvé" )
                         
     
-    def f_dicoFuncRun(self, v_dicoValueRead ) :
+    def f_dicoFuncRun( self, v_dicoValueRead ) :
         """ **f_dicoFuncRun( dict.value )**
         
             Cette methode execute une fonction en interpretant la valeur passer en
@@ -137,6 +135,25 @@ class C_ObjJson (object):
                 >>> Vous etes dans 'maFonction'
         """
         d_dicoFunc[v_dicoValueRead] ()
+        
+    def f_dicoSort( self ) :
+        """ **f_dicoSort( dict )**
+        
+            Renvoie une list des enssemble 'clefs : valeurs', sous la forme de tupple
+            tries par ordre alphabetique
+        """
+        v_dbg = 1
+        
+        d_dicoWorkSpace = self.d_dicoWorkSpace
+        l_listSortedWorkSpace = []
+        
+        for clef in sorted(d_dicoWorkSpace.keys()) :
+            l_listSortedWorkSpace.append( (clef, d_dicoWorkSpace[clef]) )
+            
+        #dbg
+        self.i_dbg.dbgPrint(v_dbg, "l_listSortedWorkSpace", l_listSortedWorkSpace)
+        
+        return l_listSortedWorkSpace
         
         
     def f_dumpJsonFile( self ) :
@@ -180,26 +197,41 @@ class C_ObjJson (object):
         
         
         
-d_dicoTest = {"0000" : "f_avance", "0002" : "f_droite", "0001" : "f_gauche"}
-d_dicoFunc = {  "f_avance" : f_avance,
-                "f_recul" : f_recul, 
-                "f_droite" : f_droite,
-                "f_gauche" : f_gauche
-            }
-    
+d_dicoToStuff = {"0000" : "f_avance", "0002" : "f_droite", "0001" : "f_gauche"}
+
     
 def main() :
-    for clef in sorted(d_dicoTest.keys()) :
-        print(clef)
-        v_dicoValueRead = d_dicoTest[clef]
-        f_dicoFuncRun( v_dicoValueRead )
-        
-    v_Un = 33
-    v_stringFormat = "{:04}".format(v_Un,)
-    print("{} - {} \n\n".format(v_stringFormat, type(v_stringFormat)))
-    print("{} - {} \n\n".format("f_avance", type(f_avance)))
+    ##################################
+    # Creation des fonctions de test #
+    ##################################
+    def f_avance() : print( "Fonction Avance" )
+    def f_recul() : print( "Fonction Recul" )
+    def f_droite() : print( "Fonction Droite" )
+    def f_gauche() : print( "Fonction Gauche" )
     
-    print(json.dumps(d_dicoTest, indent=4))
+    ############
+    # Instance #
+    ############
+    i_testObjJson = C_ObjJson()
+    
+    ## Creation des dictionnaires :
+    i_testObjJson.d_dicoFunc =  {   "f_avance" : f_avance,
+                                    "f_recul" : f_recul, 
+                                    "f_droite" : f_droite,
+                                    "f_gauche" : f_gauche
+                                }
+        
+    i_testObjJson.d_dicoToStuff = { "0000" : "f_avance",
+                                    "0002" : "f_droite",
+                                    "0001" : "f_gauche"
+                                  }
+        
+    # v_Un = 33
+    # v_stringFormat = "{:04}".format(v_Un,)
+    # print("{} - {} \n\n".format(v_stringFormat, type(v_stringFormat)))
+    # print("{} - {} \n\n".format("f_avance", type(f_avance)))
+    
+    # print(json.dumps(d_dicoTest, indent=4))
     
 if __name__ == '__main__':
     main()
