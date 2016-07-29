@@ -4,7 +4,7 @@
 """
    :Nom du fichier:     objJson.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160728
+   :Version:            20160729
 
 ####
 
@@ -31,12 +31,12 @@ lexique
 
 """
 
-import sys
+import os, sys
 sys.path.insert(0,'..')         # ajouter le repertoire precedent au path (non definitif)
                                 # pour pouvoir importer les modules et paquets parent
 from devChk.devChk import C_DebugMsg
 
-import json
+import json, copy
 
 class C_ObjJson (object):
     """ La class permet de manipuler des objet formater en Json """
@@ -231,22 +231,36 @@ def main() :
     def f_droite() : print( "Fonction Droite" )
     def f_gauche() : print( "Fonction Gauche" )
     
+    ######################################
+    # Creation des dictionnaires de test #
+    ######################################
+    
+    d_dicoFuncTest =    {   "f_avance" : f_avance,
+                            "f_recul" : f_recul, 
+                            "f_droite" : f_droite,
+                            "f_gauche" : f_gauche
+                        }
+                        
+    d_dicoToStuffTest = {   "0000" : "f_avance",
+                            "0002" : "f_droite",
+                            "0001" : "f_gauche"
+                        }
+    
     ##################################################################
     # Creation de l'instance + mise en place de la structure de test #
     ##################################################################
+    
+    ################################################
+    # Instance et test avec les valeurs par defaut #
+    ################################################
     i_testObjJson = C_ObjJson()
     
-    ## Creation des dictionnaires :
-    i_testObjJson.d_dicoFunc =  {   "f_avance" : f_avance,
-                                    "f_recul" : f_recul, 
-                                    "f_droite" : f_droite,
-                                    "f_gauche" : f_gauche
-                                }
+    ## Creation des dictionnaires de l'instance :
+    i_testObjJson.d_dicoFunc =  copy.deepcopy( d_dicoFuncTest )
+    i_testObjJson.d_dicoToStuff = copy.deepcopy( d_dicoToStuffTest )
         
-    i_testObjJson.d_dicoToStuff = { "0000" : "f_avance",
-                                    "0002" : "f_droite",
-                                    "0001" : "f_gauche"
-                                  }
+    ## test des fonctions :
+    f_setFileName()
         
     # v_Un = 33
     # v_stringFormat = "{:04}".format(v_Un,)

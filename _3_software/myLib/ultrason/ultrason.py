@@ -37,7 +37,7 @@ lexique
 """
 
 import sys
-sys.path.insert(0,'..')
+sys.path.insert(0,'../')
 
     # ajouter le repertoire precedent au path
     
