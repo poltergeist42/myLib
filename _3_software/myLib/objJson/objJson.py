@@ -65,8 +65,7 @@ class C_ObjJson (object):
         
             Permet de terminer proprement l'instance de la class courante
         
-            il faut utilise :
-            ::
+            il faut utilise ::
             
                 del [nom_de_l'_instance]
                 
@@ -92,6 +91,19 @@ class C_ObjJson (object):
         ## dbg
         i_debug(v_dbg, "f_setFileName", f_setFileName)
 
+    def f_setDicoToStuff( self, v_dicoSource ) :
+        """
+        """
+        self.d_dicoToStuff = copy.deepcopy( v_dicoSource )
+        
+    def f_setDicoFunc( self, v_dicoSource ) :
+        """
+        """
+        v_dbg = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug(v_dbg, "f_openRWFile", f_openRWFile)
+        self.d_dicoFunc = copy.deepcopy( v_dicoSource )
+        
     def f_openRWFile( self, v_mode = 'r', v_nomPlusChemin = False ) :
         """ **f_openRWFile( str, str )**
         
@@ -133,8 +145,8 @@ class C_ObjJson (object):
             *N.B 2 :* Il faut aussi remplir le dictionnaire avant d'appeler cette
             fonction.
             
-            ex :
-            ::
+            ex ::
+
                 def maFonction () :
                     print( "Vous etes dans 'maFonction'" )
                 
@@ -170,7 +182,6 @@ class C_ObjJson (object):
         i_debug(v_dbg, "l_listSortedWorkSpace", l_listSortedWorkSpace)
         
         return l_listSortedWorkSpace
-        
         
     def f_dumpJsonFile( self ) :
         """ **f_dumpJsonFile( <str>, <str> )**
