@@ -39,7 +39,9 @@ from devChk.devChk import C_DebugMsg
 import json, copy
 
 class C_ObjJson (object):
-    """ La class permet de manipuler des objet formater en Json """
+    """ La class permet de manipuler des objet formater en Json depuis et vers des 
+        dictionnaires.
+    """
 
     def __init__(self) :
         """ 
@@ -58,6 +60,7 @@ class C_ObjJson (object):
         self.v_nomPlusChemin = ""
         self.i_monFichier = ""
         
+###
         
     def __del__(self) :
         """
@@ -72,9 +75,14 @@ class C_ObjJson (object):
             *N.B :* Si l'instance n'est plus utilisee, cette methode est appellee 
             automatiquement.
         """
+        v_dbg = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug(v_dbg, "f_setFileName", self.__del__)
         
         v_className = self.__class__.__name__
         print("\n\t\tL'instance de la class {} est terminee".format(v_className))    
+    
+###
     
     def f_setFileName(  self,
                         v_nomDuFichier = "fichierJson.json", 
@@ -85,24 +93,46 @@ class C_ObjJson (object):
         """
         v_dbg = 1
         i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg, "f_setFileName", f_setFileName)
+        i_debug(v_dbg, "f_setFileName", self.f_setFileName)
         
         self.v_nomPlusChemin = str( v_cheminDuFichier ) + str( v_nomDuFichier )
         ## dbg
-        i_debug(v_dbg, "f_setFileName", f_setFileName)
+        i_debug(v_dbg, "v_nomPlusChemin", self.v_nomPlusChemin)
 
-    def f_setDicoToStuff( self, v_dicoSource ) :
-        """
-        """
-        self.d_dicoToStuff = copy.deepcopy( v_dicoSource )
+###
         
-    def f_setDicoFunc( self, v_dicoSource ) :
-        """
+    def f_setDicoToStuff( self, v_dicoSource ) :
+        """ **f_setDicoToStuff( dict )**
+        
+            Permet de remplir le dictionnaire d_dicoToStuff avec le contenue d'un autre
+            dictionnaire passé en argument.
         """
         v_dbg = 1
         i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg, "f_openRWFile", f_openRWFile)
+        i_debug(v_dbg, "f_setDicoToStuff", self.f_setDicoToStuff)
+        
+        self.d_dicoToStuff = copy.deepcopy( v_dicoSource )
+        ## dbg
+        i_debug(v_dbg, "d_dicoToStuff", self.d_dicoToStuff)
+
+###
+        
+    def f_setDicoFunc( self, v_dicoSource ) :
+        """ **f_setDicoToStuff( dict )**
+        
+            Permet de remplir le dictionnaire d_dicoFunc avec le contenue d'un autre
+            dictionnaire passé en argument.
+        """
+        v_dbg = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug(v_dbg, "f_setDicoFunc", self.f_setDicoFunc)
+        
         self.d_dicoFunc = copy.deepcopy( v_dicoSource )
+        ## dbg
+        i_debug(v_dbg, "d_dicoFunc", self.d_dicoFunc)
+
+        
+###
         
     def f_openRWFile( self, v_mode = 'r', v_nomPlusChemin = False ) :
         """ **f_openRWFile( str, str )**
@@ -119,7 +149,7 @@ class C_ObjJson (object):
         """
         v_dbg = 1
         i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg, "f_openRWFile", f_openRWFile)
+        i_debug(v_dbg, "f_openRWFile", self.f_openRWFile)
         
         if not v_nomPlusChemin : 
             f_setFileName()
@@ -131,6 +161,7 @@ class C_ObjJson (object):
         except :
             print( "Le chemin ou le nom demander n'a pas été trouvé" )
                         
+###
     
     def f_dicoFuncRun( self, v_dicoValueRead ) :
         """ **f_dicoFuncRun( dict.value )**
@@ -158,9 +189,14 @@ class C_ObjJson (object):
         """
         v_dbg = 1
         i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg, "f_dicoFuncRun", f_dicoFuncRun)
+        i_debug(v_dbg, "f_dicoFuncRun", self.f_dicoFuncRun)
         
-        d_dicoFunc[v_dicoValueRead] ()
+        self.d_dicoFunc[v_dicoValueRead] ()
+        ## dbg
+        i_debug(v_dbg, "d_dicoFunc[v_dicoValueRead]", self.d_dicoFunc[v_dicoValueRead])
+
+        
+###
         
     def f_dicoSort( self ) :
         """ **f_dicoSort( dict )**
@@ -170,7 +206,7 @@ class C_ObjJson (object):
         """
         v_dbg = 1
         i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg, "f_dicoSort", f_dicoSort)
+        i_debug(v_dbg, "f_dicoSort", self.f_dicoSort)
         
         d_dicoWorkSpace = self.d_dicoWorkSpace
         l_listSortedWorkSpace = []
@@ -183,6 +219,8 @@ class C_ObjJson (object):
         
         return l_listSortedWorkSpace
         
+###
+        
     def f_dumpJsonFile( self ) :
         """ **f_dumpJsonFile( <str>, <str> )**
             
@@ -194,11 +232,13 @@ class C_ObjJson (object):
         """
         v_dbg = 1
         i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg, "f_dumpJsonFile", f_dumpJsonFile)
+        i_debug(v_dbg, "f_dumpJsonFile", self.f_dumpJsonFile)
         
         f_openRWFile(mode = 'w')
         json.dump(self.d_dicoToStuff, self.i_monFichier, indent=4)
         self.i_monFichier.close()
+        
+###
         
     def f_loadJson( self,
                     v_nomDuFichier = "fichierJson.json", 
@@ -210,12 +250,14 @@ class C_ObjJson (object):
         """
         v_dbg = 1
         i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg, "f_loadJson", f_loadJson)
+        i_debug(v_dbg, "f_loadJson", self.f_loadJson)
         
         f_openRWFile(mode = 'r')
         self.d_dicoWorkSpace = json.load( self.i_monFichier )
         self.i_monFichier.close()
 
+###
+        
     def f_loadStringJson( self,
                     v_nomDuFichier = "fichierJson.json", 
                     v_cheminDuFichier = "./" ) :
@@ -226,7 +268,7 @@ class C_ObjJson (object):
         """
         v_dbg = 1
         i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg, "f_loadStringJson", f_loadStringJson)
+        i_debug(v_dbg, "f_loadStringJson", self.f_loadStringJson)
         
         f_openRWFile(mode = 'r')
         self.d_dicoWorkSpace = json.loads( self.i_monFichier )
@@ -266,12 +308,12 @@ def main() :
     ################################################
     i_testObjJson = C_ObjJson()
     
-    ## Creation des dictionnaires de l'instance :
-    i_testObjJson.d_dicoFunc =  copy.deepcopy( d_dicoFuncTest )
-    i_testObjJson.d_dicoToStuff = copy.deepcopy( d_dicoToStuffTest )
+    ## Remplissage des dictionnaires de l'instance :
+    i_testObjJson.f_setDicoFunc( d_dicoFuncTest )
+    i_testObjJson.f_setDicoToStuff( d_dicoToStuffTest )
         
     ## test des fonctions :
-    f_setFileName()
+    i_testObjJson.f_setFileName()
         
     # v_Un = 33
     # v_stringFormat = "{:04}".format(v_Un,)
