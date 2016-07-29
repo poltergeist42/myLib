@@ -8,7 +8,7 @@ devChk
 
    :Nom du fichier:     devChk.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            201600706
+   :Version:            201600729
 
 ####
 
@@ -82,7 +82,7 @@ class C_DebugMsg(object) :
         v_className = self.__class__.__name__
         print("\n\t\tL'instance de la class {} est terminee".format(v_className))
         
-    def dbgPrint(self, v_chk, v_varName, v_varValue) :
+    def dbgPrint(self, v_chk, v_varName, v_varValue, v_endOfLine = '\n') :
         """
         Intercept les messages pour les formater de facon homogene.
         
@@ -129,7 +129,7 @@ class C_DebugMsg(object) :
         """
         if v_chk and self.affichage :
             self.debugNumber += 1
-            print("dbgMsg[{}] : {} - {}".format(self.debugNumber, v_varName, v_varValue))
+            print( "dbgMsg[{}] : {} - {}{}".format(self.debugNumber, v_varName, v_varValue, v_endOfLine) )
         
 ####
         
@@ -196,15 +196,15 @@ class C_GitChk(object) :
                 if v_chk : v_localLib.close()
                 
             if not v_chaineIsTrue :
-                print   (" #################################################\n",
-                         "#                                               #\n",
-                         "# Attention, vous n'êtes sur la branch 'master' #\n",
-                         "#                                               #\n",
-                         "#################################################\n"
+                print   (   " #####################################################\n",
+                            "#                                                   #\n",
+                            "# Attention, vous n'êtes pas sur la branch 'master' #\n",
+                            "#                                                   #\n",
+                            "#####################################################\n"
                         )
 
         else :
-            print(" le control de branch est desactive")
+            print("\n## le control de branch est desactive")
     
  ####
 
@@ -216,8 +216,35 @@ def main():
     et méthode de ce projet.
     """
     system("cls")
-    i_git = C_GitChk(False)
+
+    #################################
+    # Test de la class 'C_DebugMsg' #
+    #################################
+    i_debugTest = C_DebugMsg(True)
+    
+    ## Normal 'end'
+    v_dbg = True
+    i_debugTest.dbgPrint(   v_dbg, 
+                            "chaine_de_caractere",
+                            main
+                        )
+                        
+    ## double 'end'
+    i_debugTest.dbgPrint(   v_dbg, 
+                            "chaine_de_caractere",
+                            main,
+                            v_endOfLine = "\n\n"
+                        )
+    ## fin de l'instance 
+    del i_debugTest
+    
+    ###############################
+    # Test de la class 'C_GitChk' #
+    ###############################
+    
+    i_git = C_GitChk(True)
     i_git.f_gitBranchChk()
+    del i_git
     
 if __name__ == '__main__':
     main()
