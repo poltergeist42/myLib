@@ -4,7 +4,7 @@
 """
    :Nom du fichier:     objJson.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160729
+   :Version:            20160730
 
 ####
 
@@ -57,6 +57,8 @@ class C_ObjJson (object):
         self.d_dicoToStuff = {}
         self.d_dicoFunc = {}
         self.d_dicoWorkSpace = {}
+        d_dicoLocalWorkSpace = {}
+        
         self.v_nomPlusChemin = ""
         self.i_monFichier = ""
         
@@ -152,7 +154,7 @@ class C_ObjJson (object):
         i_debug(v_dbg, "f_openRWFile", self.f_openRWFile)
         
         if not v_nomPlusChemin : 
-            f_setFileName()
+            self.f_setFileName()
             v_nomPlusChemin = self.v_nomPlusChemin
             
         try :
@@ -234,45 +236,61 @@ class C_ObjJson (object):
         i_debug = self.i_dbg.dbgPrint
         i_debug(v_dbg, "f_dumpJsonFile", self.f_dumpJsonFile)
         
-        f_openRWFile(mode = 'w')
+        self.f_openRWFile(v_mode = 'w')
         json.dump(self.d_dicoToStuff, self.i_monFichier, indent=4)
         self.i_monFichier.close()
         
-###
-        
-    def f_loadJson( self,
-                    v_nomDuFichier = "fichierJson.json", 
-                    v_cheminDuFichier = "./" ) :
-        """ **f_loadJson( <str>, <str> )**
-        
-            Permet de lire un fichier en gardant le type des donnees. C'est donnee sont
-            ajouter au dictionnaire 'd_dicoWorkSpace'
+    def f_dumpLocalJson( self, v_dicoSource ) :
+        """ **f_dumpLocalJson( <str>/<dict> )**
+            
+            Cette fonction permet de faire un dump dans une variable / dictionnaire
+            local, le tous formater en json.
+            
         """
         v_dbg = 1
         i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg, "f_loadJson", self.f_loadJson)
+        i_debug(v_dbg, "f_dumpLocalJson", self.f_dumpLocalJson)
         
-        f_openRWFile(mode = 'r')
-        self.d_dicoWorkSpace = json.load( self.i_monFichier )
-        self.i_monFichier.close()
-
+        self.d_dicoLocalWorkSpace = json.dumps(v_dicoSource, indent=4)
+        ## dbg
+        i_debug(v_dbg, "d_dicoWorkSpace", self.d_dicoLocalWorkSpace)
+        
 ###
         
-    def f_loadStringJson( self,
-                    v_nomDuFichier = "fichierJson.json", 
-                    v_cheminDuFichier = "./" ) :
+    def f_loadJson( self ) :
         """ **f_loadJson( <str>, <str> )**
         
             Permet de lire un fichier en considerant que toutes les donnee sont de 
             type : <str>. C'est donnee sont ajouter au dictionnaire 'd_dicoWorkSpace'
         """
+
         v_dbg = 1
         i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg, "f_loadStringJson", self.f_loadStringJson)
+        i_debug(v_dbg, "f_loadJson", self.f_loadJson)
         
-        f_openRWFile(mode = 'r')
-        self.d_dicoWorkSpace = json.loads( self.i_monFichier )
+        self.f_openRWFile(v_mode = 'r')
+        self.d_dicoWorkSpace = json.load( self.i_monFichier )
         self.i_monFichier.close()
+        ## dbg
+        i_debug(v_dbg, "d_dicoWorkSpace", self.d_dicoWorkSpace)
+
+###
+        
+    def f_loadLocalJson( self, v_dicoSource ) :
+        """ **f_loadJson( [Data in Json format] )**
+        
+            Permet de lire et de formater directement les donnees transmisent au 
+            format Json et de renvoyer une variables aux format Json
+        """
+        v_dbg = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug(v_dbg, "f_loadLocalJson", self.f_loadLocalJson)
+        
+        v_localJson = json.loads( v_dicoSource )
+        
+        ## dbg
+        i_debug(v_dbg, "v_localJson", v_localJson)
+        return v_localJson
         
     
 def main() :
@@ -296,7 +314,8 @@ def main() :
                         
     d_dicoToStuffTest = {   "0000" : "f_avance",
                             "0002" : "f_droite",
-                            "0001" : "f_gauche"
+                            "0001" : "f_gauche",
+                            "0003" : 3
                         }
     
     ##################################################################
@@ -314,6 +333,11 @@ def main() :
         
     ## test des fonctions :
     i_testObjJson.f_setFileName()
+    i_testObjJson.f_dumpJsonFile()
+    i_testObjJson.f_loadJson()
+    i_testObjJson.f_dumpLocalJson( i_testObjJson.d_dicoToStuff )
+    i_testObjJson.f_loadLocalJson( i_testObjJson.d_dicoLocalWorkSpace )
+    
         
     # v_Un = 33
     # v_stringFormat = "{:04}".format(v_Un,)
