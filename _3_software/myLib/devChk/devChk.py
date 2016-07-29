@@ -82,7 +82,7 @@ class C_DebugMsg(object) :
         v_className = self.__class__.__name__
         print("\n\t\tL'instance de la class {} est terminee".format(v_className))
         
-    def dbgPrint(self, v_chk, v_varName, v_varValue, v_endOfLine = '\n') :
+    def dbgPrint(self, v_chk, v_varName, v_varValue, v_endOfLine = "") :
         """
         Intercept les messages pour les formater de facon homogene.
         
