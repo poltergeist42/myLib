@@ -20,4 +20,5 @@ __pycache__/
 *.264
 *.mkv
 *.mp4
+*.json
 Thumbs.db

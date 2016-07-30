@@ -99,7 +99,7 @@ class C_ObjJson (object):
         
         self.v_nomPlusChemin = str( v_cheminDuFichier ) + str( v_nomDuFichier )
         ## dbg
-        i_debug(v_dbg, "v_nomPlusChemin", self.v_nomPlusChemin)
+        i_debug(v_dbg, "v_nomPlusChemin", self.v_nomPlusChemin, "\n")
 
 ###
         
@@ -115,7 +115,7 @@ class C_ObjJson (object):
         
         self.d_dicoToStuff = copy.deepcopy( v_dicoSource )
         ## dbg
-        i_debug(v_dbg, "d_dicoToStuff", self.d_dicoToStuff)
+        i_debug(v_dbg, "d_dicoToStuff", self.d_dicoToStuff, "\n")
 
 ###
         
@@ -131,7 +131,7 @@ class C_ObjJson (object):
         
         self.d_dicoFunc = copy.deepcopy( v_dicoSource )
         ## dbg
-        i_debug(v_dbg, "d_dicoFunc", self.d_dicoFunc)
+        i_debug(v_dbg, "d_dicoFunc", self.d_dicoFunc, "\n")
 
         
 ###
@@ -195,7 +195,7 @@ class C_ObjJson (object):
         
         self.d_dicoFunc[v_dicoValueRead] ()
         ## dbg
-        i_debug(v_dbg, "d_dicoFunc[v_dicoValueRead]", self.d_dicoFunc[v_dicoValueRead])
+        i_debug(v_dbg, "d_dicoFunc[v_dicoValueRead]", self.d_dicoFunc[v_dicoValueRead], "\n")
 
         
 ###
@@ -217,7 +217,7 @@ class C_ObjJson (object):
             l_listSortedWorkSpace.append( (clef, d_dicoWorkSpace[clef]) )
             
         #dbg
-        i_debug(v_dbg, "l_listSortedWorkSpace", l_listSortedWorkSpace)
+        i_debug(v_dbg, "l_listSortedWorkSpace", l_listSortedWorkSpace, "\n")
         
         return l_listSortedWorkSpace
         
@@ -253,7 +253,7 @@ class C_ObjJson (object):
         
         self.d_dicoLocalWorkSpace = json.dumps(v_dicoSource, indent=4)
         ## dbg
-        i_debug(v_dbg, "d_dicoWorkSpace", self.d_dicoLocalWorkSpace)
+        i_debug(v_dbg, "d_dicoWorkSpace", self.d_dicoLocalWorkSpace, "\n")
         
 ###
         
@@ -272,7 +272,7 @@ class C_ObjJson (object):
         self.d_dicoWorkSpace = json.load( self.i_monFichier )
         self.i_monFichier.close()
         ## dbg
-        i_debug(v_dbg, "d_dicoWorkSpace", self.d_dicoWorkSpace)
+        i_debug(v_dbg, "d_dicoWorkSpace", self.d_dicoWorkSpace, "\n")
 
 ###
         
@@ -289,7 +289,7 @@ class C_ObjJson (object):
         v_localJson = json.loads( v_dicoSource )
         
         ## dbg
-        i_debug(v_dbg, "v_localJson", v_localJson)
+        i_debug(v_dbg, "v_localJson", v_localJson, "\n")
         return v_localJson
         
     
