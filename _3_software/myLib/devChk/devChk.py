@@ -8,7 +8,7 @@ devChk
 
    :Nom du fichier:     devChk.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            201600729
+   :Version:            20160731
 
 ####
 
@@ -96,16 +96,16 @@ class C_DebugMsg(object) :
                 # Affichage active
                 v_dbg = True
                 i_monIstanceDbg.dbgPrint(   v_dbg, 
-                                        ["chaine_de_caractere"],
-                                        [la_variable_a_controller]
-                                    )
+                                            ["chaine_de_caractere"],
+                                            [la_variable_a_controller]
+                                        )
                                     
                 # Affichage desactive
                 v_dbg = False
                 i_monIstanceDbg.dbgPrint(   v_dbg, 
-                                        ["chaine_de_caractere"],
-                                        [la_variable_a_controller]
-                                    )
+                                            ["chaine_de_caractere"],
+                                            [la_variable_a_controller]
+                                        )
                                     
         Pour desactiver l'affichage d'un seul message a la fois, on peut remplacer la
         variable locale par une valeur **booleen**. On peut aussi simplement commenter
@@ -116,9 +116,9 @@ class C_DebugMsg(object) :
                 # Affichage desactive par une valeur booleen
                 v_dbg = True
                 i_monIstanceDbg.dbgPrint(   False, 
-                                        ["chaine_de_caractere"],
-                                        [la_variable_a_controller]
-                                    )
+                                            ["chaine_de_caractere"],
+                                            [la_variable_a_controller]
+                                        )
                                     
                 # Affichage desactive en commentant la ligne
                 v_dbg = True
