@@ -78,8 +78,9 @@ class C_ObjJson (object):
             automatiquement.
         """
         v_dbg = 1
+        v_dbg2 = 0
         i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg, "f_setFileName", self.__del__)
+        i_debug(v_dbg2, "__del__", self.__del__)
         
         v_className = self.__class__.__name__
         print("\n\t\tL'instance de la class {} est terminee".format(v_className))    
@@ -94,12 +95,13 @@ class C_ObjJson (object):
             Permet de renseigner le chemin et le nom du fichier.
         """
         v_dbg = 1
+        v_dbg2 = 0
         i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg, "f_setFileName", self.f_setFileName)
+        i_debug(v_dbg2, "f_setFileName", self.f_setFileName)
         
         self.v_nomPlusChemin = str( v_cheminDuFichier ) + str( v_nomDuFichier )
         ## dbg
-        i_debug(v_dbg, "v_nomPlusChemin", self.v_nomPlusChemin, "\n")
+        i_debug(v_dbg, "v_nomPlusChemin", self.v_nomPlusChemin)
 
 ###
         
@@ -110,12 +112,13 @@ class C_ObjJson (object):
             dictionnaire passé en argument.
         """
         v_dbg = 1
+        v_dbg2 = 0
         i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg, "f_setDicoToStuff", self.f_setDicoToStuff)
+        i_debug(v_dbg2, "f_setDicoToStuff", self.f_setDicoToStuff)
         
         self.d_dicoToStuff = copy.deepcopy( v_dicoSource )
         ## dbg
-        i_debug(v_dbg, "d_dicoToStuff", self.d_dicoToStuff, "\n")
+        i_debug(v_dbg, "d_dicoToStuff", self.d_dicoToStuff)
 
 ###
         
@@ -126,12 +129,13 @@ class C_ObjJson (object):
             dictionnaire passé en argument.
         """
         v_dbg = 1
+        v_dbg2 = 0
         i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg, "f_setDicoFunc", self.f_setDicoFunc)
+        i_debug(v_dbg2, "f_setDicoFunc", self.f_setDicoFunc)
         
         self.d_dicoFunc = copy.deepcopy( v_dicoSource )
         ## dbg
-        i_debug(v_dbg, "d_dicoFunc", self.d_dicoFunc, "\n")
+        i_debug(v_dbg, "d_dicoFunc", self.d_dicoFunc)
 
         
 ###
@@ -150,8 +154,9 @@ class C_ObjJson (object):
             l'endroit de l'appel de 'f_openRWFile()'
         """
         v_dbg = 1
+        v_dbg2 = 0
         i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg, "f_openRWFile", self.f_openRWFile)
+        i_debug(v_dbg2, "f_openRWFile", self.f_openRWFile)
         
         if not v_nomPlusChemin : 
             self.f_setFileName()
@@ -190,13 +195,16 @@ class C_ObjJson (object):
                 >>> Vous etes dans 'maFonction'
         """
         v_dbg = 1
+        v_dbg2 = 0
         i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg, "f_dicoFuncRun", self.f_dicoFuncRun)
+        i_debug(v_dbg2, "f_dicoFuncRun", self.f_dicoFuncRun)
         
-        self.d_dicoFunc[v_dicoValueRead] ()
-        ## dbg
-        i_debug(v_dbg, "d_dicoFunc[v_dicoValueRead]", self.d_dicoFunc[v_dicoValueRead], "\n")
-
+        try :
+            self.d_dicoFunc[v_dicoValueRead] ()
+            ## dbg
+            i_debug(v_dbg, "d_dicoFunc[v_dicoValueRead]", self.d_dicoFunc[v_dicoValueRead])
+        except NameError :
+            print( "{} n'est pas definie\n".format( self.d_dicoFunc[v_dicoValueRead] ))
         
 ###
         
@@ -207,8 +215,9 @@ class C_ObjJson (object):
             tries par ordre alphabetique
         """
         v_dbg = 1
+        v_dbg2 = 0
         i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg, "f_dicoSort", self.f_dicoSort)
+        i_debug(v_dbg2, "f_dicoSort", self.f_dicoSort)
         
         d_dicoWorkSpace = self.d_dicoWorkSpace
         l_listSortedWorkSpace = []
@@ -217,7 +226,7 @@ class C_ObjJson (object):
             l_listSortedWorkSpace.append( (clef, d_dicoWorkSpace[clef]) )
             
         #dbg
-        i_debug(v_dbg, "l_listSortedWorkSpace", l_listSortedWorkSpace, "\n")
+        i_debug(v_dbg, "l_listSortedWorkSpace", l_listSortedWorkSpace)
         
         return l_listSortedWorkSpace
         
@@ -233,8 +242,9 @@ class C_ObjJson (object):
             Le chemin par defaut quant à lui se trouve dans le dossier local
         """
         v_dbg = 1
+        v_dbg2 = 0
         i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg, "f_dumpJsonFile", self.f_dumpJsonFile)
+        i_debug(v_dbg2, "f_dumpJsonFile", self.f_dumpJsonFile)
         
         self.f_openRWFile(v_mode = 'w')
         json.dump(self.d_dicoToStuff, self.i_monFichier, indent=4)
@@ -248,12 +258,13 @@ class C_ObjJson (object):
             
         """
         v_dbg = 1
+        v_dbg2 = 0
         i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg, "f_dumpLocalJson", self.f_dumpLocalJson)
+        i_debug(v_dbg2, "f_dumpLocalJson", self.f_dumpLocalJson)
         
         self.d_dicoLocalWorkSpace = json.dumps(v_dicoSource, indent=4)
         ## dbg
-        i_debug(v_dbg, "d_dicoWorkSpace", self.d_dicoLocalWorkSpace, "\n")
+        i_debug(v_dbg, "d_dicoWorkSpace", self.d_dicoLocalWorkSpace)
         
 ###
         
@@ -265,14 +276,15 @@ class C_ObjJson (object):
         """
 
         v_dbg = 1
+        v_dbg2 = 0
         i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg, "f_loadJson", self.f_loadJson)
+        i_debug(v_dbg2, "f_loadJson", self.f_loadJson)
         
         self.f_openRWFile(v_mode = 'r')
         self.d_dicoWorkSpace = json.load( self.i_monFichier )
         self.i_monFichier.close()
         ## dbg
-        i_debug(v_dbg, "d_dicoWorkSpace", self.d_dicoWorkSpace, "\n")
+        i_debug(v_dbg, "d_dicoWorkSpace", self.d_dicoWorkSpace)
 
 ###
         
@@ -283,13 +295,14 @@ class C_ObjJson (object):
             format Json et de renvoyer une variables aux format Json
         """
         v_dbg = 1
+        v_dbg2 = 0
         i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg, "f_loadLocalJson", self.f_loadLocalJson)
+        i_debug(v_dbg2, "f_loadLocalJson", self.f_loadLocalJson)
         
         v_localJson = json.loads( v_dicoSource )
         
         ## dbg
-        i_debug(v_dbg, "v_localJson", v_localJson, "\n")
+        i_debug(v_dbg, "v_localJson", v_localJson)
         return v_localJson
         
     
@@ -315,7 +328,8 @@ def main() :
     d_dicoToStuffTest = {   "0000" : "f_avance",
                             "0002" : "f_droite",
                             "0001" : "f_gauche",
-                            "0003" : 3
+                            "0003" : 3,
+                            "0004" : "f_recul"
                         }
     
     ##################################################################
@@ -337,7 +351,15 @@ def main() :
     i_testObjJson.f_loadJson()
     i_testObjJson.f_dumpLocalJson( i_testObjJson.d_dicoToStuff )
     i_testObjJson.f_loadLocalJson( i_testObjJson.d_dicoLocalWorkSpace )
+    l_list = i_testObjJson.f_dicoSort()
     
+    for i in range( len(l_list) ) :
+        if type( l_list[i][1] ) == type( "str" ) :
+            i_testObjJson.f_dicoFuncRun( l_list[i][1] )
+            
+    del( i_testObjJson )
+            
+            
         
     # v_Un = 33
     # v_stringFormat = "{:04}".format(v_Un,)
