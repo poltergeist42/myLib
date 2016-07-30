@@ -4,7 +4,7 @@
 """
    :Nom du fichier:     objJson.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160730
+   :Version:            20160731
 
 ####
 
@@ -99,6 +99,7 @@ class C_ObjJson (object):
         i_debug = self.i_dbg.dbgPrint
         i_debug(v_dbg2, "f_setFileName", self.f_setFileName)
         
+        os.makedirs(os.path.normpath(v_cheminDuFichier), mode=0o777, exist_ok=True)
         self.v_nomPlusChemin = str( v_cheminDuFichier ) + str( v_nomDuFichier )
         ## dbg
         i_debug(v_dbg, "v_nomPlusChemin", self.v_nomPlusChemin)
@@ -140,7 +141,7 @@ class C_ObjJson (object):
         
 ###
         
-    def f_openRWFile( self, v_mode = 'r', v_nomPlusChemin = False ) :
+    def f_openRWFile( self, v_mode = 'r' ) :
         """ **f_openRWFile( str, str )**
         
             Permet d'ouvrir un fichier en mode 'Lecture' : 'r' (valeur par défaut)
@@ -158,9 +159,8 @@ class C_ObjJson (object):
         i_debug = self.i_dbg.dbgPrint
         i_debug(v_dbg2, "f_openRWFile", self.f_openRWFile)
         
-        if not v_nomPlusChemin : 
-            self.f_setFileName()
-            v_nomPlusChemin = self.v_nomPlusChemin
+
+        v_nomPlusChemin = self.v_nomPlusChemin
             
         try :
             self.i_monFichier = open( v_nomPlusChemin, v_mode, encoding='utf-8' )
@@ -347,6 +347,32 @@ def main() :
         
     ## test des fonctions :
     i_testObjJson.f_setFileName()
+    i_testObjJson.f_dumpJsonFile()
+    i_testObjJson.f_loadJson()
+    i_testObjJson.f_dumpLocalJson( i_testObjJson.d_dicoToStuff )
+    i_testObjJson.f_loadLocalJson( i_testObjJson.d_dicoLocalWorkSpace )
+    l_list = i_testObjJson.f_dicoSort()
+    
+    for i in range( len(l_list) ) :
+        if type( l_list[i][1] ) == type( "str" ) :
+            i_testObjJson.f_dicoFuncRun( l_list[i][1] )
+            
+    del( i_testObjJson )
+            
+    ###############################################
+    # Instance et test avec les valeurs miodifies #
+    ###############################################
+    i_testObjJson = C_ObjJson()
+    
+    ## Remplissage des dictionnaires de l'instance :
+    i_testObjJson.f_setDicoFunc( d_dicoFuncTest )
+    i_testObjJson.f_setDicoToStuff( d_dicoToStuffTest )
+        
+    ## test des fonctions :
+    i_testObjJson.f_setFileName (
+                                v_nomDuFichier = "fichierJson2.json", 
+                                v_cheminDuFichier = "./testJson/" 
+                                )
     i_testObjJson.f_dumpJsonFile()
     i_testObjJson.f_loadJson()
     i_testObjJson.f_dumpLocalJson( i_testObjJson.d_dicoToStuff )
