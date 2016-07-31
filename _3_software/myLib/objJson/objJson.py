@@ -30,13 +30,16 @@ lexique
    :**m_**:                 Module
 
 """
+try :
+    import os, sys
+    sys.path.insert(0,'..')         # ajouter le repertoire precedent au path (non definitif)
+                                    # pour pouvoir importer les modules et paquets parent
+    from devChk.devChk import C_DebugMsg
 
-import os, sys
-sys.path.insert(0,'..')         # ajouter le repertoire precedent au path (non definitif)
-                                # pour pouvoir importer les modules et paquets parent
-from devChk.devChk import C_DebugMsg
-
-import json, copy
+    import json, copy
+    
+except ImportError :
+    print( "module non present" )
 
 class C_ObjJson (object):
     """ La class permet de manipuler des objet formater en Json depuis et vers des 
@@ -70,7 +73,7 @@ class C_ObjJson (object):
         
             Permet de terminer proprement l'instance de la class courante
         
-            il faut utilise ::
+            il faut utilise : ::
             
                 del [nom_de_l'_instance]
                 
@@ -183,7 +186,7 @@ class C_ObjJson (object):
             *N.B 2 :* Il faut aussi remplir le dictionnaire avant d'appeler cette
             fonction.
             
-            ex ::
+            ex : ::
 
                 def maFonction () :
                     print( "Vous etes dans 'maFonction'" )

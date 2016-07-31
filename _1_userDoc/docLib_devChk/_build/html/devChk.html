@@ -53,7 +53,7 @@
 </tr>
 <tr class="field-even field"><th class="field-name">Autheur:</th><td class="field-body"><a class="reference external" href="https://github.com/poltergeist42">Poltergeist42</a></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Version:</th><td class="field-body">20160626</td>
+<tr class="field-odd field"><th class="field-name">Version:</th><td class="field-body">20160731</td>
 </tr>
 </tbody>
 </table>
@@ -77,7 +77,7 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Dev Langage:</th><td class="field-body">Python 3.4</td>
+<tr class="field-odd field"><th class="field-name">dev language:</th><td class="field-body">Python 3.4</td>
 </tr>
 </tbody>
 </table>
@@ -90,21 +90,21 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name"><a href="#id2"><span class="problematic" id="id3">v_</span></a>:</th><td class="field-body">variable</td>
+<tr class="field-odd field"><th class="field-name"><strong>v_</strong>:</th><td class="field-body">variable</td>
 </tr>
-<tr class="field-even field"><th class="field-name"><a href="#id4"><span class="problematic" id="id5">l_</span></a>:</th><td class="field-body">list</td>
+<tr class="field-even field"><th class="field-name"><strong>l_</strong>:</th><td class="field-body">list</td>
 </tr>
-<tr class="field-odd field"><th class="field-name"><a href="#id6"><span class="problematic" id="id7">t_</span></a>:</th><td class="field-body">tuple</td>
+<tr class="field-odd field"><th class="field-name"><strong>t_</strong>:</th><td class="field-body">tuple</td>
 </tr>
-<tr class="field-even field"><th class="field-name"><a href="#id8"><span class="problematic" id="id9">d_</span></a>:</th><td class="field-body">dictionnaire</td>
+<tr class="field-even field"><th class="field-name"><strong>d_</strong>:</th><td class="field-body">dictionnaire</td>
 </tr>
-<tr class="field-odd field"><th class="field-name"><a href="#id10"><span class="problematic" id="id11">f_</span></a>:</th><td class="field-body">fonction</td>
+<tr class="field-odd field"><th class="field-name"><strong>f_</strong>:</th><td class="field-body">fonction</td>
 </tr>
-<tr class="field-even field"><th class="field-name"><a href="#id12"><span class="problematic" id="id13">C_</span></a>:</th><td class="field-body">Class</td>
+<tr class="field-even field"><th class="field-name"><strong>C_</strong>:</th><td class="field-body">Class</td>
 </tr>
-<tr class="field-odd field"><th class="field-name"><a href="#id14"><span class="problematic" id="id15">i_</span></a>:</th><td class="field-body">Instance</td>
+<tr class="field-odd field"><th class="field-name"><strong>i_</strong>:</th><td class="field-body">Instance</td>
 </tr>
-<tr class="field-even field"><th class="field-name"><a href="#id16"><span class="problematic" id="id17">m_</span></a>:</th><td class="field-body">Module</td>
+<tr class="field-even field"><th class="field-name"><strong>m_</strong>:</th><td class="field-body">Module</td>
 </tr>
 </tbody>
 </table>
@@ -131,7 +131,7 @@ l&#8217;ensemble des messages seront masques.</p>
 </div>
 <dl class="method">
 <dt id="_3_software.myLib.devChk.devChk.C_DebugMsg.dbgPrint">
-<code class="descname">dbgPrint</code><span class="sig-paren">(</span><em>v_chk</em>, <em>v_varName</em>, <em>v_varValue</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.devChk.devChk.C_DebugMsg.dbgPrint" title="Lien permanent vers cette définition">¶</a></dt>
+<code class="descname">dbgPrint</code><span class="sig-paren">(</span><em>v_chk</em>, <em>v_varName</em>, <em>v_varValue</em>, <em>v_endOfLine=''</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.devChk.devChk.C_DebugMsg.dbgPrint" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Intercept les messages pour les formater de facon homogene.</p>
 <blockquote>
 <div>Pour permettre de masquer les messages d&#8217;une seule fonction a la fois,</div></blockquote>
@@ -142,16 +142,16 @@ mise a <strong>False</strong> pour que l&#8217;affichage local soit desactive.</
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Affichage active</span>
 <span class="n">v_dbg</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">i_monIstanceDbg</span><span class="o">.</span><span class="n">dbgPrint</span><span class="p">(</span>   <span class="n">v_dbg</span><span class="p">,</span> 
-                        <span class="p">[</span><span class="s2">&quot;chaine_de_caractere&quot;</span><span class="p">],</span>
-                        <span class="p">[</span><span class="n">la_variable_a_controller</span><span class="p">]</span>
-                    <span class="p">)</span>
+                            <span class="p">[</span><span class="s2">&quot;chaine_de_caractere&quot;</span><span class="p">],</span>
+                            <span class="p">[</span><span class="n">la_variable_a_controller</span><span class="p">]</span>
+                        <span class="p">)</span>
                     
 <span class="c1"># Affichage desactive</span>
 <span class="n">v_dbg</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="n">i_monIstanceDbg</span><span class="o">.</span><span class="n">dbgPrint</span><span class="p">(</span>   <span class="n">v_dbg</span><span class="p">,</span> 
-                        <span class="p">[</span><span class="s2">&quot;chaine_de_caractere&quot;</span><span class="p">],</span>
-                        <span class="p">[</span><span class="n">la_variable_a_controller</span><span class="p">]</span>
-                    <span class="p">)</span>
+                            <span class="p">[</span><span class="s2">&quot;chaine_de_caractere&quot;</span><span class="p">],</span>
+                            <span class="p">[</span><span class="n">la_variable_a_controller</span><span class="p">]</span>
+                        <span class="p">)</span>
 </pre></div>
 </div>
 <p>Pour desactiver l&#8217;affichage d&#8217;un seul message a la fois, on peut remplacer la
@@ -161,9 +161,9 @@ la ligne du message de debug.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Affichage desactive par une valeur booleen</span>
 <span class="n">v_dbg</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">i_monIstanceDbg</span><span class="o">.</span><span class="n">dbgPrint</span><span class="p">(</span>   <span class="kc">False</span><span class="p">,</span> 
-                        <span class="p">[</span><span class="s2">&quot;chaine_de_caractere&quot;</span><span class="p">],</span>
-                        <span class="p">[</span><span class="n">la_variable_a_controller</span><span class="p">]</span>
-                    <span class="p">)</span>
+                            <span class="p">[</span><span class="s2">&quot;chaine_de_caractere&quot;</span><span class="p">],</span>
+                            <span class="p">[</span><span class="n">la_variable_a_controller</span><span class="p">]</span>
+                        <span class="p">)</span>
                     
 <span class="c1"># Affichage desactive en commentant la ligne</span>
 <span class="n">v_dbg</span> <span class="o">=</span> <span class="kc">True</span>

@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>objJson &mdash; documentation objJson 20160731</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '20160731',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="top" title="documentation objJson 20160731" href="index.html" />
+    <link rel="prev" title="objJson" href="README_objJson.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="objjson">
+<h1>objJson<a class="headerlink" href="#objjson" title="Lien permanent vers ce titre">¶</a></h1>
+<hr class="docutils" />
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Licence:</th><td class="field-body">CC-BY-NC-SA</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Liens:</th><td class="field-body"><a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">https://creativecommons.org/licenses/by-nc-sa/4.0/</a></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<hr class="docutils" />
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">dev language:</th><td class="field-body">Python 3.4</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<hr class="docutils" />
+<div class="section" id="lexique">
+<h2>lexique<a class="headerlink" href="#lexique" title="Lien permanent vers ce titre">¶</a></h2>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name"><strong>v_</strong>:</th><td class="field-body">variable</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>l_</strong>:</th><td class="field-body">list</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><strong>t_</strong>:</th><td class="field-body">tuple</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>d_</strong>:</th><td class="field-body">dictionnaire</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><strong>f_</strong>:</th><td class="field-body">fonction</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>C_</strong>:</th><td class="field-body">Class</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><strong>i_</strong>:</th><td class="field-body">Instance</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>m_</strong>:</th><td class="field-body">Module</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<dl class="class">
+<dt id="_3_software.myLib.objJson.objJson.C_ObjJson">
+<em class="property">class </em><code class="descclassname">_3_software.myLib.objJson.objJson.</code><code class="descname">C_ObjJson</code><a class="headerlink" href="#_3_software.myLib.objJson.objJson.C_ObjJson" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>La class permet de manipuler des objet formater en Json depuis et vers des 
+dictionnaires.</p>
+<dl class="method">
+<dt id="_3_software.myLib.objJson.objJson.C_ObjJson.f_dicoFuncRun">
+<code class="descname">f_dicoFuncRun</code><span class="sig-paren">(</span><em>v_dicoValueRead</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.objJson.objJson.C_ObjJson.f_dicoFuncRun" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_dicoFuncRun( dict.value )</strong></p>
+<p>Cette methode execute une fonction en interpretant la valeur passer en
+argument. Cet argument placer en index dans le dictionnaire &#8216;d_dicoFunc&#8217;.
+c&#8217;est donc la clef. Pour chaque clef est assocé une valeur qui correspond
+a une fonction. Seule le nom de la fonction doit etre precisee, les
+parentheses ne doivent etres specifees.</p>
+<p><em>N.B :</em> La fonction doit etre declaree avant.
+<em>N.B 2 :</em> Il faut aussi remplir le dictionnaire avant d&#8217;appeler cette
+fonction.</p>
+<p>ex :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">maFonction</span> <span class="p">()</span> <span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span> <span class="s2">&quot;Vous etes dans &#39;maFonction&#39;&quot;</span> <span class="p">)</span>
+
+<span class="n">d_dicoFunc</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;maClef&quot;</span> <span class="p">:</span> <span class="n">maFonction</span> <span class="p">}</span>
+
+<span class="n">dicoFuncRun</span><span class="p">(</span> <span class="s2">&quot;maClef&quot;</span> <span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Vous</span> <span class="n">etes</span> <span class="n">dans</span> <span class="s1">&#39;maFonction&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.objJson.objJson.C_ObjJson.f_dicoSort">
+<code class="descname">f_dicoSort</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.objJson.objJson.C_ObjJson.f_dicoSort" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_dicoSort( dict )</strong></p>
+<p>Renvoie une list des enssemble &#8216;clefs : valeurs&#8217;, sous la forme de tupple
+tries par ordre alphabetique</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.objJson.objJson.C_ObjJson.f_dumpJsonFile">
+<code class="descname">f_dumpJsonFile</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.objJson.objJson.C_ObjJson.f_dumpJsonFile" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_dumpJsonFile( &lt;str&gt;, &lt;str&gt; )</strong></p>
+<p>Cette fonction permet de creer un fichier texte et d&#8217;y ajouter le contenu du
+dictionnaire &#8216;d_dicoToStuff&#8217; formater en json.</p>
+<p>Par defaut le nom du fichier est : &#8216;fichierJson.json&#8217; 
+Le chemin par defaut quant à lui se trouve dans le dossier local</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.objJson.objJson.C_ObjJson.f_dumpLocalJson">
+<code class="descname">f_dumpLocalJson</code><span class="sig-paren">(</span><em>v_dicoSource</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.objJson.objJson.C_ObjJson.f_dumpLocalJson" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_dumpLocalJson( &lt;str&gt;/&lt;dict&gt; )</strong></p>
+<p>Cette fonction permet de faire un dump dans une variable / dictionnaire
+local, le tous formater en json.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.objJson.objJson.C_ObjJson.f_loadJson">
+<code class="descname">f_loadJson</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.objJson.objJson.C_ObjJson.f_loadJson" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_loadJson( &lt;str&gt;, &lt;str&gt; )</strong></p>
+<p>Permet de lire un fichier en considerant que toutes les donnee sont de 
+type : &lt;str&gt;. C&#8217;est donnee sont ajouter au dictionnaire &#8216;d_dicoWorkSpace&#8217;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.objJson.objJson.C_ObjJson.f_loadLocalJson">
+<code class="descname">f_loadLocalJson</code><span class="sig-paren">(</span><em>v_dicoSource</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.objJson.objJson.C_ObjJson.f_loadLocalJson" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_loadJson( [Data in Json format] )</strong></p>
+<p>Permet de lire et de formater directement les donnees transmisent au 
+format Json et de renvoyer une variables aux format Json</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.objJson.objJson.C_ObjJson.f_openRWFile">
+<code class="descname">f_openRWFile</code><span class="sig-paren">(</span><em>v_mode='r'</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.objJson.objJson.C_ObjJson.f_openRWFile" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_openRWFile( str, str )</strong></p>
+<p>Permet d&#8217;ouvrir un fichier en mode &#8216;Lecture&#8217; : &#8216;r&#8217; (valeur par défaut)
+ou en mode &#8216;ecriture&#8217; : &#8216;w&#8217;</p>
+<p>Les nom et chemin pour acceder / creer le fichier est donne par
+v_nomPlusChemin qui prend les valeurs par defaut de &#8216;f_setFileName()&#8217; si aucun
+parametre n&#8217;est donne.</p>
+<p><em>N.B :</em> L&#8217;instance du fichier devra etre fermee avec &#8216;.close()&#8217; depuis
+l&#8217;endroit de l&#8217;appel de &#8216;f_openRWFile()&#8217;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.objJson.objJson.C_ObjJson.f_setDicoFunc">
+<code class="descname">f_setDicoFunc</code><span class="sig-paren">(</span><em>v_dicoSource</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.objJson.objJson.C_ObjJson.f_setDicoFunc" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_setDicoToStuff( dict )</strong></p>
+<p>Permet de remplir le dictionnaire d_dicoFunc avec le contenue d&#8217;un autre
+dictionnaire passé en argument.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.objJson.objJson.C_ObjJson.f_setDicoToStuff">
+<code class="descname">f_setDicoToStuff</code><span class="sig-paren">(</span><em>v_dicoSource</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.objJson.objJson.C_ObjJson.f_setDicoToStuff" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_setDicoToStuff( dict )</strong></p>
+<p>Permet de remplir le dictionnaire d_dicoToStuff avec le contenue d&#8217;un autre
+dictionnaire passé en argument.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.objJson.objJson.C_ObjJson.f_setFileName">
+<code class="descname">f_setFileName</code><span class="sig-paren">(</span><em>v_nomDuFichier='fichierJson.json'</em>, <em>v_cheminDuFichier='./'</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.objJson.objJson.C_ObjJson.f_setFileName" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_setFileName( str, str )</strong></p>
+<p>Permet de renseigner le chemin et le nom du fichier.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table des Matières</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">objJson</a><ul>
+<li><a class="reference internal" href="#lexique">lexique</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="README_objJson.html" title="Chapitre précédent">objJson</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/objJson.txt"
+            rel="nofollow">Montrer le code source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Poltergeist42.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/objJson.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
