@@ -32,7 +32,7 @@ lexique
 """
 try :
     import os, sys
-    sys.path.insert(0,'..')         # ajouter le repertoire precedent au path (non definitif)
+    sys.path.insert(0,'..')         # ajouter le repertoire precedent au path (non définitif)
                                     # pour pouvoir importer les modules et paquets parent
     from devChk.devChk import C_DebugMsg
 
@@ -42,7 +42,9 @@ except ImportError :
     print( "module non present" )
 
 class C_ObjJson (object):
-    """ La class permet de manipuler des objet formater en Json depuis et vers des 
+    """ **C_ObjJson (object)**
+    
+        La class permet de manipuler des objet formater en Json depuis et vers des 
         dictionnaires.
     """
 
@@ -50,7 +52,7 @@ class C_ObjJson (object):
         """ 
             **__init()**
         
-            Creation et initialisation des variables globales de cette class
+            Creation et initialisation des variables globales de cette Class
         """
         
         ## Creation de l'instance pour les message de debug
@@ -71,7 +73,7 @@ class C_ObjJson (object):
         """
             **__del__()**
         
-            Permet de terminer proprement l'instance de la class courante
+            Permet de terminer proprement l'instance de la Class courante
         
             il faut utilise : ::
             
@@ -214,7 +216,7 @@ class C_ObjJson (object):
     def f_dicoSort( self ) :
         """ **f_dicoSort( dict )**
         
-            Renvoie une list des enssemble 'clefs : valeurs', sous la forme de tupple
+            Renvoie une liste des ensemble 'clefs : valeurs', sous la forme de tupple
             tries par ordre alphabetique
         """
         v_dbg = 1

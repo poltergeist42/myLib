@@ -2,50 +2,67 @@
 # -*- coding: utf-8 -*-
 
 """
+
+=============
+libReplicator
+=============
+
    :Nom du fichier:     libReplicator.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160625
+   :Version:            20160731
 
-----
+####
 
    :Licence:            CC-BY-NC-SA
    :Liens:              https://creativecommons.org/licenses/by-nc-sa/4.0/
 
-----
+####
 
+   :Licence:            CC-BY-NC-SA
+   :Liens:              https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+####
+
+    :dev langage:       Python 3.4
+
+####
 
 lexique
--------
+=======
 
-   :v_:                 variable
-   :l_:                 list
-   :t_:                 tuple
-   :d_:                 dictionnaire
-   :f_:                 fonction
-   :C_:                 Class
-   :i_:                 Instance
-   :m_:                 Module
+   :**v_**:                 variable
+   :**l_**:                 list
+   :**t_**:                 tuple
+   :**d_**:                 dictionnaire
+   :**f_**:                 fonction
+   :**C_**:                 Class
+   :**i_**:                 Instance
+   :**m_**:                 Module
+   
 """
-#################### Taille maximum des commentaires (90 caracteres)######################
 
 from __future__ import absolute_import  # Permet d'importer en chemin abslolu ou relatif
                                         # doit etre importer en premier
 
 import os, sys
 from os import system
-from myLib.devChk.devChk import C_DebugMsg
-from myLib.devChk.devChk import C_GitChk
-                                        # Arboressence de l'import :
-                                        # _3_software           <-- origin du projet
-                                        #  |
-                                        #  +- myLib             <-- paquet
-                                        #  |  |
-                                        #  |  +- devChk         <-- sous-paquet
-                                        #  |  |  |
-                                        #  |  |  +- devChk.py   <-- librairie
-                                        #  |  |  |  |
-                                        #  |  |  |  +- C_GitChk <-- class 
-                                        #                           de la lib devChk.py   
+try :
+    from myLib.devChk.devChk import C_DebugMsg
+    from myLib.devChk.devChk import C_GitChk
+                                            # Arboressence de l'import :
+                                            # _3_software           <-- origin du projet
+                                            #  |
+                                            #  +- myLib             <-- paquet
+                                            #  |  |
+                                            #  |  +- devChk         <-- sous-paquet
+                                            #  |  |  |
+                                            #  |  |  +- devChk.py   <-- librairie
+                                            #  |  |  |  |
+                                            #  |  |  |  +- C_GitChk <-- class 
+                                            #                           de la lib devChk.py   
+except ImportError :
+    print("module 'devChk' non charge")
+    
 from distutils import dir_util
 """
     :liens web sbutil:
@@ -54,7 +71,9 @@ from distutils import dir_util
         https://docs.python.org/3.4/distutils/apiref.html#module-distutils.dir_util
 """
 class C_bougeTonFile(object) :
-    """ Class permettant de copier les diférentes librairies
+    """ **C_bougeTonFile(object)**
+    
+        Class permettant de copier et de mettre a jours les diférentes librairies dans
         l'ensemble des projet auquel elles sont utiles
     """
         
@@ -74,8 +93,7 @@ class C_bougeTonFile(object) :
     def __del__(self) :
         """destructor
         
-            il faut utilise :
-            ::
+            il faut utilise : ::
             
                 del [nom_de_l'_instance]
         """

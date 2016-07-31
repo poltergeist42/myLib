@@ -9,7 +9,7 @@ ultrason
 
    :Nom du fichier:     ultrason.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160703
+   :Version:            20160731
 
 ####
 
@@ -40,13 +40,15 @@ import sys
 sys.path.insert(0,'../')
 
     # ajouter le repertoire precedent au path
-    
-    # (non definitif, supprimer du cache a la fin de lexecution)
-    
+    # (non definitif, supprimer du cache a la fin de l'execution)
     # pour pouvoir importer les modules et paquets parent
 
+try :
+    from devChk.devChk import C_DebugMsg
 
-from devChk.devChk import C_DebugMsg
+except ImportError :
+    print("module 'devChk' non charge")
+
 
 try :
     import RPi.GPIO as GPIO
@@ -54,19 +56,11 @@ try :
 except ImportError :
     print("module 'RPi' non charge")
     
-
 import time
 
-"""
-
-####
-
-class C_ultrasonSensor(object)
-==============================
-"""
-
 class C_ultrasonSensor(object) :
-    """ 
+    """ **C_ultrasonSensor(object)**
+    
         Class permettant d'utiliser le capteur ultra son 
     
         :Type de capteur:   HC-SR04
@@ -85,9 +79,7 @@ class C_ultrasonSensor(object) :
         **Vitesse du son**
             Le son se déplace à une vitesse d'environ 343 m/s
             soit 34300 cm / us (centimetre / micro seconde)
-                
-                
-                    
+                                   
         **Distance**
             D = 17150 x time
                 # 17150 correspond a la vitesse du son / 2 (34300/2).
@@ -103,7 +95,7 @@ class C_ultrasonSensor(object) :
         """ 
             **__init()**
         
-            Creation et initialisation des variables globales de cette class
+            Creation et initialisation des variables globales de cette Class
             
         """
         
@@ -119,10 +111,9 @@ class C_ultrasonSensor(object) :
         """
             **__del__()**
         
-            Permet de terminer proprement l'instance de la class courante
+            Permet de terminer proprement l'instance de la Class courante
         
-            il faut utilise :
-            ::
+            il faut utilise : ::
             
                 del [nom_de_l'_instance]
                 
@@ -139,7 +130,7 @@ class C_ultrasonSensor(object) :
             Methode permettant de fermer proprement la gestion des GPIO du Rpi
             
             Cette methode doit etre appellee a la fin de l'utilisation
-            des broches GPIO (avant de quiter le programe).
+            des broches GPIO (avant de quiter le programme).
             
         """
         
@@ -234,13 +225,10 @@ class C_ultrasonSensor(object) :
  
  
 def main() :
-    """ 
-        **Fonction main()**
-        
-    
+    """**Fonction main()**
+
         Cette Fonction affiche en permanence la distance entre le capteur et l'obstacle.
         Pour sortir de la boucle il faut faire une interruption (CTRL - c).
-
     """
         
     # Instance par defaut
@@ -260,7 +248,7 @@ def main() :
             print(i_testClass.f_ultraMesure())
 
         except KeyboardInterrupt :
-            print("\nLa boucle a ete interompue par l'utilisateur")
+            print("\nLa boucle a ete interrompue par l'utilisateur")
             v_boucle = False
 
     del i_testClass

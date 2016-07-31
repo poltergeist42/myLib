@@ -13,11 +13,3 @@ Contents:
 
    README_objJson
    objJson
-
-Index
-=====
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-

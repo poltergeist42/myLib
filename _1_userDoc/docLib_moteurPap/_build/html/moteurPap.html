@@ -1,0 +1,490 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>moteurPap &mdash; documentation moteurPap 20160731</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '20160731',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="top" title="documentation moteurPap 20160731" href="index.html" />
+    <link rel="prev" title="moteurPap" href="README_moteurPap.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="moteurpap">
+<h1>moteurPap<a class="headerlink" href="#moteurpap" title="Lien permanent vers ce titre">¶</a></h1>
+<hr class="docutils" />
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Licence:</th><td class="field-body">CC-BY-NC-SA</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Liens:</th><td class="field-body"><a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">https://creativecommons.org/licenses/by-nc-sa/4.0/</a></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<hr class="docutils" />
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">dev language:</th><td class="field-body">Python 3.4</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<hr class="docutils" />
+<div class="section" id="lexique">
+<h2>lexique<a class="headerlink" href="#lexique" title="Lien permanent vers ce titre">¶</a></h2>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name"><strong>v_</strong>:</th><td class="field-body">variable</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>l_</strong>:</th><td class="field-body">list</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><strong>t_</strong>:</th><td class="field-body">tuple</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>d_</strong>:</th><td class="field-body">dictionnaire</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><strong>f_</strong>:</th><td class="field-body">fonction</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>C_</strong>:</th><td class="field-body">Class</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><strong>i_</strong>:</th><td class="field-body">Instance</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>m_</strong>:</th><td class="field-body">Module</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<hr class="docutils" />
+<div class="section" id="id1">
+<h2>moteurPap<a class="headerlink" href="#id1" title="Lien permanent vers ce titre">¶</a></h2>
+<blockquote>
+<div><blockquote>
+<div><p>Ce module permet de creer et de manipuler l&#8217;objet &#8216;C_MoteurPap&#8217;</p>
+<p>Une valeur positive fait tourner le moteur dans le sens horaire.
+Une valeur négative fait tourner le moteur
+dans le sens anti-horaire (si on ne s&#8217;est pas trompé dans le cablage)</p>
+<p>N.B : se PAP doit etre pilote par un driver comme le UNL2003</p>
+<p><strong>* Specification *</strong></p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">reference du moteur Pas a Pas:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">28BJY-48</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">angle par pas (moteur):</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">5.625°</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Nbe de pas / tours (moteur):</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">64 (360/5.625)</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">ratio (demultiplicateur):</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">1/64</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">angle par pas (en sortie d&#8217;abre):</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">0.087890625°</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Nbe de pas / tour (en sortie d&#8217;arbre):</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">4096</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div></blockquote>
+<p><strong>* Correspondance entre le driver UNL2003 et les GPIO *</strong></p>
+<blockquote>
+<div><blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="32%" />
+<col width="68%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">BCM (GPIO)</th>
+<th class="head">Serigraphie sur UNL2003</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>v_gpioA</td>
+<td>N1</td>
+</tr>
+<tr class="row-odd"><td>v_gpioB</td>
+<td>N2</td>
+</tr>
+<tr class="row-even"><td>v_gpioC</td>
+<td>N3</td>
+</tr>
+<tr class="row-odd"><td>v_gpioD</td>
+<td>N4</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><strong>* t_phases *</strong></p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="41%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&nbsp;</th>
+<th class="head" colspan="8">&#8211;&gt; CW Direction (1-2 phase )</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>lead Wire color</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+</tr>
+<tr class="row-odd"><td>4 orange</td>
+<td>x</td>
+<td>x</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>x</td>
+</tr>
+<tr class="row-even"><td>3 yelow</td>
+<td>&nbsp;</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>2 pink</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>1 blue</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>N.B</dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">les 8 phases donnent 1 tour complet sur le moteur,</span><dd>soit 1/64 de tour en sortie d&#8217;arbre.</dd>
+</dl>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+<dl class="class">
+<dt id="_3_software.myLib.moteurPap.moteurPap.C_MoteurPap">
+<em class="property">class </em><code class="descclassname">_3_software.myLib.moteurPap.moteurPap.</code><code class="descname">C_MoteurPap</code><span class="sig-paren">(</span><em>v_rotationInit='horaire'</em>, <em>v_rayonInit=1</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.moteurPap.moteurPap.C_MoteurPap" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Class permettant d&#8217;instancier un objet &#8216;C_MoteurPap&#8217;</p>
+<dl class="method">
+<dt id="_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_convertCmToDeg">
+<code class="descname">f_convertCmToDeg</code><span class="sig-paren">(</span><em>v_cmToDeg</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_convertCmToDeg" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Methode permettant de convertir en centimetre
+une valeur donnee en degres</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Rappel:</th><td class="field-body"><p class="first">Calcul du perimetre d&#8217;un cercle :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">2</span> <span class="n">x</span> <span class="n">pi</span> <span class="n">x</span> <span class="n">R</span>
+</pre></div>
+</div>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="49%" />
+<col width="51%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Degres</th>
+<th class="head">centimetres</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>360</td>
+<td>2piR</td>
+</tr>
+<tr class="row-odd"><td>360/(2piR)</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>(x360) / (2piR)</td>
+<td>x</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>(2piR) / (x360)</td>
+</tr>
+<tr class="row-even"><td>x</td>
+<td>(x2piR) / (x360)</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_convertCmToStep">
+<code class="descname">f_convertCmToStep</code><span class="sig-paren">(</span><em>v_cmToStep</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_convertCmToStep" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>convertit une valeur en centimetre
+en l&#8217;equivalent en nombres de pas</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_convertDegToCm">
+<code class="descname">f_convertDegToCm</code><span class="sig-paren">(</span><em>v_degToCm</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_convertDegToCm" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Methode permettant de convertir en degres
+une valeur donnee en centimetre</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Rappel:</th><td class="field-body"><p class="first">Calcul du perimetre d&#8217;un cercle :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">2</span> <span class="n">x</span> <span class="n">pi</span> <span class="n">x</span> <span class="n">R</span>
+</pre></div>
+</div>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="49%" />
+<col width="51%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Degres</th>
+<th class="head">centimetres</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>360</td>
+<td>2piR</td>
+</tr>
+<tr class="row-odd"><td>360/(2piR)</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>(x360) / (2piR)</td>
+<td>x</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>(2piR) / (x360)</td>
+</tr>
+<tr class="row-even"><td>x</td>
+<td>(x2piR) / (x360)</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_convertDegToStep">
+<code class="descname">f_convertDegToStep</code><span class="sig-paren">(</span><em>v_degToStep</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_convertDegToStep" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Methode permettant de convertir en nombre de Pas
+une valeur entree en degres</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_convertStepToCm">
+<code class="descname">f_convertStepToCm</code><span class="sig-paren">(</span><em>v_stepToCm</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_convertStepToCm" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>convertit un nombre de pas en une distance en centimetre</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_convertStepToDeg">
+<code class="descname">f_convertStepToDeg</code><span class="sig-paren">(</span><em>v_stepToDeg</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_convertStepToDeg" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Methode permettant de convertir en degres
+une valeur entree nombre de Pas</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_gpioDestructor">
+<code class="descname">f_gpioDestructor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_gpioDestructor" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Methode permettant de fermer proprement la gestion des GPIO du Rpi</p>
+<p>Cette methode doit etre appellee a la fin de l&#8217;utilisation
+des broches GPIO (avant de quitter le programme).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_gpioInit">
+<code class="descname">f_gpioInit</code><span class="sig-paren">(</span><em>v_gpioA=17</em>, <em>v_gpioB=18</em>, <em>v_gpioC=27</em>, <em>v_gpioD=22</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_gpioInit" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Methode permettant de selectionner et d&#8217;activer les 4 ports du RPi
+necessaires au fonctionnement du moteur Pas a Pas.
+par défaut, les ports sont configures de la facon suivante :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">v_gpioA</span> <span class="o">=</span> <span class="n">GPIO17</span>
+<span class="n">v_gpioB</span> <span class="o">=</span> <span class="n">GPIO18</span>
+<span class="n">v_gpioC</span> <span class="o">=</span> <span class="n">GPIO27</span>
+<span class="n">v_gpioD</span> <span class="o">=</span> <span class="n">GPIO22</span>
+</pre></div>
+</div>
+<p>Ces ports doivent etre change si il y a plus d&#8217;un moteur sur le montage</p>
+<p>Cette methode est obligatoire est doit etre appellee lors de la creation
+de chaque nouvelle instance de l&#8217;objet.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_move">
+<code class="descname">f_move</code><span class="sig-paren">(</span><em>v_destMove</em>, <em>v_step</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_move" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Factorisation de la sequence de mouvement des PAP</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_moveCm">
+<code class="descname">f_moveCm</code><span class="sig-paren">(</span><em>v_cm</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_moveCm" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>effectue une rotation egale a une distance en centimetre</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_moveDeg">
+<code class="descname">f_moveDeg</code><span class="sig-paren">(</span><em>v_deg</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_moveDeg" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Methode permettant d&#8217;effectuer une rotation egale 
+a la valeur fournie degres</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_moveStep">
+<code class="descname">f_moveStep</code><span class="sig-paren">(</span><em>v_step</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_moveStep" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Methode permettant d&#8217;effectuer une rotation egale
+a la valeur fournie nombre de pas (en sortie d&#8217;arbre)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_sensDeRotation">
+<code class="descname">f_sensDeRotation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.moteurPap.moteurPap.C_MoteurPap.f_sensDeRotation" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>identifie le sens de rotation attendu par l&#8217;utilisateur
+et l&#8217;affecter au PAP</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table des Matières</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">moteurPap</a><ul>
+<li><a class="reference internal" href="#lexique">lexique</a></li>
+<li><a class="reference internal" href="#id1">moteurPap</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="README_moteurPap.html" title="Chapitre précédent">moteurPap</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/moteurPap.txt"
+            rel="nofollow">Montrer le code source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Poltergeist42.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/moteurPap.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

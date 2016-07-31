@@ -1,6 +1,6 @@
-======
-devChk
-======
+=============
+README devChk
+=============
 
    :Autheur:          `Poltergeist42 <https://github.com/poltergeist42>`_
    
@@ -22,5 +22,5 @@ Description
             Pour afficher les messages debug en cours de devellopement.
         
         **C_GitChk**
-            Pour tester la branch (git) sur la quelle on se trouve, a fin d'éviter
-            les opérations malheureuses.
+            Pour tester la branch (git) sur la quelle on se trouve, a fin d'eviter
+            les operations malheureuses.

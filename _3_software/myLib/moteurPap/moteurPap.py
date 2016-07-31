@@ -4,7 +4,7 @@
 """
    :Nom du fichier:     moteurPap.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160703
+   :Version:            20160731
 
 ####
 
@@ -36,9 +36,9 @@ moteurPap
 
     Ce module permet de creer et de manipuler l'objet 'C_MoteurPap'
     
-    Une valeur positive fait touner le moteur dans le sens horraire.
+    Une valeur positive fait tourner le moteur dans le sens horaire.
     Une valeur négative fait tourner le moteur
-    dans le sens anti-horraire (si on ne s'est pas trompé dans le cablage)
+    dans le sens anti-horaire (si on ne s'est pas trompé dans le cablage)
 
     N.B : se PAP doit etre pilote par un driver comme le UNL2003
 
@@ -51,7 +51,7 @@ moteurPap
         :angle par pas (en sortie d'abre):          0.087890625°
         :Nbe de pas / tour (en sortie d'arbre):     4096 
 
-   *** Correspodanse entre le driver UNL2003 et les GPIO ***
+   *** Correspondance entre le driver UNL2003 et les GPIO ***
    
        +------------+-------------------------+
        | BCM (GPIO) | Serigraphie sur UNL2003 |
@@ -87,8 +87,11 @@ moteurPap
 
 import sys
 sys.path.insert(0,'..')         # ajouter le repertoire precedent au path (non definitif)
-                                # pour pouvoir importer les modules et paquets parent
-from devChk.devChk import C_DebugMsg
+
+try :                           # pour pouvoir importer les modules et paquets parent
+    from devChk.devChk import C_DebugMsg
+except ImportError :
+    print( "module 'devChk' non charge")
 
 try :
     import RPi.GPIO as GPIO
@@ -106,7 +109,7 @@ class C_MoteurPap(object):
     
     def __init__(self, v_rotationInit = "horaire", v_rayonInit = 1) :
         """
-            Déclaration et intialisation des variables
+            Declaration et initialisation des variables
         """
         # Creation de l'instance pour les message de debug
         self.i_dbg = C_DebugMsg()
@@ -140,8 +143,7 @@ class C_MoteurPap(object):
     def __del__(self) :
         """destructor
         
-            il faut utilise :
-            ::
+            il faut utilise : ::
             
                 del [nom_de_l'_instance]
         """
@@ -153,8 +155,7 @@ class C_MoteurPap(object):
         """
             Methode permettant de selectionner et d'activer les 4 ports du RPi
             necessaires au fonctionnement du moteur Pas a Pas.
-            par défaut, les ports sont configures de la facon suivante :
-            ::
+            par défaut, les ports sont configures de la facon suivante : ::
             
                 v_gpioA = GPIO17
                 v_gpioB = GPIO18
@@ -186,7 +187,7 @@ class C_MoteurPap(object):
             Methode permettant de fermer proprement la gestion des GPIO du Rpi
             
             Cette methode doit etre appellee a la fin de l'utilisation
-            des broches GPIO (avant de quiter le programe).
+            des broches GPIO (avant de quitter le programme).
         """
         try :
             GPIO.cleanup()
@@ -201,7 +202,7 @@ class C_MoteurPap(object):
         """
         v_dbg = True
         
-        # Récupération d'une valeur donnée en degrès puis convertion
+        # Récupération d'une valeur donnée en degrés puis conversion
         # de cette valeur en nombre de pas en sortie d'arbre
         self.v_dest = self.f_convertDegToStep( v_deg )
         
@@ -301,8 +302,7 @@ class C_MoteurPap(object):
             une valeur donnee en degres
             
             :Rappel:
-                Calcul du perimetre d'un cercle
-                    ::
+                Calcul du perimetre d'un cercle : ::
                     
                         2 x pi x R
                 
@@ -328,8 +328,7 @@ class C_MoteurPap(object):
             une valeur donnee en centimetre
             
             :Rappel:
-                Calcul du perimetre d'un cercle
-                    ::
+                Calcul du perimetre d'un cercle : ::
                     
                         2 x pi x R
                 
@@ -362,10 +361,10 @@ class C_MoteurPap(object):
        
     def f_sensDeRotation(self) :
         """
-            identifi le sens de rotation attendu par l'utilisateur
+            identifie le sens de rotation attendu par l'utilisateur
             et l'affecter au PAP
         """
-        if self.v_rotation == "antihorraire" :
+        if self.v_rotation == "antihoraire" :
             self.v_dest *= -1
 
 
@@ -392,8 +391,8 @@ def main() :
     #########################
     # Instance Anti-horaire #
     #########################
-    print("Instance Anti-horraire")
-    i_testClass2 = C_MoteurPap(v_rotationInit = "antihorraire")
+    print("Instance Anti-horaire")
+    i_testClass2 = C_MoteurPap(v_rotationInit = "antihoraire")
     
     input("f_gpioInit")
     i_testClass2.f_gpioInit()

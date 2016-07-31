@@ -14,10 +14,3 @@ Contents:
    README_devChk
    devChk
 
-Index
-=====
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-

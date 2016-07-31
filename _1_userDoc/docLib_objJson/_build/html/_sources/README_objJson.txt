@@ -1,6 +1,6 @@
-======
-objJson
-======
+==============
+README objJson
+==============
 
    :Autheur:          `Poltergeist42 <https://github.com/poltergeist42>`_
    
@@ -15,5 +15,5 @@ objJson
 Description
 ===========
 
-    objJson est une librairie servant de manipuler des objet formater en Json depuis 
+    objJson est une librairie servant à manipuler des objets formater en Json depuis 
     et vers des dictionnaires.

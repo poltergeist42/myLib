@@ -48,8 +48,9 @@ from os import system
 
 
 class C_DebugMsg(object) :
-    """ 
-        Class permettant d'intercepter et d'afficher les message de debug.
+    """**C_DebugMsg(object)**
+    
+    Class permettant d'intercepter et d'afficher les message de debug.
 
     Cette Class doit être instancier dans la fonction **__init__()** pour une Class
     et instancier en premier dans la fontion **main()** pour les fonctions
@@ -134,8 +135,9 @@ class C_DebugMsg(object) :
 ####
         
 class C_GitChk(object) :
-    """
-        Class permettant de tester la branch (git) sur la quelle on se trouve,
+    """**C_GitChk(object)**
+    
+    Class permettant de tester la branch (git) sur la quelle on se trouve,
     et nous informe si nous ne sommes pas sur la branch 'Master',
     afin d'éviter les opérations malheureuses.
     

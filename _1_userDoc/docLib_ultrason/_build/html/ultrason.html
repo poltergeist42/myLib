@@ -1,0 +1,263 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ultrason &mdash; documentation ultrason 20160731</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '20160731',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="top" title="documentation ultrason 20160731" href="index.html" />
+    <link rel="prev" title="README_ultrason" href="README_ultrason.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-_3_software.myLib.ultrason.ultrason">
+<span id="ultrason"></span><h1>ultrason<a class="headerlink" href="#module-_3_software.myLib.ultrason.ultrason" title="Lien permanent vers ce titre">¶</a></h1>
+<div class="section" id="id1">
+<h2>ultrason<a class="headerlink" href="#id1" title="Lien permanent vers ce titre">¶</a></h2>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Nom du fichier:</th><td class="field-body">ultrason.py</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Autheur:</th><td class="field-body"><a class="reference external" href="https://github.com/poltergeist42">Poltergeist42</a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Version:</th><td class="field-body">20160731</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<hr class="docutils" />
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Licence:</th><td class="field-body">CC-BY-NC-SA</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Liens:</th><td class="field-body"><a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">https://creativecommons.org/licenses/by-nc-sa/4.0/</a></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<hr class="docutils" />
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">dev langage:</th><td class="field-body">Python 3.4</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<hr class="docutils" />
+<div class="section" id="lexique">
+<h3>lexique<a class="headerlink" href="#lexique" title="Lien permanent vers ce titre">¶</a></h3>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name"><strong>v_</strong>:</th><td class="field-body">variable</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>l_</strong>:</th><td class="field-body">list</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><strong>t_</strong>:</th><td class="field-body">tuple</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>d_</strong>:</th><td class="field-body">dictionnaire</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><strong>f_</strong>:</th><td class="field-body">fonction</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>C_</strong>:</th><td class="field-body">Class</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><strong>i_</strong>:</th><td class="field-body">Instance</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>m_</strong>:</th><td class="field-body">Module</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<dl class="class">
+<dt id="_3_software.myLib.ultrason.ultrason.C_ultrasonSensor">
+<em class="property">class </em><code class="descclassname">_3_software.myLib.ultrason.ultrason.</code><code class="descname">C_ultrasonSensor</code><a class="headerlink" href="#_3_software.myLib.ultrason.ultrason.C_ultrasonSensor" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>C_ultrasonSensor(object)</strong></p>
+<p>Class permettant d&#8217;utiliser le capteur ultra son</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Type de capteur:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">HC-SR04</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt><strong>Trig</strong></dt>
+<dd><dl class="first last docutils">
+<dt>En Sortie (hautparleur)</dt>
+<dd># 1 impulsion est egale a 10us (0.00001)</dd>
+</dl>
+</dd>
+<dt><strong>Echo</strong></dt>
+<dd><dl class="first last docutils">
+<dt>En Entree (Micro)</dt>
+<dd># Attention les entrees du RPi etant en 3.3v,
+il faut faire un pont diviseur entre la broche
+&#8220;Echo&#8221; et le GND pour pouvoir se brancher
+sur le RPi</dd>
+</dl>
+</dd>
+<dt><strong>Vitesse du son</strong></dt>
+<dd>Le son se déplace à une vitesse d&#8217;environ 343 m/s
+soit 34300 cm / us (centimetre / micro seconde)</dd>
+<dt><strong>Distance</strong></dt>
+<dd><dl class="first last docutils">
+<dt>D = 17150 x time</dt>
+<dd># 17150 correspond a la vitesse du son / 2 (34300/2).
+On divise par 2 car seule la distance en l&#8217;obstacle et le mur nous intéresse
+et non la distance total parcourue par l&#8217;onde radio.</dd>
+</dl>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Source:</th><td class="field-body"><a class="reference external" href="https://www.youtube.com/watch?v=xACy8l3LsXI">https://www.youtube.com/watch?v=xACy8l3LsXI</a></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="_3_software.myLib.ultrason.ultrason.C_ultrasonSensor.f_gpioDestructor">
+<code class="descname">f_gpioDestructor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.ultrason.ultrason.C_ultrasonSensor.f_gpioDestructor" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_gpioDestructor()</strong></p>
+<p>Methode permettant de fermer proprement la gestion des GPIO du Rpi</p>
+<p>Cette methode doit etre appellee a la fin de l&#8217;utilisation
+des broches GPIO (avant de quiter le programme).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.ultrason.ultrason.C_ultrasonSensor.f_ultraInit">
+<code class="descname">f_ultraInit</code><span class="sig-paren">(</span><em>v_gpioTrig=7</em>, <em>v_gpioEcho=12</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.ultrason.ultrason.C_ultrasonSensor.f_ultraInit" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_ultraInit()</strong></p>
+<p>initialisation des broches GPIO en entree (Echo) et en sortie (Trig).
+Par défaut, le Trig et l&#8217;Echo sont affectés aux broches 
+7 et 12 du Raspberry Pi</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.ultrason.ultrason.C_ultrasonSensor.f_ultraMesure">
+<code class="descname">f_ultraMesure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.ultrason.ultrason.C_ultrasonSensor.f_ultraMesure" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_ultraMesure()</strong></p>
+<p>Renvoie la distance entre le capteur et l&#8217;obstacle.</p>
+<p><em>N.B :</em> valeur en centimetre</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="_3_software.myLib.ultrason.ultrason.main">
+<code class="descclassname">_3_software.myLib.ultrason.ultrason.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.ultrason.ultrason.main" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>Fonction main()</strong></p>
+<p>Cette Fonction affiche en permanence la distance entre le capteur et l&#8217;obstacle.
+Pour sortir de la boucle il faut faire une interruption (CTRL - c).</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table des Matières</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">ultrason</a><ul>
+<li><a class="reference internal" href="#id1">ultrason</a><ul>
+<li><a class="reference internal" href="#lexique">lexique</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="README_ultrason.html" title="Chapitre précédent">README_ultrason</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/ultrason.txt"
+            rel="nofollow">Montrer le code source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Poltergeist42.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/ultrason.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
