@@ -9,7 +9,7 @@ ultrason
 
    :Nom du fichier:     ultrason.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160731
+   :Version:            20160805
 
 ####
 
@@ -151,6 +151,8 @@ class C_ultrasonSensor(object) :
             Par défaut, le Trig et l'Echo sont affectés aux broches 
             7 et 12 du Raspberry Pi
             
+            Echo est configure en entree avec la PULL_DOWN activee.
+            
         """
         
         v_dbg = False
@@ -160,7 +162,7 @@ class C_ultrasonSensor(object) :
         self.v_trig = v_gpioTrig
         self.v_echo = v_gpioEcho
         
-        GPIO.setup(self.v_echo, GPIO.IN)
+        GPIO.setup(self.v_echo, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.setup(self.v_trig, GPIO.OUT)
         
         GPIO.output(self.v_trig, 0)
