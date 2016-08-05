@@ -53,7 +53,7 @@
 </tr>
 <tr class="field-even field"><th class="field-name">Autheur:</th><td class="field-body"><a class="reference external" href="https://github.com/poltergeist42">Poltergeist42</a></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Version:</th><td class="field-body">20160731</td>
+<tr class="field-odd field"><th class="field-name">Version:</th><td class="field-body">20160805</td>
 </tr>
 </tbody>
 </table>
@@ -175,6 +175,7 @@ des broches GPIO (avant de quiter le programme).</p>
 <p>initialisation des broches GPIO en entree (Echo) et en sortie (Trig).
 Par défaut, le Trig et l&#8217;Echo sont affectés aux broches 
 7 et 12 du Raspberry Pi</p>
+<p>Echo est configure en entree avec la PULL_DOWN activee.</p>
 </dd></dl>
 
 <dl class="method">
@@ -233,8 +234,8 @@ Pour sortir de la boucle il faut faire une interruption (CTRL - c).</p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Recherche rapide</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
@@ -248,7 +249,7 @@ Pour sortir de la boucle il faut faire une interruption (CTRL - c).</p>
       &copy;2016, Poltergeist42.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
       
       |
