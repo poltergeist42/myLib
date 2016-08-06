@@ -4,7 +4,7 @@
 """
    :Nom du fichier:     objJson.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160731
+   :Version:            20160806
 
 ####
 
@@ -389,15 +389,7 @@ def main() :
             i_testObjJson.f_dicoFuncRun( l_list[i][1] )
             
     del( i_testObjJson )
-            
-            
-        
-    # v_Un = 33
-    # v_stringFormat = "{:04}".format(v_Un,)
-    # print("{} - {} \n\n".format(v_stringFormat, type(v_stringFormat)))
-    # print("{} - {} \n\n".format("f_avance", type(f_avance)))
-    
-    # print(json.dumps(d_dicoTest, indent=4))
+
     
 if __name__ == '__main__':
     main()
