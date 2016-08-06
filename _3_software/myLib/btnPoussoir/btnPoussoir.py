@@ -165,6 +165,8 @@ class C_BtnPoussoir( object )
                 
             Si tous les parametres sont laisser par Defaut, le chagemant d'etat se fait
             sur le front Descendant car la résistance de tirrage est en Pull-UP.
+            
+            **Attention :** Cettte fonction est une fonction bloquante
         """
         v_dbg = 1
         v_dbg2 = 1
@@ -175,9 +177,9 @@ class C_BtnPoussoir( object )
         v_broche = self.v_broche
 
         ## Selection du front
-        if v_front      == "RISING"     :    v_rfb = GPIO.RISING
+        if v_front      == "RISING"     : v_rfb = GPIO.RISING
         elif v_front    == "FALLING"    : v_rfb = GPIO.FALLING
-        elif v_front    == "BOTH"       :    v_rfb = GPIO.BOTH
+        elif v_front    == "BOTH"       : v_rfb = GPIO.BOTH
         
         ## dbg
         i_debug( v_dbg1, "v_rfb", v_rfb )
@@ -186,5 +188,36 @@ class C_BtnPoussoir( object )
         GPIO.wait_for_edge(v_broche, v_rfb)
         
         return v_fnToExecute()
+        
+        
+        
+def main() :
+    """ Fonction pricipale """
+    ##################################
+    # Creation des fonctions de test #
+    ##################################
+    def f_fnTest1() : print( "Fonction fnTest1" )
+    def f_fnTest2() : print( "Fonction fnTest2" )
+    def f_fnTest3() : print( "Fonction fnTest3" )
+    def f_fnTest4() : print( "Fonction fnTest4" )
+    
+    ##################################################################
+    # Creation de l'instance + mise en place de la structure de test #
+    ##################################################################
+    
+    ################################################
+    # Instance et test avec les valeurs par defaut #
+    ################################################
+    i_testBtn = C_BtnPoussoir()
+    
+    ## test des fonctions :
+    i_testBtn.f_gpioInit()
+    i_testBtn.f_btnWaitForEvent( f_fnTest1 )
+    
+    del( i_testBtn )
+
+    
+if __name__ == '__main__':
+    main()
 
     
