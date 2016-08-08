@@ -4,7 +4,7 @@
 """
    :Nom du fichier:     btnPoussoir.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160806
+   :Version:            20160808
 
 ####
 
@@ -151,8 +151,12 @@ class C_BtnPoussoir( object )
 
 ####
 
-    def f_btnWaitForEvent( self, v_fnToExecute, v_front = "FALLING" ) :
-        """ **f_btnWaitForEvent( [nom_de_la_fonction_a_executer], str )
+    def f_btnWaitForEvent( self, v_fnToExecute, v_front = "FALLING", v_timeout = None ) :
+        """ **f_btnWaitForEvent(
+                                [nom_de_la_fonction_a_executer -- Type <function>],
+                                [Etat attendu pour le declenchement de l'evenement -- Type <str>],
+                                [temps du time Out en milisecondes -- Type <int>
+                                )
         
             Cette methode attend un chagemant d'etat de la broche (front montant, front
             front descandant, ou les deux) puis execute la fonction passee en parametre.
@@ -162,6 +166,9 @@ class C_BtnPoussoir( object )
                 * "RISING" : Front Montant
                 * "FALLING" : Front Descendant
                 * "BOTH" : Front Montant + Front Descendant
+                
+            Il est possible de définir un délais d'expiration qui lorsqu'il est atteind
+            annule l'attente d'une action.
                 
             Si tous les parametres sont laisser par Defaut, le chagemant d'etat se fait
             sur le front Descendant car la résistance de tirrage est en Pull-UP.
@@ -180,12 +187,12 @@ class C_BtnPoussoir( object )
         if v_front      == "RISING"     : v_rfb = GPIO.RISING
         elif v_front    == "FALLING"    : v_rfb = GPIO.FALLING
         elif v_front    == "BOTH"       : v_rfb = GPIO.BOTH
-        
+               
         ## dbg
         i_debug( v_dbg1, "v_rfb", v_rfb )
         i_debug( v_dbg1, "v_fnToExecute", v_fnToExecute )
         
-        GPIO.wait_for_edge(v_broche, v_rfb)
+        GPIO.wait_for_edge(v_broche, v_rfb, v_timeout)
         
         return v_fnToExecute()
         
