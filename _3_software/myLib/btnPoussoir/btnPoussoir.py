@@ -197,12 +197,12 @@ class C_BtnPoussoir( object )
         
         return v_fnToExecute()
         
-    def f_btnEvent_detected(    self,
+    def f_btnEvent_detect(    self,
                                 v_fnToExecute,
                                 v_front = "FALLING",
                                 v_bouncetime=200
                             ) :
-        """ **f_btnEvent_detected(
+        """ **f_btnEvent_detect(
                                 [nom_de_la_fonction_a_executer -- Type <function>],
                                 [Etat attendu pour le declenchement de l'evenement -- Type <str>],
                                 [Duree de l'anti-rebond (en milisecondes) -- Type <int>
@@ -223,6 +223,14 @@ class C_BtnPoussoir( object )
                 
             Si tous les parametres sont laisser par Defaut, le chagemant d'etat se fait
             sur le front Descendant car la résistance de tirrage est en Pull-UP.
+            
+            *N.B :* Il s'agit ici d'une interpretation de : ::
+                
+                GPIO.add_event_detect()
+                
+            et non de : ::
+            
+                GPIO.event_detected()
         """
         v_dbg = 1
         v_dbg2 = 1
@@ -242,10 +250,14 @@ class C_BtnPoussoir( object )
         i_debug( v_dbg1, "v_rfb", v_rfb )
         i_debug( v_dbg1, "v_bouncetime", v_bouncetime )
         
-        GPIO.add_event_detect(  v_broche,
-                                v_rfb, 
-                                callback=v_fnToExecute,
-                                bouncetime = v_bouncetime)
+        GPIO.add_event_detect(  v_broche, v_rfb, bouncetime = v_bouncetime )
+        
+        if type( v_fnToExecute ) == "list" :
+            for i in range( len( v_fnToExecute) ) :
+                GPIO.add_event_callback( channel, v_fnToExecute[i] )
+        else :
+            GPIO.add_event_callback( channel, v_fnToExecute )
+
 
         
 def main() :
