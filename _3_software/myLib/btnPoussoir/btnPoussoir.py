@@ -4,7 +4,7 @@
 """
    :Nom du fichier:     btnPoussoir.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160808
+   :Version:            20160809
 
 ####
 
@@ -158,7 +158,7 @@ class C_BtnPoussoir( object )
                                 [temps du time Out en milisecondes -- Type <int>
                                 )
         
-            Cette methode attend un chagemant d'etat de la broche (front montant, front
+            Cette methode attend un chagemant d'etat de la broche (front montant,
             front descandant, ou les deux) puis execute la fonction passee en parametre.
             
             les modes disponibles sont : 
@@ -189,14 +189,64 @@ class C_BtnPoussoir( object )
         elif v_front    == "BOTH"       : v_rfb = GPIO.BOTH
                
         ## dbg
-        i_debug( v_dbg1, "v_rfb", v_rfb )
         i_debug( v_dbg1, "v_fnToExecute", v_fnToExecute )
+        i_debug( v_dbg1, "v_rfb", v_rfb )
+        i_debug( v_dbg1, "v_timeout", v_timeout )
         
         GPIO.wait_for_edge(v_broche, v_rfb, v_timeout)
         
         return v_fnToExecute()
         
+    def f_btnEvent_detected(    self,
+                                v_fnToExecute,
+                                v_front = "FALLING",
+                                v_bouncetime=200
+                            ) :
+        """ **f_btnEvent_detected(
+                                [nom_de_la_fonction_a_executer -- Type <function>],
+                                [Etat attendu pour le declenchement de l'evenement -- Type <str>],
+                                [Duree de l'anti-rebond (en milisecondes) -- Type <int>
+                                )
         
+            Cette methode s'execute lors d'un chagemant d'etat de la broche (front montant,
+            front descandant, ou les deux) puis execute la fonction passee en parametre.
+            C'est le callback.
+            
+            les modes disponibles sont : 
+            
+                * "RISING" : Front Montant
+                * "FALLING" : Front Descendant
+                * "BOTH" : Front Montant + Front Descendant
+                
+            Il est possible de définir le délais durant lequel la fonction ne sera pas
+            reexecute. on parles d'anti-rebond.
+                
+            Si tous les parametres sont laisser par Defaut, le chagemant d'etat se fait
+            sur le front Descendant car la résistance de tirrage est en Pull-UP.
+        """
+        v_dbg = 1
+        v_dbg2 = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug( v_dbg2, "f_btnEvent_detected", self.f_btnEvent_detected )
+        
+        ## raccourcis
+        v_broche = self.v_broche
+
+        ## Selection du front
+        if v_front      == "RISING"     : v_rfb = GPIO.RISING
+        elif v_front    == "FALLING"    : v_rfb = GPIO.FALLING
+        elif v_front    == "BOTH"       : v_rfb = GPIO.BOTH
+               
+        ## dbg
+        i_debug( v_dbg1, "v_fnToExecute", v_fnToExecute )
+        i_debug( v_dbg1, "v_rfb", v_rfb )
+        i_debug( v_dbg1, "v_bouncetime", v_bouncetime )
+        
+        GPIO.add_event_detect(  v_broche,
+                                v_rfb, 
+                                callback=v_fnToExecute,
+                                bouncetime = v_bouncetime)
+
         
 def main() :
     """ Fonction pricipale """
