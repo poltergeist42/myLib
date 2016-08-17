@@ -4,7 +4,7 @@
 """
    :Nom du fichier:     btnPoussoir.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160814
+   :Version:            20160817
 
 ####
 
@@ -46,6 +46,7 @@ except ImportError :
     print("module 'RPi' non charge")
     
 import time
+from os import system
 
 class C_BtnPoussoir( object ) :
     """ **btnPoussoir()**
@@ -172,6 +173,30 @@ class C_BtnPoussoir( object ) :
             
 ####
 
+    def f_setFront( self, v_front ) :
+        """ **f_setFront( [Etat_attendu_pour_le_declenchement_de_l'evenement -- Type 'str'])**
+        
+            Cette methode permet de configurer le changement d'état attendue pour
+            l'execution du action.
+            
+            les modes disponibles sont : 
+            
+                * 'RISING' : Front Montant
+                * 'FALLING' : Front Descendant
+                * 'BOTH' : Front Montant + Front Descendant
+                
+            Si 'v_front == False' alors 'v_rfb = GPIO.FALLING'
+
+        """
+        if v_front      == "RISING"     : v_rfb = GPIO.RISING
+        elif v_front    == "FALLING"    : v_rfb = GPIO.FALLING
+        elif not v_front                : v_rfb = GPIO.FALLING
+        elif v_front    == "BOTH"       : v_rfb = GPIO.BOTH
+        
+        return v_rfb
+
+####
+
     def f_btnWaitForEvent( self, v_fnToExecute, v_front = "FALLING", v_timeout = 1 ) :
         """ **f_btnWaitForEvent(
                                 [nom_de_la_fonction_a_executer -- Type 'function'],
@@ -182,11 +207,6 @@ class C_BtnPoussoir( object ) :
             Cette methode attend un chagemant d'etat de la broche (front montant,
             front descandant, ou les deux) puis execute la fonction passee en parametre.
             
-            les modes disponibles sont : 
-            
-                * 'RISING' : Front Montant
-                * 'FALLING' : Front Descendant
-                * 'BOTH' : Front Montant + Front Descendant
                 
             Il est possible de definir un delais d'expiration qui lorsqu'il est atteind
             annule l'attente d'une action.
@@ -206,9 +226,8 @@ class C_BtnPoussoir( object ) :
         v_broche = self.v_broche
 
         ## Selection du front
-        if v_front      == "RISING"     : v_rfb = GPIO.RISING
-        elif v_front    == "FALLING"    : v_rfb = GPIO.FALLING
-        elif v_front    == "BOTH"       : v_rfb = GPIO.BOTH
+        v_rfb = self.f_setFront( v_front )
+
                
         ## dbg
         i_debug( v_dbg, "v_fnToExecute", v_fnToExecute )
@@ -220,13 +239,53 @@ class C_BtnPoussoir( object ) :
         return v_fnToExecute()
         
 ####
-        
-    def f_btnEvent_detect   (    self,
-                                v_fnToExecute,
+
+    def f_addEventDetect    (   self,
                                 v_front = "FALLING",
-                                v_bouncetime=200
+                                v_callBack = False,
+                                v_bouncetime = 250
                             ) :
-        """ **f_btnEvent_detect(
+        """ **f_addEventDetect**    (
+                                    [Etat_attendu_pour_le_declenchement_de_l'evenement -- Type 'str'],
+                                    [Presence_/_Utilisation_d'un_callback -- Type 'bool' ou 'function.__name__'],
+                                    [Duree_de_l'anti-rebond_(en milisecondes) -- Type 'int']
+                                    )
+                                    
+            Cette methode permet d'initaliser le 'event_detect'. 
+
+        """
+        v_dbg = 1
+        v_dbg2 = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug( v_dbg2, "f_addEventDetect", self.f_addEventDetect )
+        
+        ## variables
+        v_broche    = self.v_broche
+
+
+        ## Selection du front
+        v_rfb = self.f_setFront( v_front )
+               
+        ## dbg
+        i_debug( v_dbg, "v_rfb", v_rfb )
+        
+        ## init Event detect
+        if not v_callBack :
+            return GPIO.add_event_detect    (   v_broche,
+                                                v_rfb,
+                                                bouncetime = v_bouncetime
+                                            )
+        else :
+            return GPIO.add_event_detect    (   v_broche,
+                                                v_rfb,
+                                                callback = v_callBack,
+                                                bouncetime = v_bouncetime
+                                            )
+
+####
+        
+    def f_onEventDetect( self, v_fnToExecute ) :
+        """ **f_onEventDetect(
                                 [nom_de_la_fonction_a_executer -- Type 'function'],
                                 [Etat_attendu_pour_le_declenchement_de_l'evenement -- Type 'str'],
                                 [Duree_de_l'anti-rebond_(en milisecondes) -- Type 'int']
@@ -248,37 +307,49 @@ class C_BtnPoussoir( object ) :
             Si tous les parametres sont laisser par Defaut, le chagemant d'etat se fait
             sur le front Descendant car la resistance de tirrage est en Pull-UP.
             
-            *N.B :* Il s'agit ici d'une interpretation de : ::
-                
-                GPIO.add_event_detect()
-                
-            et non de : ::
-            
-                GPIO.event_detected()
         """
         v_dbg = 1
         v_dbg2 = 1
         i_debug = self.i_dbg.dbgPrint
-        i_debug( v_dbg2, "f_btnEvent_detect", self.f_btnEvent_detect )
+        i_debug( v_dbg2, "f_onEventDetect", self.f_onEventDetect )
         
         ## raccourcis
         v_broche        = self.v_broche
-        f_myCallBack    = self.f_myCallBack
-
+        
         ## Selection du front
-        if v_front      == "RISING"     : v_rfb = GPIO.RISING
-        elif v_front    == "FALLING"    : v_rfb = GPIO.FALLING
-        elif v_front    == "BOTH"       : v_rfb = GPIO.BOTH
-               
+        v_rfb = self.f_setFront( v_front )
+
         ## dbg
         i_debug( v_dbg, "v_fnToExecute", v_fnToExecute )
         i_debug( v_dbg, "v_rfb", v_rfb )
         i_debug( v_dbg, "v_bouncetime", v_bouncetime )
         
-        ## Event detect
-        GPIO.add_event_detect(  v_broche, v_rfb, bouncetime = v_bouncetime )
-        if isinstance( v_fnToExecute, list ) :
+######
         
+        def f_myCallBack( channel ) :
+            """ **f_myCallBack(  GPIO_Channel -- Type 'int',
+                                [nom_de_la_fonction_a_executer -- Type 'function'] )**
+                                
+                Cette methode permet de ne renvoyer que la fonction passee en argument sans y
+                ajouter le numero de broche en argument 'cache'
+            """
+            ##dbg
+            i_debug( v_dbg2, "f_myCallBack", f_myCallBack )
+            i_debug( v_dbg, "v_fnToExecute", v_fnToExecute )
+            i_debug( v_dbg, "channel", channel )
+            
+            i_debug( v_dbg, "avant la fonction ...",  v_fnToExecute.__name__)
+            
+            v_fnToExecute()
+            
+            i_debug( v_dbg, "... apres la fonction",  v_fnToExecute.__name__)
+    
+######
+        
+        ## Event detect
+
+        if isinstance( v_fnToExecute, list ) :
+            GPIO.add_event_detect(  v_broche, v_rfb, bouncetime = v_bouncetime )
             ## dbg
             i_debug( v_dbg, "Type de l'argument ", type(v_fnToExecute) )
             
@@ -288,18 +359,22 @@ class C_BtnPoussoir( object ) :
             ## dbg
             i_debug( v_dbg, "Type de l'argument ", type(v_fnToExecute) )
 
-            GPIO.add_event_callback( v_broche, callback = f_myCallBack(v_fnToExecute) )
-           
-       
-####
+            # GPIO.add_event_detect   (  v_broche,
+                                        # v_rfb,
+                                        # callback = f_myCallBack,
+                                        # bouncetime = v_bouncetime
+                                    # )
+            self.f_addEventDetect( v_callBack = f_myCallBack )
 
-    def f_btnEvent_detected(    self,
+####
+        
+    def f_ifDetected(    self,
                                 v_fnToExecute,
                                 v_front = "FALLING",
-                                v_howManyHit = 1,
+                                v_howManyHit = 2,
                                 v_bouncetime = 250
                             ) :
-        """ **f_btnEvent_detected(
+        """ **f_ifDetected(
                                 [nom_de_la_fonction_a_executer -- Type 'function'],
                                 [Etat_attendu_pour_le_declenchement_de_l'evenement -- Type 'str'],
                                 [nombre_d'impulsions_attendues -- Type 'int'],
@@ -322,20 +397,11 @@ class C_BtnPoussoir( object ) :
                 
             Si tous les parametres sont laisse par Defaut, le chagemant d'etat se fait
             sur le front Descendant car la resistance de tirrage est en Pull-UP.
-            
-            *N.B :* Il s'agit ici d'une interpretation de : ::
-                
-                
-                GPIO.event_detected()
-                
-            et non de : ::
-            
-                GPIO.add_event_detect()
         """
-        v_dbg = 1
-        v_dbg2 = 1
+        v_dbg = 0
+        v_dbg2 = 0
         i_debug = self.i_dbg.dbgPrint
-        i_debug( v_dbg2, "f_btnEvent_detected", self.f_btnEvent_detected )
+        i_debug( v_dbg2, "f_ifDetected", self.f_ifDetected )
         
         ## variables
         v_broche    = self.v_broche
@@ -346,9 +412,7 @@ class C_BtnPoussoir( object ) :
         v_hit       = 0
 
         ## Selection du front
-        if v_front      == "RISING"     : v_rfb = GPIO.RISING
-        elif v_front    == "FALLING"    : v_rfb = GPIO.FALLING
-        elif v_front    == "BOTH"       : v_rfb = GPIO.BOTH
+        v_rfb = self.f_setFront( v_front )
                
         ## dbg
         i_debug( v_dbg, "v_fnToExecute", v_fnToExecute )
@@ -356,40 +420,57 @@ class C_BtnPoussoir( object ) :
         i_debug( v_dbg, "v_howManyHit", v_howManyHit )
         
         ## Event detected
-        if GPIO.event_detected(v_broche):
+        
+        # GPIO.add_event_detect( v_broche, v_rfb )
+        # print( "add_event_detect" )
+        if GPIO.event_detected( v_broche ) :
             v_timeNow = time.time()
-            if not v_prev : v_timeStart = v_prev = v_timeNow
-            if (v_timeNow - v_timeStart) <= v_timeOut :
-                if (v_timeNow - v_prev) >= v_dBounce :
-                    v_hit += 1
-                    if v_hit == v_howManyHit :
-                        print( "TimeOut !" )
-                        v_prev = v_timeNow
-                        v_hit = 0
-                        v_fnToExecute()
-            else :
-                v_hit = 0
-                v_timeStart = v_prev = 0.0
-        
-    def f_myCallBack( self, v_broche = self.v_broche, v_fnToExecute ) :
-        """
-        """
-        return v_fnToExecute()
-        
+            print( "event_detected - timeNow : ", v_timeNow )
+
+            # if not v_prev : v_timeStart = v_prev = v_timeNow
+            # print( "not v_prev - v_timeStart : ", v_timeStart )
+
+            # # if (v_timeNow - v_timeStart) <= v_timeOut :
+            # if (v_timeNow - v_prev) >= v_dBounce :
+                # v_hit += 1
+                # i_debug( v_dbg, "v_hit", v_hit )
+
+                # if v_hit == v_howManyHit :
+                    # print( "TimeOut !" )
+                    # v_prev = v_timeNow
+                    # v_hit = 0
+                    # v_fnToExecute()
+                # elif v_hit >= v_howManyHit :
+                    # print( 
+                            # "{} appuis detectes alors que {} etaient attendu".format(
+                            # v_howManyHit, 
+                            # v_hit))
+            # else :
+                # v_hit = 0
+                # v_timeStart = v_prev = 0.0
+               
 ####
         
 def main() :
-    """ Fonction pricipale """
+    """ Fonction pricipale
+
+        Ici vont etre tester toutes les methodes de la classe.
+        
+        **Attention !** La fonction de test 'f_fnTest1' executant un 'input', il ne faut
+        pas oubliez d'appuyer sur la touche 'entree' lors des appel a cette fonction.
+        
+        Chaque fonction testee, attend un appuie sur la touche 'entree' avant de lancer
+        la sequense.
+    """
+    system( "clear" )
+    
     ##################################
     # Creation des fonctions de test #
     ##################################
-    def f_fnTest1(var) : 
-        print( "{} - {}".format(var, type(var)) )
-        input( "Execution de Fonction fnTest1" )
-        
-    def f_fnTest2() : input( "Execution de Fonction fnTest2" )
-    def f_fnTest3() : input( "Execution de Fonction fnTest3" )
-    def f_fnTest4() : input( "Execution de Fonction fnTest4" )
+    def f_fnTest1() : input( "Execution de Fonction fnTest1\n" )
+    def f_fnTest2() : print( "Execution de Fonction fnTest2\n" )
+    def f_fnTest3() : print( "Execution de Fonction fnTest3\n" )
+    def f_fnTest4() : print( "Execution de Fonction fnTest4\n" )
     
     ##################################################################
     # Creation de l'instance + mise en place de la structure de test #
@@ -398,56 +479,68 @@ def main() :
     ################################################
     # Instance et test avec les valeurs par defaut #
     ################################################
-    
+
     ## f_gpioInit : valeurs par defaut
     input( "f_gpioInit : valeurs par defaut" )
     i_testBtn = C_BtnPoussoir()
-    ## test des fonctions :
+    # test des fonctions :
     i_testBtn.f_gpioInit()
-    ## destructor
+    # destructor
     del( i_testBtn )
     
+####
+    
     ## f_btnWaitForEvent : valeurs par defaut"
-    # input( "f_btnWaitForEvent : valeurs par defaut" )
-    # i_testBtn = C_BtnPoussoir()
-    ## test des fonctions :
-    # i_testBtn.f_gpioInit()
-    # i_testBtn.f_btnWaitForEvent( f_fnTest1 )
-    ## destructor
-    # del( i_testBtn )
+    input( "f_btnWaitForEvent : valeurs par defaut" )
+    i_testBtn = C_BtnPoussoir()
+    # test des fonctions :
+    i_testBtn.f_gpioInit()
+    i_testBtn.f_btnWaitForEvent( f_fnTest1 )
+    # destructor
+    del( i_testBtn )
 
-    ## f_btnEvent_detect : valeurs par defaut
-    input( "f_btnEvent_detect : valeurs par defaut" )
+####
+    
+    ## f_onEventDetect : valeurs par defaut
+    input( "f_onEventDetect : valeurs par defaut" )
     i_testBtn = C_BtnPoussoir()
     print( "j'attend" )
-    ## test des fonctions :
+    # test des fonctions :
     i_testBtn.f_gpioInit()
-    i_testBtn.f_btnEvent_detect( f_fnTest2 )
+    i_testBtn.f_onEventDetect( f_fnTest2 )
     try: 
         while True :
             print( "j'attend !" )
             time.sleep(0.25)
             
     except KeyboardInterrupt :
-            print( "Interrompu par l'utilisateur" )
+            print( "\nInterrompu par l'utilisateur" )
+            pass
 
-    ## destructor
+    # destructor
     del( i_testBtn )
 
-    ## f_btnEvent_detected : valeurs par defaut
-    # input( "f_btnEvent_detected : valeurs par defaut" )
-    # i_testBtn = C_BtnPoussoir()
-    ## test des fonctions :
-    # i_testBtn.f_gpioInit()
-    # try :
-        # while True :
-            # i_testBtn.f_btnEvent_detected( f_fnTest1 )
-            # print( "j'attend !" )
-    # except KeyboardInterrupt :
-        # print( "inerrompu par l'utilisateur" )
-    ## destructor
-    # del( i_testBtn )
+####
 
+    ## f_btnEvent_detected : valeurs par defaut
+    input( "f_btnEvent_detected : valeurs par defaut" )
+    i_testBtn = C_BtnPoussoir()
+    # test des fonctions :
+    i_testBtn.f_gpioInit()
+    i_testBtn.f_addEventDetect()
+    try :
+        while True :
+            i_testBtn.f_ifDetected( f_fnTest2 )
+            print( "J'attend !" )
+            time.sleep(0.25)
+
+    except KeyboardInterrupt :
+        print( "inerrompu par l'utilisateur" )
+        pass
+    # destructor
+    del( i_testBtn )
+
+####
     
 if __name__ == '__main__':
     main()
