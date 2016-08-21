@@ -4,7 +4,7 @@
 """
    :Nom du fichier:     btnPoussoir.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160817
+   :Version:            20160821
 
 ####
 
@@ -63,10 +63,13 @@ class C_BtnPoussoir( object ) :
         self.i_dbg = C_DebugMsg()
                 
         ## declaration des variables
-        self.v_broche = 0
+        self.v_broche = False
         self.v_pudStatus = ""
         self.v_pudState = True
-        self.v_prevTime = 0.0
+        self.v_prev = False
+        self.v_timeStart = False
+        self.v_bouncetime = False
+        self.v_hit = False
         
 ####
         
@@ -261,6 +264,7 @@ class C_BtnPoussoir( object ) :
         
         ## variables
         v_broche    = self.v_broche
+        self.v_bouncetime = v_bouncetime
 
 
         ## Selection du front
@@ -284,7 +288,7 @@ class C_BtnPoussoir( object ) :
 
 ####
         
-    def f_onEventDetect( self, v_fnToExecute ) :
+    def f_onEventDetect( self, v_fnToExecute, v_front = "FALLING" ) :
         """ **f_onEventDetect(
                                 [nom_de_la_fonction_a_executer -- Type 'function'],
                                 [Etat_attendu_pour_le_declenchement_de_l'evenement -- Type 'str'],
@@ -301,8 +305,9 @@ class C_BtnPoussoir( object ) :
                 * 'FALLING' : Front Descendant
                 * 'BOTH' : Front Montant + Front Descendant
                 
-            Il est possible de definir le delais durant lequel la fonction ne sera pas
-            reexecute. on parles d'anti-rebond.
+            Le delais durant lequel la fonction ne sera pas
+            reexecute (l'anti-rebond), se configure lors de l'appel 
+            de la fonction 'f_addEventDetect'.
                 
             Si tous les parametres sont laisser par Defaut, le chagemant d'etat se fait
             sur le front Descendant car la resistance de tirrage est en Pull-UP.
@@ -322,8 +327,7 @@ class C_BtnPoussoir( object ) :
         ## dbg
         i_debug( v_dbg, "v_fnToExecute", v_fnToExecute )
         i_debug( v_dbg, "v_rfb", v_rfb )
-        i_debug( v_dbg, "v_bouncetime", v_bouncetime )
-        
+                
 ######
         
         def f_myCallBack( channel ) :
@@ -370,85 +374,87 @@ class C_BtnPoussoir( object ) :
         
     def f_ifDetected(    self,
                                 v_fnToExecute,
-                                v_front = "FALLING",
                                 v_howManyHit = 2,
-                                v_bouncetime = 250
+                                v_timeOut = 3
                             ) :
         """ **f_ifDetected(
                                 [nom_de_la_fonction_a_executer -- Type 'function'],
-                                [Etat_attendu_pour_le_declenchement_de_l'evenement -- Type 'str'],
                                 [nombre_d'impulsions_attendues -- Type 'int'],
-                                [Duree_de_l'anti-rebond_(en_milisecondes) -- Type 'int']
+                                [Duree_du_time_Out_(en_secondes) -- Type 'int']
                                 )**
         
-            Cette methode s'execute lors d'un chagemant d'etat de la broche (front montant,
-            front descandant, ou les deux) puis execute la fonction passee en parametre.
-            C'est le callback.
-            
-            les modes disponibles sont : 
-            
-                * 'RISING' : Front Montant
-                * 'FALLING' : Front Descendant
-                * 'BOTH' : Front Montant + Front Descendant
+            Cette methode permet de l'ancer une action apres un certain nombre d'appuis
+            sur le bouton pousoir.
                 
             La valeur de 'v_howManyHit' permet de d'attendre que l'utilisateur appuie un
             nombre de fois egal a cette valeur avant d'effectuer l'action passer par
             'v_fnToExecute'
+            
+            Le timOut permet de determiner le temps maximum pour effectuer l'ensemble des
+            impulsions
                 
-            Si tous les parametres sont laisse par Defaut, le chagemant d'etat se fait
-            sur le front Descendant car la resistance de tirrage est en Pull-UP.
+            Si tous les parametres sont laisse par Defaut :
+            
+            * le chagemant d'etat se fait sur le front Descendant car la resistance
+              de tirrage est en Pull-UP.
+              
+            * Le nombre d'impulsion attendu est de 2
+            
+            * Le le timeOut est de 3 secondes
+            
+            Cette methode peut etre placer dans une boucle
+            
+            **N.B :** il faut utiliser 'f_addEventDetect' avant la boucle pour pouvoir
+            utiliser cette methode
         """
         v_dbg = 0
         v_dbg2 = 0
+        v_dbg3 = 0
         i_debug = self.i_dbg.dbgPrint
         i_debug( v_dbg2, "f_ifDetected", self.f_ifDetected )
         
         ## variables
-        v_broche    = self.v_broche
-        v_prev      = self.v_prevTime
-        v_dBounce   = v_bouncetime / 1000
-        v_timeStart = 0.0
-        v_timeOut   = (v_howManyHit * v_dBounce) * 2
-        v_hit       = 0
-
-        ## Selection du front
-        v_rfb = self.f_setFront( v_front )
-               
+        v_dBounce   = self.v_bouncetime / 1000
+            
         ## dbg
         i_debug( v_dbg, "v_fnToExecute", v_fnToExecute )
-        i_debug( v_dbg, "v_rfb", v_rfb )
         i_debug( v_dbg, "v_howManyHit", v_howManyHit )
         
         ## Event detected
-        
-        # GPIO.add_event_detect( v_broche, v_rfb )
-        # print( "add_event_detect" )
-        if GPIO.event_detected( v_broche ) :
+        if GPIO.event_detected( self.v_broche ) :
             v_timeNow = time.time()
-            print( "event_detected - timeNow : ", v_timeNow )
+            self.v_hit += 1
+            i_debug( v_dbg3, "self.v_hit", self.v_hit )
+            i_debug( v_dbg3, "v_timeNow", v_timeNow )
 
-            # if not v_prev : v_timeStart = v_prev = v_timeNow
-            # print( "not v_prev - v_timeStart : ", v_timeStart )
+            if not self.v_prev :
+                self.v_timeStart = self.v_prev = v_timeNow
+                i_debug( v_dbg3, "not v_prev - v_timeStart : ", self.v_timeStart )
 
-            # # if (v_timeNow - v_timeStart) <= v_timeOut :
-            # if (v_timeNow - v_prev) >= v_dBounce :
-                # v_hit += 1
-                # i_debug( v_dbg, "v_hit", v_hit )
+            v_timeDiff = v_timeNow - self.v_prev
+            i_debug( v_dbg3, "v_timeDiff", v_timeDiff )
 
-                # if v_hit == v_howManyHit :
-                    # print( "TimeOut !" )
-                    # v_prev = v_timeNow
-                    # v_hit = 0
-                    # v_fnToExecute()
-                # elif v_hit >= v_howManyHit :
-                    # print( 
-                            # "{} appuis detectes alors que {} etaient attendu".format(
-                            # v_howManyHit, 
-                            # v_hit))
-            # else :
-                # v_hit = 0
-                # v_timeStart = v_prev = 0.0
-               
+            if (v_timeDiff >= v_dBounce) :
+                if (v_timeDiff <= v_timeOut) :
+                # if (v_timeDiff >= v_dBounce) :
+                    
+                    ##dbg
+                    i_debug( v_dbg3, "v_dBounce", v_dBounce )
+                    i_debug( v_dbg3, "v_timeDiff", v_timeDiff )
+                    i_debug( v_dbg3, "v_timeOut", v_timeOut )
+
+                    self.v_prev = v_timeNow
+
+                    if self.v_hit == v_howManyHit :
+                        self.v_prev = self.v_timeStart = False
+                        self.v_hit = False
+                        v_fnToExecute()
+                        
+                else :
+                    print( "\nTimeOut ! Reinitialisation du compteur\n" )
+                    self.v_prev = self.v_timeStart = False
+                    self.v_hit = False
+
 ####
         
 def main() :
@@ -467,10 +473,13 @@ def main() :
     ##################################
     # Creation des fonctions de test #
     ##################################
-    def f_fnTest1() : input( "Execution de Fonction fnTest1\n" )
-    def f_fnTest2() : print( "Execution de Fonction fnTest2\n" )
-    def f_fnTest3() : print( "Execution de Fonction fnTest3\n" )
-    def f_fnTest4() : print( "Execution de Fonction fnTest4\n" )
+    def f_fnTest1() :
+        print( "\nAppuyer sur la touche 'Entree' pour sortir de la fonction 'f_fnTest1'\n" )
+        input( "Execution de Fonction fnTest1\n" )
+        
+    def f_fnTest2() : print( "\nExecution de Fonction fnTest2\n" )
+    def f_fnTest3() : print( "\nExecution de Fonction fnTest3\n" )
+    def f_fnTest4() : print( "\nExecution de Fonction fnTest4\n" )
     
     ##################################################################
     # Creation de l'instance + mise en place de la structure de test #
@@ -495,6 +504,7 @@ def main() :
     i_testBtn = C_BtnPoussoir()
     # test des fonctions :
     i_testBtn.f_gpioInit()
+    print( "\nIl ne se passe rien tan que l'on appuis pas sur le bouton\n" )
     i_testBtn.f_btnWaitForEvent( f_fnTest1 )
     # destructor
     del( i_testBtn )
@@ -522,8 +532,8 @@ def main() :
 
 ####
 
-    ## f_btnEvent_detected : valeurs par defaut
-    input( "f_btnEvent_detected : valeurs par defaut" )
+    ## f_ifDetected : valeurs par defaut
+    input( "f_ifDetected : valeurs par defaut" )
     i_testBtn = C_BtnPoussoir()
     # test des fonctions :
     i_testBtn.f_gpioInit()
