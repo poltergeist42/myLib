@@ -4,7 +4,7 @@
 """
    :Nom du fichier:     btnPoussoir.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160821
+   :Version:            20160822
 
 ####
 
@@ -169,7 +169,7 @@ class C_BtnPoussoir( object ) :
         """
         try :
             GPIO.remove_event_detect(self.v_broche)
-            GPIO.cleanup()
+            GPIO.cleanup(self.v_broche)
             
         except NameError :
             print("GPIO error : f_gpioDestructor")
@@ -179,8 +179,8 @@ class C_BtnPoussoir( object ) :
     def f_setFront( self, v_front ) :
         """ **f_setFront( [Etat_attendu_pour_le_declenchement_de_l'evenement -- Type 'str'])**
         
-            Cette methode permet de configurer le changement d'état attendue pour
-            l'execution du action.
+            Cette methode permet de configurer le changement d'etat attendue pour
+            l'execution de l'action.
             
             les modes disponibles sont : 
             
@@ -200,8 +200,8 @@ class C_BtnPoussoir( object ) :
 
 ####
 
-    def f_btnWaitForEvent( self, v_fnToExecute, v_front = "FALLING", v_timeout = 1 ) :
-        """ **f_btnWaitForEvent(
+    def f_waitForEvent( self, v_fnToExecute, v_front = "FALLING", v_timeout = 1 ) :
+        """ **f_waitForEvent(
                                 [nom_de_la_fonction_a_executer -- Type 'function'],
                                 [Etat_attendu_pour_le_declenchement_de_l'evenement -- Type 'str'],
                                 [temps_du_time_Out_en_milisecondes -- Type 'int']
@@ -214,16 +214,16 @@ class C_BtnPoussoir( object ) :
             Il est possible de definir un delais d'expiration qui lorsqu'il est atteind
             annule l'attente d'une action.
                 
-            Si tous les parametres sont laisser par Defaut, le chagemant d'etat se fait
+            Si tous les parametres sont laisses par Defaut, le chagemant d'etat se fait
             sur le front Descendant car la resistance de tirrage est en Pull-UP.
             
-            ** Attention : ** Cettte fonction est une fonction bloquante
+            ** Attention :** Cettte fonction est une fonction bloquante
         """
         
         v_dbg = 1
         v_dbg2 = 1
         i_debug = self.i_dbg.dbgPrint
-        i_debug( v_dbg2, "f_btnWaitForEvent", self.f_btnWaitForEvent )
+        i_debug( v_dbg2, "f_waitForEvent", self.f_waitForEvent )
         
         ## raccourcis
         v_broche = self.v_broche
@@ -255,6 +255,9 @@ class C_BtnPoussoir( object ) :
                                     )
                                     
             Cette methode permet d'initaliser le 'event_detect'. 
+            
+            Cette methode est appelee par 'f_onEventDetect' et doit etre appelee 
+            specifiquement avant l'utilisation de 'f_ifDetected'
 
         """
         v_dbg = 1
@@ -299,11 +302,7 @@ class C_BtnPoussoir( object ) :
             front descandant, ou les deux) puis execute la fonction passee en parametre.
             C'est le callback.
             
-            les modes disponibles sont : 
-            
-                * 'RISING' : Front Montant
-                * 'FALLING' : Front Descendant
-                * 'BOTH' : Front Montant + Front Descendant
+            Le front ecoute est renvoyer par 'f_setFront'
                 
             Le delais durant lequel la fonction ne sera pas
             reexecute (l'anti-rebond), se configure lors de l'appel 
@@ -336,6 +335,9 @@ class C_BtnPoussoir( object ) :
                                 
                 Cette methode permet de ne renvoyer que la fonction passee en argument sans y
                 ajouter le numero de broche en argument 'cache'
+                
+                'channel' et affectee directement par la lib 'RPi.GPIO'. cette affectation
+                correspond au numero de la broche.
             """
             ##dbg
             i_debug( v_dbg2, "f_myCallBack", f_myCallBack )
@@ -353,21 +355,17 @@ class C_BtnPoussoir( object ) :
         ## Event detect
 
         if isinstance( v_fnToExecute, list ) :
-            GPIO.add_event_detect(  v_broche, v_rfb, bouncetime = v_bouncetime )
+        
             ## dbg
             i_debug( v_dbg, "Type de l'argument ", type(v_fnToExecute) )
             
             for i in range( len(v_fnToExecute) ) :
-                GPIO.add_event_callback( v_broche, v_fnToExecute[i] )
+                self.f_addEventDetect( v_callBack = v_fnToExecute[i] )
+
         else :
             ## dbg
             i_debug( v_dbg, "Type de l'argument ", type(v_fnToExecute) )
 
-            # GPIO.add_event_detect   (  v_broche,
-                                        # v_rfb,
-                                        # callback = f_myCallBack,
-                                        # bouncetime = v_bouncetime
-                                    # )
             self.f_addEventDetect( v_callBack = f_myCallBack )
 
 ####
@@ -393,7 +391,7 @@ class C_BtnPoussoir( object ) :
             Le timOut permet de determiner le temps maximum pour effectuer l'ensemble des
             impulsions
                 
-            Si tous les parametres sont laisse par Defaut :
+            Si tous les parametres sont laisses par Defaut :
             
             * le chagemant d'etat se fait sur le front Descendant car la resistance
               de tirrage est en Pull-UP.
@@ -436,8 +434,7 @@ class C_BtnPoussoir( object ) :
 
             if (v_timeDiff >= v_dBounce) :
                 if (v_timeDiff <= v_timeOut) :
-                # if (v_timeDiff >= v_dBounce) :
-                    
+                                    
                     ##dbg
                     i_debug( v_dbg3, "v_dBounce", v_dBounce )
                     i_debug( v_dbg3, "v_timeDiff", v_timeDiff )
@@ -462,7 +459,7 @@ def main() :
 
         Ici vont etre tester toutes les methodes de la classe.
         
-        **Attention !** La fonction de test 'f_fnTest1' executant un 'input', il ne faut
+        **Attention !** La fonction de test 'f_fnTest1' executant un 'input()', il ne faut
         pas oubliez d'appuyer sur la touche 'entree' lors des appel a cette fonction.
         
         Chaque fonction testee, attend un appuie sur la touche 'entree' avant de lancer
@@ -484,7 +481,7 @@ def main() :
     ##################################################################
     # Creation de l'instance + mise en place de la structure de test #
     ##################################################################
-    
+    """
     ################################################
     # Instance et test avec les valeurs par defaut #
     ################################################
@@ -499,13 +496,13 @@ def main() :
     
 ####
     
-    ## f_btnWaitForEvent : valeurs par defaut"
-    input( "f_btnWaitForEvent : valeurs par defaut" )
+    ## f_waitForEvent : valeurs par defaut"
+    input( "f_waitForEvent : valeurs par defaut" )
     i_testBtn = C_BtnPoussoir()
     # test des fonctions :
     i_testBtn.f_gpioInit()
     print( "\nIl ne se passe rien tan que l'on appuis pas sur le bouton\n" )
-    i_testBtn.f_btnWaitForEvent( f_fnTest1 )
+    i_testBtn.f_waitForEvent( f_fnTest1 )
     # destructor
     del( i_testBtn )
 
@@ -514,7 +511,6 @@ def main() :
     ## f_onEventDetect : valeurs par defaut
     input( "f_onEventDetect : valeurs par defaut" )
     i_testBtn = C_BtnPoussoir()
-    print( "j'attend" )
     # test des fonctions :
     i_testBtn.f_gpioInit()
     i_testBtn.f_onEventDetect( f_fnTest2 )
@@ -551,6 +547,30 @@ def main() :
     del( i_testBtn )
 
 ####
+    """
+    ###############################################
+    # Instance et test avec les valeurs modifiees #
+    ###############################################
+    
+    ## f_onEventDetect : valeurs modifiees
+    input( "f_onEventDetect : valeurs modifiees" )
+    i_testBtn = C_BtnPoussoir()
+    # test des fonctions :
+    l_lstFnTest = [ f_fnTest2, f_fnTest3, f_fnTest4 ]
+    i_testBtn.f_gpioInit()
+    i_testBtn.f_onEventDetect( l_lstFnTest )
+    try: 
+        while True :
+            print( "j'attend !" )
+            time.sleep(0.25)
+            
+    except KeyboardInterrupt :
+            print( "\nInterrompu par l'utilisateur" )
+            pass
+
+    # destructor
+    del( i_testBtn )
+    
     
 if __name__ == '__main__':
     main()
