@@ -29,6 +29,8 @@ lexique
    :**i_**:                 Instance
    :**m_**:                 Matrice
    
+####
+   
 Librairie necessaire
 ====================
 
@@ -55,6 +57,8 @@ import numpy as np
 import cv2
 import argparse
 
+#####
+
 class C_ImageContour( object ) :
     """ **C_ImageContour( object )**
     
@@ -72,16 +76,20 @@ class C_ImageContour( object ) :
         self.i_dbg = C_DebugMsg()
                 
         ## declaration des variables
-        self.i_img1     = False
-        self.i_img2     = False
-        self.i_BWMask   = False
-        self.v_maskOn   = False
+        self.i_img1             = False
+        self.i_img2             = False
+        self.i_BWMask           = False
+        self.i_imgSubst         = False
         
-        self.npImg1     = False
-        self.npImg2     = False
-        Self.npBWMask   = False
+        self.v_maskOn           = False
+        self.v_outputFilename   = False
+        
+        self.m_npImg1           = False
+        self.m_npImg2           = False
+        self.m_npBWMask         = False
+        self.m_npSubst          = False
 
-###
+####
         
     def __del__(self) :
         """
@@ -104,60 +112,131 @@ class C_ImageContour( object ) :
         v_className = self.__class__.__name__
         print("\n\t\tL'instance de la class {} est terminee".format(v_className))    
     
-###
+####
 
-    def imageOpen( self, v_img1, v_img2=False, v_maskOn=False ) :
-        """ **imageOpen( str, str, bool )**
+    def f_openImage( self, v_img1, v_img2=False, v_maskOn=False ) :
+        """ **f_openImage( str, str, bool )**
         
             Permet d'ouvrir les photos passees en arguments et de les convertir en Matrice.
             
             Le format des photos etant obligatoirement au format Jpeg, le nom des photos
-            passees en arguments ne doivent pas comprtes l'extension '.jpeg' car elle sera 
+            passees en arguments ne doivent pas compotes l'extension '.jpeg' car elle sera 
             ajoute automatiquement.
             
             Seul 'v_img1' est obligatoire car au minimum, il n'y a qu'une seule phtoto a
             ouvrir (dans le cas d'un mask par exemple)
             
-            Si l'une des 2 photos est un mask (en noir et blanc) la variable 'v_maskOn'
-            doit etre mis a True et doit etre associer a 'v_img1'
+            Si v_img1 est un mask (en noir et blanc) la variable 'v_maskOn'
+            doit etre mis a True. l'argument a donner pour v_img1 doit normalement etre le
+            contenu de 'i_BWMask'.
             
-            img1 est soit la photo vide, soit le mask en noir et blanc. C'est toujours 
+            v_img1 est soit la photo vide, soit le mask en noir et blanc. C'est toujours 
             l'image a partir de laquelle nous ferons la soustrction (voir imageSubst).
             
             ex :
-                imageResultat = imag1 - imag2
+                imagSubst = imag1 - imag2
             
         """
         if v_img1 and not v_maskOn :
             self.i_img1 = v_img1 + ".jpg"
-            self.npImg1 = np.array(Image.open(self.i_img1), dtype=i_np.uint8)
+            self.m_npImg1 = np.array(Image.open(self.i_img1), dtype=i_np.uint8)
         
         if v_img2 :
             self.i_img2 = v_img2 + ".jpg"
-            self.npImg2 = np.array(Image.open(self.i_img2), dtype=i_np.uint8)
+            self.m_npImg2 = np.array(Image.open(self.i_img2), dtype=i_np.uint8)
 
-        if v_maskOn and self.npImg2 :
-            ## Creation d'une matrice de la taille de npImg2 et remplissage de cette matrice
-            ## avec le contenu de npImg1
-            Self.npBWMask = np.zeros(self.npImg2.shape, dtype=i_np.uint8)
-            for rowIdx, row in enumerate( self.npImg1 ) :
+        if v_maskOn and self.m_npImg2 :
+            ## Creation d'une matrice de la taille de m_npImg2 et remplissage de cette matrice
+            ## avec le contenu de m_npImg1
+            self.i_img1 = v_img1 + ".jpg"
+            Self.npBWMask = np.zeros(self.m_npImg2.shape, dtype=i_np.uint8)
+            for rowIdx, row in enumerate( self.m_npImg1 ) :
                 for colIdx, val in enumerate( row ) :
-                    Self.npBWMask[rowIdx, colIdx] = self.npImg1[rowIdx, colIdx]
+                    Self.m_npBWMask[rowIdx, colIdx] = self.m_npImg1[rowIdx, colIdx]
+                    
+            self.m_npImg1 = self.m_npBWMask
 
-    def imageSubst( self, v_maskOn = False,  v_img1=False, v_img2=False) :
-        """ **imageSubst( bool )**
-        """
-        ## soustraction de l'image vide (ou du mask Noir et Blanc) par le model
-        self.npImg2 = i_np.clip(self.npImg2, 0, self.npImg1)
-        npSubst = self.npImg1 - self.npImg2
+####
 
-        ## invertion des couleurs pour la remettre normal
-        i_img = m_pilImg.fromarray(npSubst)
-        v_outputFilename = "out_" + self.i_img2
-        # i_img.save(v_outputFilename)
+    def f_imageSubst( self) :
+        """ **f_imageSubst(  )**
         
-        i_invImgmage = ImageOps.invert(i_img)
-
-        i_invImgmage.save(v_outputFilename)
-
+            Soustraction de l'image vide (ou du mask Noir et Blanc) par le model
             
+            **N.B :** Pour ne pas avoir de valeur negative lors de la soustraction, les
+            valeurs de la matrice m_npImg2 (la matrice du modele) sont contrainte entre
+            m_npImg2 (lui meme) pour les valeurs hautes et m_npImg1 pour les valeur basses
+            
+            Pour rappel :
+                * Blanc = 255
+                * Noir = 0
+
+        """
+        self.m_npImg2 = np.clip(self.m_npImg2, 0, self.m_npImg1)
+        self.m_npSubst = self.m_npImg1 - self.m_npImg2
+
+        
+####
+
+    def f_createImage( self ) :
+        """ **f_createImage()**
+        
+            Permet de creer l'image finale (ou intermediaire si l'on ne souhaite pas creer
+            le mask.
+            
+            Le nom l'image generee aura le prefix 'out_' suivie du nom du model (i_img2)
+        """
+        self.v_outputFilename = "out_" + self.i_img2
+        self.i_imgSubst = Image.fromarray(self.m_npSubst)       
+        self.i_imgSubst.save(self.v_outputFilename)
+        
+####
+
+    def f_createMask( self, v_img1, v_show = False ) :
+        """ **f_createMask( str, bool )**
+        
+            permet d'effectuer les traitemants de l'image intermediaire avec openCV.
+            Ces traitemant convertissent l'image en Noir et blanc. La zone Noir correspond
+            au fond de l'image alors que le blanc correspond a la forme du modele.
+            
+            c'est la valeur de la variable 'v_outputFilename' qui doit etre passe 
+            en argument v_img1.
+            
+            Lorsque 'v_show' est vrai, l'image en cours de traitemant sera afficher 
+            a l'ecran.
+            
+            L'image creer apres le traitemant se nomme 'cvOut.jpg' ce nom est sauvegarde
+            dans la variable 'i_BWMask'
+            
+        """
+        # charger l'image, la convertir en niveaux de gris, et la brouiller legerement
+        i_image = cv2.imread(v_img1)
+        i_gray = cv2.cvtColor(i_image, cv2.COLOR_BGR2GRAY)
+        i_gray = cv2.GaussianBlur(i_gray, (5, 5), 0)
+
+
+        # seuillage de l'image, avant d'effectuer une serie de traitemant pour eliminer
+        # toutes zone de bruit sur l'image
+        i_work = cv2.threshold(i_gray, 45, 255, cv2.THRESH_BINARY)[1]
+        i_work = cv2.erode(i_work, None, iterations=2)
+        i_work = cv2.dilate(i_work, None, iterations=2)
+        if v_show : cv2.imshow("i_work", i_work)
+        self.i_BWMask = "cvOut.jpg"
+        cv2.imwrite(self.i_BWMask, i_work)
+        
+####
+
+    def f_invert( self ) :
+        """ **f_invert( )**
+         
+            invertion des couleurs pour remettre normal l'image avec la bonne apparence
+        """
+        self.i_imgSubst = ImageOps.invert(self.i_imgSubst)
+        
+#####
+
+def main() :
+    """ Fonction principale """
+    
+if __name__ == '__main__':
+    main()
