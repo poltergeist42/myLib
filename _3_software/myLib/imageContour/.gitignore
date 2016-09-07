@@ -6,7 +6,7 @@
 #.gitignore
 
 ## [ Dossiers a ignorer ]
-_3_software/_3-1_test*/
+test*/
 *_v/
 __pycache__/
 
@@ -18,4 +18,6 @@ __pycache__/
 *.mkv
 *.mp4
 *.json
+*.jpeg
+*.jpg
 Thumbs.db

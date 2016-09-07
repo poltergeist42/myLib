@@ -4,7 +4,7 @@
 """
    :Nom du fichier:     imageContour.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160905
+   :Version:            20160907
 
 ####
 
@@ -65,7 +65,7 @@ class C_ImageContour( object ) :
         Class permettant de detourer et d'isoler la forme exterieur d'un sujet pris sur
         fond unie.
     """
-    def __init__( self ) :
+    def __init__( self, v_debug=False ) :
         """ 
             **__init()**
         
@@ -73,7 +73,7 @@ class C_ImageContour( object ) :
         """
         
         ## Creation de l'instance pour les message de debug
-        self.i_dbg = C_DebugMsg()
+        self.i_dbg = C_DebugMsg(v_debug)
                 
         ## declaration des variables
         self.i_img1             = False
@@ -104,11 +104,13 @@ class C_ImageContour( object ) :
             *N.B :* Si l'instance n'est plus utilisee, cette methode est appellee 
             automatiquement.
         """
+        ## dbg
         v_dbg = 1
-        v_dbg2 = 0
+        v_dbg2 = 1
         i_debug = self.i_dbg.dbgPrint
         i_debug(v_dbg2, "__del__", self.__del__)
         
+        ## Action
         v_className = self.__class__.__name__
         print("\n\t\tL'instance de la class {} est terminee".format(v_className))    
     
@@ -137,22 +139,29 @@ class C_ImageContour( object ) :
                 imagSubst = imag1 - imag2
             
         """
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug(v_dbg2, "f_openImage", self.f_openImage)
+        
+        ## Action
         if v_img1 and not v_maskOn :
             self.i_img1 = v_img1 + ".jpg"
-            self.m_npImg1 = np.array(Image.open(self.i_img1), dtype=i_np.uint8)
+            self.m_npImg1 = np.array(Image.open(self.i_img1), dtype = np.uint8)
         
         if v_img2 :
             self.i_img2 = v_img2 + ".jpg"
-            self.m_npImg2 = np.array(Image.open(self.i_img2), dtype=i_np.uint8)
+            self.m_npImg2 = np.array(Image.open(self.i_img2), dtype = np.uint8)
 
-        if v_maskOn and self.m_npImg2 :
+        if v_maskOn and not v_img2 :
             ## Creation d'une matrice de la taille de m_npImg2 et remplissage de cette matrice
             ## avec le contenu de m_npImg1
             self.i_img1 = v_img1 + ".jpg"
-            Self.npBWMask = np.zeros(self.m_npImg2.shape, dtype=i_np.uint8)
+            self.m_npBWMask = np.zeros(self.m_npImg2.shape, dtype = np.uint8)
             for rowIdx, row in enumerate( self.m_npImg1 ) :
                 for colIdx, val in enumerate( row ) :
-                    Self.m_npBWMask[rowIdx, colIdx] = self.m_npImg1[rowIdx, colIdx]
+                    self.m_npBWMask[rowIdx, colIdx] = self.m_npImg1[rowIdx, colIdx]
                     
             self.m_npImg1 = self.m_npBWMask
 
@@ -172,8 +181,19 @@ class C_ImageContour( object ) :
                 * Noir = 0
 
         """
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug(v_dbg2, "f_openImage", self.f_openImage)
+        
+        ## Action
+        # self.m_npImg2 = np.clip(self.m_npImg2, 0, self.m_npImg1)
         self.m_npImg2 = np.clip(self.m_npImg2, 0, self.m_npImg1)
-        self.m_npSubst = self.m_npImg1 - self.m_npImg2
+                # i_np_ImgMask = i_np.clip(i_np_ImgMask, 0, i_np_img1)
+
+        # self.m_npSubst = self.m_npImg1 - self.m_npImg2
+        self.m_npSubst = self.m_npImg2 - self.m_npImg1
 
         
 ####
@@ -186,7 +206,7 @@ class C_ImageContour( object ) :
             
             Le nom l'image generee aura le prefix 'out_' suivie du nom du model (i_img2)
         """
-        self.v_outputFilename = "out_" + self.i_img2
+        self.v_outputFilename = "out_" + str(self.i_img2)
         self.i_imgSubst = Image.fromarray(self.m_npSubst)       
         self.i_imgSubst.save(self.v_outputFilename)
         
@@ -209,6 +229,14 @@ class C_ImageContour( object ) :
             dans la variable 'i_BWMask'
             
         """
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug(v_dbg2, "f_createMask", self.f_createMask)
+        
+        ## Action
+        
         # charger l'image, la convertir en niveaux de gris, et la brouiller legerement
         i_image = cv2.imread(v_img1)
         i_gray = cv2.cvtColor(i_image, cv2.COLOR_BGR2GRAY)
@@ -221,8 +249,8 @@ class C_ImageContour( object ) :
         i_work = cv2.erode(i_work, None, iterations=2)
         i_work = cv2.dilate(i_work, None, iterations=2)
         if v_show : cv2.imshow("i_work", i_work)
-        self.i_BWMask = "cvOut.jpg"
-        cv2.imwrite(self.i_BWMask, i_work)
+        cv2.imwrite("cvOut.jpg", i_work)
+        self.i_BWMask = "cvOut"
         
 ####
 
@@ -231,12 +259,56 @@ class C_ImageContour( object ) :
          
             invertion des couleurs pour remettre normal l'image avec la bonne apparence
         """
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug(v_dbg2, "f_invert", self.f_invert)
+        
+        ## Action
         self.i_imgSubst = ImageOps.invert(self.i_imgSubst)
         
 #####
 
 def main() :
     """ Fonction principale """
+    parser = argparse.ArgumentParser()
+    parser.add_argument( "-i", "--images", nargs = "+",
+                        help = "[nom_premiere_image_(mask)] [nom_seconde_image_(model)]")
+    parser.add_argument( "-n", "--number", type=int, help="nombre d'image dans la serie")
+    parser.add_argument( "-d", "--debug", action='store_true', help="activation du mode debug")
+                        
+    args = parser.parse_args()
+    if args.images :
+        if args.debug :
+            print( "Mode Debug activer" )
+            i_ic = C_ImageContour( True )
+        else :
+            i_ic = C_ImageContour( False )
+        
+        if (len(args.images) < 2) or (len(args.images) > 2) :
+            print(  "\nvous devez entrer que 2 nom :\n",
+                    "\tle 1er\t: Le nom de l'image servant de mask\n",
+                    "\tle 2eme\t: le nom de l'image servant de modele" )
+        else :
+            l_lstArgsImage = []
+            for i in args.images :
+                l_lstArgsImage.append( i )
+                
+            v_mask, v_model = l_lstArgsImage
+            i_ic.f_openImage( v_mask, v_img2=v_model )
+            i_ic.f_imageSubst()
+            i_ic.f_createImage()
+            
+            input( "\nappuyez sur entree pour continuer\n" )
+            
+            i_ic.f_createMask( i_ic.v_outputFilename )
+            i_ic.f_openImage( i_ic.i_BWMask, v_maskOn=True )
+            i_ic.f_imageSubst()
+            i_ic.f_invert()
+            i_ic.f_createImage()
+            
+            
     
 if __name__ == '__main__':
     main()
