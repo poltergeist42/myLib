@@ -4,7 +4,7 @@
 """
    :Nom du fichier:     imageContour.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160907
+   :Version:            20160908
 
 ####
 
@@ -158,6 +158,7 @@ class C_ImageContour( object ) :
             ## Creation d'une matrice de la taille de m_npImg2 et remplissage de cette matrice
             ## avec le contenu de m_npImg1
             self.i_img1 = v_img1 + ".jpg"
+            self.m_npImg1 = np.array(Image.open(self.i_img1), dtype = np.uint8)
             self.m_npBWMask = np.zeros(self.m_npImg2.shape, dtype = np.uint8)
             for rowIdx, row in enumerate( self.m_npImg1 ) :
                 for colIdx, val in enumerate( row ) :
@@ -188,12 +189,17 @@ class C_ImageContour( object ) :
         i_debug(v_dbg2, "f_openImage", self.f_openImage)
         
         ## Action
-        # self.m_npImg2 = np.clip(self.m_npImg2, 0, self.m_npImg1)
-        self.m_npImg2 = np.clip(self.m_npImg2, 0, self.m_npImg1)
-                # i_np_ImgMask = i_np.clip(i_np_ImgMask, 0, i_np_img1)
+        
+        if not self.v_maskOn :
+            self.m_npImg1 = np.clip(self.m_npImg1, 0, self.m_npImg2)
+            self.m_npSubst = self.m_npImg2 - self.m_npImg1
+            
+        if self.v_maskOn :
+            self.m_npImg2 = np.clip(self.m_npImg2, 0, self.m_npImg1)
+            self.m_npSubst = self.m_npImg1 - self.m_npImg2
+            
 
-        # self.m_npSubst = self.m_npImg1 - self.m_npImg2
-        self.m_npSubst = self.m_npImg2 - self.m_npImg1
+
 
         
 ####
@@ -206,8 +212,20 @@ class C_ImageContour( object ) :
             
             Le nom l'image generee aura le prefix 'out_' suivie du nom du model (i_img2)
         """
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug(v_dbg2, "f_createImage", self.f_createImage)
+        
+        ## Action
         self.v_outputFilename = "out_" + str(self.i_img2)
-        self.i_imgSubst = Image.fromarray(self.m_npSubst)       
+        
+        self.i_imgSubst = Image.fromarray(self.m_npSubst) 
+        if self.v_maskOn :
+            self.f_invert()
+            self.f_setMask()
+            
         self.i_imgSubst.save(self.v_outputFilename)
         
 ####
@@ -252,6 +270,9 @@ class C_ImageContour( object ) :
         cv2.imwrite("cvOut.jpg", i_work)
         self.i_BWMask = "cvOut"
         
+        self.f_setMask()
+
+        
 ####
 
     def f_invert( self ) :
@@ -268,6 +289,27 @@ class C_ImageContour( object ) :
         ## Action
         self.i_imgSubst = ImageOps.invert(self.i_imgSubst)
         
+    def f_setMask( self ) :
+        """ **f_setMask()**
+        
+            Inverse automatiquement la valeur de 'v_maskOn'
+        """
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug(v_dbg2, "f_setMask", self.f_setMask)
+        
+        ## Action
+    
+        if self.v_maskOn :
+            self.v_maskOn = False
+            i_debug(v_dbg, "v_maskOn", self.v_maskOn)
+            
+        if not self.v_maskOn :
+            self.v_maskOn = True
+            i_debug(v_dbg, "v_maskOn", self.v_maskOn)
+       
 #####
 
 def main() :
@@ -305,7 +347,7 @@ def main() :
             i_ic.f_createMask( i_ic.v_outputFilename )
             i_ic.f_openImage( i_ic.i_BWMask, v_maskOn=True )
             i_ic.f_imageSubst()
-            i_ic.f_invert()
+            # i_ic.f_invert()
             i_ic.f_createImage()
             
             
