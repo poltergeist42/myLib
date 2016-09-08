@@ -309,6 +309,31 @@ class C_ImageContour( object ) :
         if not self.v_maskOn :
             self.v_maskOn = True
             i_debug(v_dbg, "v_maskOn", self.v_maskOn)
+            
+    def f_resetVar( self ) :
+        """ **f_resetVar()**
+        
+            reinitialise toutes les variable de l'instance
+        """
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug(v_dbg2, "f_resetVar", self.f_resetVar)
+        
+        ## Action
+        self.i_img1             = False
+        self.i_img2             = False
+        self.i_BWMask           = False
+        self.i_imgSubst         = False
+        
+        self.v_maskOn           = False
+        self.v_outputFilename   = False
+        
+        self.m_npImg1           = False
+        self.m_npImg2           = False
+        self.m_npBWMask         = False
+        self.m_npSubst          = False
        
 #####
 
@@ -337,18 +362,38 @@ def main() :
             for i in args.images :
                 l_lstArgsImage.append( i )
                 
-            v_mask, v_model = l_lstArgsImage
-            i_ic.f_openImage( v_mask, v_img2=v_model )
-            i_ic.f_imageSubst()
-            i_ic.f_createImage()
+            v_maskPrim, v_modelPrim = l_lstArgsImage
+            if args.number :
+                for n in range( args.number ) :
+                    v_mask = v_maskPrim + "_{:03}".format(n)
+                    v_model = v_modelPrim + "_{:03}".format(n)
+                    
+                    i_ic.f_openImage( v_mask, v_img2=v_model )
+                    i_ic.f_imageSubst()
+                    i_ic.f_createImage()
+                    
+                    # input( "\nappuyez sur entree pour continuer\n" )
+                    
+                    i_ic.f_createMask( i_ic.v_outputFilename )
+                    i_ic.f_openImage( i_ic.i_BWMask, v_maskOn=True )
+                    i_ic.f_imageSubst()
+                    i_ic.f_createImage()
+                    
+                    i_ic.f_resetVar()
             
-            input( "\nappuyez sur entree pour continuer\n" )
-            
-            i_ic.f_createMask( i_ic.v_outputFilename )
-            i_ic.f_openImage( i_ic.i_BWMask, v_maskOn=True )
-            i_ic.f_imageSubst()
-            # i_ic.f_invert()
-            i_ic.f_createImage()
+            else :
+                v_mask = v_maskPrim
+                v_model = v_modelPrim
+                i_ic.f_openImage( v_mask, v_img2=v_model )
+                i_ic.f_imageSubst()
+                i_ic.f_createImage()
+                
+                # input( "\nappuyez sur entree pour continuer\n" )
+                
+                i_ic.f_createMask( i_ic.v_outputFilename )
+                i_ic.f_openImage( i_ic.i_BWMask, v_maskOn=True )
+                i_ic.f_imageSubst()
+                i_ic.f_createImage()
             
             
     
