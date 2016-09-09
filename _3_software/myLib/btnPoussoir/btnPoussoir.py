@@ -45,7 +45,7 @@ try :
 except ImportError :
     print("module 'RPi' non charge")
     
-import time
+import time, argparse
 from os import system
 
 class C_BtnPoussoir( object ) :
@@ -53,14 +53,14 @@ class C_BtnPoussoir( object ) :
     
         Class permettant de gerer les boutons poussoirs
     """
-    def __init__( self ) :
+    def __init__( self, v_debug=False ) :
         """ **__init()**
         
             Creation et initialisation des variables globales de cette Class
         """
         
         ## Creation de l'instance pour les message de debug
-        self.i_dbg = C_DebugMsg()
+        self.i_dbg = C_DebugMsg(v_debug)
                 
         ## declaration des variables
         self.v_broche = False
@@ -283,6 +283,7 @@ class C_BtnPoussoir( object ) :
                                                 bouncetime = v_bouncetime
                                             )
         else :
+            # GPIO.add_event_callback
             return GPIO.add_event_detect    (   v_broche,
                                                 v_rfb,
                                                 callback = v_callBack,
@@ -358,9 +359,10 @@ class C_BtnPoussoir( object ) :
         
             ## dbg
             i_debug( v_dbg, "Type de l'argument ", type(v_fnToExecute) )
+            self.f_addEventDetect( v_broche )
             
             for i in range( len(v_fnToExecute) ) :
-                self.f_addEventDetect( v_callBack = v_fnToExecute[i] )
+                GPIO.add_event_callback( v_broche, v_callBack = v_fnToExecute[i] )
 
         else :
             ## dbg
@@ -464,7 +466,34 @@ def main() :
         
         Chaque fonction testee, attend un appuie sur la touche 'entree' avant de lancer
         la sequense.
+        
+        Le script utilise de options :
+        
+        :'--help' ou '-h':
+            Affiche l'aide pour les options
+            
+        :'--debug' ou '-d':
+            Active le mode debug sur l'instance
+            
+        :'--number' ou '-n':
+            Prend un entier en argument.
+            Permet d'executer la fonction correspondant au numero de l'argument
     """
+    parser = argparse.ArgumentParser()
+    parser.add_argument( "-n", "--number", help="numero de la fonction a executer")
+    parser.add_argument( "-d", "--debug", action='store_true', help="activation du mode debug")
+                        
+    args = parser.parse_args()
+    
+    def f_startInstance() :
+        if args.debug :
+            i_testBtn = C_BtnPoussoir(True)
+            print( "activation du mode debug" )
+        else :
+            i_testBtn = C_BtnPoussoir()
+            
+        return i_testBtn
+            
     system( "clear" )
     
     ##################################
@@ -481,96 +510,105 @@ def main() :
     ##################################################################
     # Creation de l'instance + mise en place de la structure de test #
     ##################################################################
-    """
+
     ################################################
     # Instance et test avec les valeurs par defaut #
     ################################################
 
-    ## f_gpioInit : valeurs par defaut
-    input( "f_gpioInit : valeurs par defaut" )
-    i_testBtn = C_BtnPoussoir()
-    # test des fonctions :
-    i_testBtn.f_gpioInit()
-    # destructor
-    del( i_testBtn )
+    def f_defautFN1() :
+        ## f_gpioInit : valeurs par defaut
+        input( "f_gpioInit : valeurs par defaut" )
+        i_testBtn = f_startInstance()
+        # test des fonctions :
+        i_testBtn.f_gpioInit()
+        # destructor
+        del( i_testBtn )
     
 ####
     
-    ## f_waitForEvent : valeurs par defaut"
-    input( "f_waitForEvent : valeurs par defaut" )
-    i_testBtn = C_BtnPoussoir()
-    # test des fonctions :
-    i_testBtn.f_gpioInit()
-    print( "\nIl ne se passe rien tan que l'on appuis pas sur le bouton\n" )
-    i_testBtn.f_waitForEvent( f_fnTest1 )
-    # destructor
-    del( i_testBtn )
+    def f_defautFN2() :
+        ## f_waitForEvent : valeurs par defaut"
+        input( "f_waitForEvent : valeurs par defaut" )
+        i_testBtn = f_startInstance()
+        # test des fonctions :
+        i_testBtn.f_gpioInit()
+        print( "\nIl ne se passe rien tan que l'on appuis pas sur le bouton\n" )
+        i_testBtn.f_waitForEvent( f_fnTest1 )
+        # destructor
+        del( i_testBtn )
 
 ####
     
-    ## f_onEventDetect : valeurs par defaut
-    input( "f_onEventDetect : valeurs par defaut" )
-    i_testBtn = C_BtnPoussoir()
-    # test des fonctions :
-    i_testBtn.f_gpioInit()
-    i_testBtn.f_onEventDetect( f_fnTest2 )
-    try: 
-        while True :
-            print( "j'attend !" )
-            time.sleep(0.25)
-            
-    except KeyboardInterrupt :
-            print( "\nInterrompu par l'utilisateur" )
+    def f_defautFN3() :
+        ## f_onEventDetect : valeurs par defaut
+        input( "f_onEventDetect : valeurs par defaut" )
+        i_testBtn = f_startInstance()
+        # test des fonctions :
+        i_testBtn.f_gpioInit()
+        i_testBtn.f_onEventDetect( f_fnTest2 )
+        try: 
+            while True :
+                print( "j'attend !" )
+                time.sleep(0.25)
+                
+        except KeyboardInterrupt :
+                print( "\nInterrompu par l'utilisateur" )
+                pass
+
+        # destructor
+        del( i_testBtn )
+
+####
+
+    def f_defautFN4() :
+        ## f_ifDetected : valeurs par defaut
+        input( "f_ifDetected : valeurs par defaut" )
+        i_testBtn = f_startInstance()
+        # test des fonctions :
+        i_testBtn.f_gpioInit()
+        i_testBtn.f_addEventDetect()
+        try :
+            while True :
+                i_testBtn.f_ifDetected( f_fnTest2 )
+                print( "J'attend !" )
+                time.sleep(0.25)
+
+        except KeyboardInterrupt :
+            print( "inerrompu par l'utilisateur" )
             pass
-
-    # destructor
-    del( i_testBtn )
-
-####
-
-    ## f_ifDetected : valeurs par defaut
-    input( "f_ifDetected : valeurs par defaut" )
-    i_testBtn = C_BtnPoussoir()
-    # test des fonctions :
-    i_testBtn.f_gpioInit()
-    i_testBtn.f_addEventDetect()
-    try :
-        while True :
-            i_testBtn.f_ifDetected( f_fnTest2 )
-            print( "J'attend !" )
-            time.sleep(0.25)
-
-    except KeyboardInterrupt :
-        print( "inerrompu par l'utilisateur" )
-        pass
-    # destructor
-    del( i_testBtn )
+        # destructor
+        del( i_testBtn )
 
 ####
-    """
+    
     ###############################################
     # Instance et test avec les valeurs modifiees #
     ###############################################
     
-    ## f_onEventDetect : valeurs modifiees
-    input( "f_onEventDetect : valeurs modifiees" )
-    i_testBtn = C_BtnPoussoir()
-    # test des fonctions :
-    l_lstFnTest = [ f_fnTest2, f_fnTest3, f_fnTest4 ]
-    i_testBtn.f_gpioInit()
-    i_testBtn.f_onEventDetect( l_lstFnTest )
-    try: 
-        while True :
-            print( "j'attend !" )
-            time.sleep(0.25)
-            
-    except KeyboardInterrupt :
-            print( "\nInterrompu par l'utilisateur" )
-            pass
+    def f_modifieesFN5() :
+        ## f_onEventDetect : valeurs modifiees
+        input( "f_onEventDetect : valeurs modifiees" )
+        i_testBtn = f_startInstance()
+        # test des fonctions :
+        l_lstFnTest = [ f_fnTest2, f_fnTest3, f_fnTest4 ]
+        i_testBtn.f_gpioInit()
+        i_testBtn.f_onEventDetect( l_lstFnTest )
+        try: 
+            while True :
+                print( "j'attend !" )
+                time.sleep(0.25)
+                
+        except KeyboardInterrupt :
+                print( "\nInterrompu par l'utilisateur" )
+                pass
 
-    # destructor
-    del( i_testBtn )
+        # destructor
+        del( i_testBtn )
     
+    d_args = {  '1':f_defautFN1, '2':f_defautFN2, '3':f_defautFN3,
+                '4':f_defautFN4, '5':f_modifieesFN5 }
+
+    d_args[args.number]()
     
 if __name__ == '__main__':
     main()
