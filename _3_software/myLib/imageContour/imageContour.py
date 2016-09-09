@@ -4,7 +4,7 @@
 """
    :Nom du fichier:     imageContour.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160908
+   :Version:            20160909
 
 ####
 
@@ -122,22 +122,23 @@ class C_ImageContour( object ) :
             Permet d'ouvrir les photos passees en arguments et de les convertir en Matrice.
             
             Le format des photos etant obligatoirement au format Jpeg, le nom des photos
-            passees en arguments ne doivent pas compotes l'extension '.jpeg' car elle sera 
+            passees en arguments ne doit pas comporter l'extension '.jpeg' car elle sera 
             ajoute automatiquement.
             
-            Seul 'v_img1' est obligatoire car au minimum, il n'y a qu'une seule phtoto a
+            Seul 'v_img1' est obligatoire car au minimum, il n'y a qu'une seule photo a
             ouvrir (dans le cas d'un mask par exemple)
             
             Si v_img1 est un mask (en noir et blanc) la variable 'v_maskOn'
             doit etre mis a True. l'argument a donner pour v_img1 doit normalement etre le
             contenu de 'i_BWMask'.
             
-            v_img1 est soit la photo vide, soit le mask en noir et blanc. C'est toujours 
-            l'image a partir de laquelle nous ferons la soustrction (voir imageSubst).
+            v_img1 est soit la photo vide, soit le mask en noir et blanc.
+            v_img2 est le modele (elle n'est declarer qu'une fois).
             
-            ex :
-                imagSubst = imag1 - imag2
-            
+            Cette methode doit etre appellee 2 fois. Une premiere fois en declarant
+            l'image vide et le modele. Une seconde fois en declarant simplement le mask.
+
+            'i_BWMask' doit etre passee en argument à 'f_openImage' lors de son second appel            
         """
         ## dbg
         v_dbg = 1
@@ -173,9 +174,20 @@ class C_ImageContour( object ) :
         
             Soustraction de l'image vide (ou du mask Noir et Blanc) par le model
             
-            **N.B :** Pour ne pas avoir de valeur negative lors de la soustraction, les
-            valeurs de la matrice m_npImg2 (la matrice du modele) sont contrainte entre
-            m_npImg2 (lui meme) pour les valeurs hautes et m_npImg1 pour les valeur basses
+            **Dans une une soustrataction photoVide / photoModele**
+            Pour ne pas avoir de valeur negative lors de la soustraction (pixel parasites),
+            les valeurs de la matrice m_npImg1 (photoVide) sont contraintes
+            entre m_npImg1 (lui meme) pour les valeurs hautes et m_npImg2 (photoModele)
+            pour les valeurs basses. La soustraction sera : ::
+            
+                m_npSubst = m_npImg2 - m_npImg1
+                
+            **Dans une une soustrataction photoMask / photoModele**
+            Les valeurs de la matrice m_npImg2 (la matrice du modele) sont contraintes
+            entre m_npImg2 (lui meme) pour les valeurs hautes et m_npImg1 (photoMask) pour
+            les valeurs basses. La soustraction sera : ::
+            
+                m_npSubst = m_npImg1 - m_npImg2
             
             Pour rappel :
                 * Blanc = 255
@@ -189,7 +201,6 @@ class C_ImageContour( object ) :
         i_debug(v_dbg2, "f_openImage", self.f_openImage)
         
         ## Action
-        
         if not self.v_maskOn :
             self.m_npImg1 = np.clip(self.m_npImg1, 0, self.m_npImg2)
             self.m_npSubst = self.m_npImg2 - self.m_npImg1
@@ -207,10 +218,12 @@ class C_ImageContour( object ) :
     def f_createImage( self ) :
         """ **f_createImage()**
         
-            Permet de creer l'image finale (ou intermediaire si l'on ne souhaite pas creer
-            le mask.
+            Permet de creer l'image intermediaire si la variable de l'instance 'v_maskOn'
+            est 'False' et l'image finale si la variable de l'instance 'v_maskOn'
+            est 'True'
             
             Le nom l'image generee aura le prefix 'out_' suivie du nom du model (i_img2)
+            et l'extension 'jpg'
         """
         ## dbg
         v_dbg = 1
@@ -230,8 +243,8 @@ class C_ImageContour( object ) :
         
 ####
 
-    def f_createMask( self, v_img1, v_show = False ) :
-        """ **f_createMask( str, bool )**
+    def f_createMask( self, v_img1) :
+        """ **f_createMask( str )**
         
             permet d'effectuer les traitemants de l'image intermediaire avec openCV.
             Ces traitemant convertissent l'image en Noir et blanc. La zone Noir correspond
@@ -240,12 +253,10 @@ class C_ImageContour( object ) :
             c'est la valeur de la variable 'v_outputFilename' qui doit etre passe 
             en argument v_img1.
             
-            Lorsque 'v_show' est vrai, l'image en cours de traitemant sera afficher 
-            a l'ecran.
-            
             L'image creer apres le traitemant se nomme 'cvOut.jpg' ce nom est sauvegarde
             dans la variable 'i_BWMask'
             
+            'i_BWMask' doit etre passee en argument à 'f_openImage' lors de son second appel            
         """
         ## dbg
         v_dbg = 1
@@ -266,7 +277,6 @@ class C_ImageContour( object ) :
         i_work = cv2.threshold(i_gray, 45, 255, cv2.THRESH_BINARY)[1]
         i_work = cv2.erode(i_work, None, iterations=2)
         i_work = cv2.dilate(i_work, None, iterations=2)
-        if v_show : cv2.imshow("i_work", i_work)
         cv2.imwrite("cvOut.jpg", i_work)
         self.i_BWMask = "cvOut"
         
@@ -278,7 +288,10 @@ class C_ImageContour( object ) :
     def f_invert( self ) :
         """ **f_invert( )**
          
-            invertion des couleurs pour remettre normal l'image avec la bonne apparence
+            inverce les couleurs de l'image 'i_imgSubst'
+            
+            Cette methode est appellee par 'f_createImage' lors de la creation 
+            de l'image finale 
         """
         ## dbg
         v_dbg = 1
@@ -293,6 +306,8 @@ class C_ImageContour( object ) :
         """ **f_setMask()**
         
             Inverse automatiquement la valeur de 'v_maskOn'
+            
+            Cette methode est appellee par 'f_createMask' et 'f_createMask'
         """
         ## dbg
         v_dbg = 1
@@ -301,7 +316,6 @@ class C_ImageContour( object ) :
         i_debug(v_dbg2, "f_setMask", self.f_setMask)
         
         ## Action
-    
         if self.v_maskOn :
             self.v_maskOn = False
             i_debug(v_dbg, "v_maskOn", self.v_maskOn)
@@ -313,7 +327,10 @@ class C_ImageContour( object ) :
     def f_resetVar( self ) :
         """ **f_resetVar()**
         
-            reinitialise toutes les variable de l'instance
+            Reinitialise toutes les variables de l'instance
+            
+            Lors du traitemant d'une serie de photos, il faut reinitialiser toutes les
+            variables entre chaque iteration.
         """
         ## dbg
         v_dbg = 1
@@ -338,7 +355,36 @@ class C_ImageContour( object ) :
 #####
 
 def main() :
-    """ Fonction principale """
+    """ Fonction principale
+
+        Cette fonction permet d'utiliser se script de facon autonaume.
+        
+        Differentes options sont disponibles : 
+        
+            :'--help' ou '-h':      Permet d'obtenir l'aide sur les differentes options
+                                    de se script.
+                                    
+            :'--images' ou '-i':    Permet de donnee le nom des 2 photos (ou des 2 series)
+                                    qui devrons etre traitee par le script.
+                                    Les 2 parametres, de type string, sont :
+                                    
+                                    1. Le nom de l'image vide (sans extension)
+                                    2. Le nom du model (sans extension)
+                                    
+            :'--debug' ou '-d':     Permet d'afficher les differentes informations des
+                                    methodes utilisees
+                                    
+            :'--number' ou '-n':    Permet de specifier le nombre d'iteration sur la serie.
+                                    Le parametres est un entier.
+                                    
+                                    **N.B** : l'iteration formate les noms passee avec '_000'
+                                     ( ou 000 est incremente a chaque iterration).
+                                     Ce formatage est arbitraire et ne correspond peut
+                                     etre pas au votre. Il est donc a adaptee en fonction
+                                     de vos besions.
+                                     
+        Attetion, les options 'debug' et 'number' ne sont pas active sans l'option 'images'
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument( "-i", "--images", nargs = "+",
                         help = "[nom_premiere_image_(mask)] [nom_seconde_image_(model)]")
@@ -371,9 +417,7 @@ def main() :
                     i_ic.f_openImage( v_mask, v_img2=v_model )
                     i_ic.f_imageSubst()
                     i_ic.f_createImage()
-                    
-                    # input( "\nappuyez sur entree pour continuer\n" )
-                    
+                                       
                     i_ic.f_createMask( i_ic.v_outputFilename )
                     i_ic.f_openImage( i_ic.i_BWMask, v_maskOn=True )
                     i_ic.f_imageSubst()
@@ -387,9 +431,7 @@ def main() :
                 i_ic.f_openImage( v_mask, v_img2=v_model )
                 i_ic.f_imageSubst()
                 i_ic.f_createImage()
-                
-                # input( "\nappuyez sur entree pour continuer\n" )
-                
+                                
                 i_ic.f_createMask( i_ic.v_outputFilename )
                 i_ic.f_openImage( i_ic.i_BWMask, v_maskOn=True )
                 i_ic.f_imageSubst()
