@@ -383,7 +383,7 @@ def main() :
                                      etre pas au votre. Il est donc a adaptee en fonction
                                      de vos besions.
                                      
-        Attetion, les options 'debug' et 'number' ne sont pas active sans l'option 'images'
+        Attention, les options 'debug' et 'number' ne sont pas active sans l'option 'images'
     """
     parser = argparse.ArgumentParser()
     parser.add_argument( "-i", "--images", nargs = "+",

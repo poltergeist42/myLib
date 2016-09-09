@@ -1,0 +1,330 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>imageContour &mdash; documentation imageContour 20160909</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '20160909',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="top" title="documentation imageContour 20160909" href="index.html" />
+    <link rel="prev" title="README imageContour" href="README_imageContour.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="imagecontour">
+<h1>imageContour<a class="headerlink" href="#imagecontour" title="Lien permanent vers ce titre">¶</a></h1>
+<hr class="docutils" />
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Licence:</th><td class="field-body">CC-BY-NC-SA</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Liens:</th><td class="field-body"><a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">https://creativecommons.org/licenses/by-nc-sa/4.0/</a></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<hr class="docutils" />
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">dev language:</th><td class="field-body">Python 3.4</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<hr class="docutils" />
+<div class="section" id="lexique">
+<h2>lexique<a class="headerlink" href="#lexique" title="Lien permanent vers ce titre">¶</a></h2>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name"><strong>v_</strong>:</th><td class="field-body">variable</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>l_</strong>:</th><td class="field-body">list</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><strong>t_</strong>:</th><td class="field-body">tuple</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>d_</strong>:</th><td class="field-body">dictionnaire</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><strong>f_</strong>:</th><td class="field-body">fonction</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>C_</strong>:</th><td class="field-body">Class</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><strong>i_</strong>:</th><td class="field-body">Instance</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>m_</strong>:</th><td class="field-body">Matrice</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<hr class="docutils" />
+<div class="section" id="librairie-necessaire">
+<h2>Librairie necessaire<a class="headerlink" href="#librairie-necessaire" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Les lib suivantes doivent etre installees dans votre environement Python :</p>
+<blockquote>
+<div><ul class="simple">
+<li>Numpy</li>
+<li>Pillow</li>
+<li>Matplot lib</li>
+<li>OpenCV</li>
+</ul>
+</div></blockquote>
+<dl class="class">
+<dt id="_3_software.myLib.imageContour.imageContour.C_ImageContour">
+<em class="property">class </em><code class="descclassname">_3_software.myLib.imageContour.imageContour.</code><code class="descname">C_ImageContour</code><span class="sig-paren">(</span><em>v_debug=False</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.imageContour.imageContour.C_ImageContour" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>C_ImageContour( object )</strong></p>
+<p>Class permettant de detourer et d&#8217;isoler la forme exterieur d&#8217;un sujet pris sur
+fond unie.</p>
+<dl class="method">
+<dt id="_3_software.myLib.imageContour.imageContour.C_ImageContour.f_createImage">
+<code class="descname">f_createImage</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.imageContour.imageContour.C_ImageContour.f_createImage" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_createImage()</strong></p>
+<p>Permet de creer l&#8217;image intermediaire si la variable de l&#8217;instance &#8216;v_maskOn&#8217;
+est &#8216;False&#8217; et l&#8217;image finale si la variable de l&#8217;instance &#8216;v_maskOn&#8217;
+est &#8216;True&#8217;</p>
+<p>Le nom l&#8217;image generee aura le prefix &#8216;<a href="#id1"><span class="problematic" id="id2">out_</span></a>&#8216; suivie du nom du model (i_img2)
+et l&#8217;extension &#8216;jpg&#8217;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.imageContour.imageContour.C_ImageContour.f_createMask">
+<code class="descname">f_createMask</code><span class="sig-paren">(</span><em>v_img1</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.imageContour.imageContour.C_ImageContour.f_createMask" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_createMask( str )</strong></p>
+<p>permet d&#8217;effectuer les traitemants de l&#8217;image intermediaire avec openCV.
+Ces traitemant convertissent l&#8217;image en Noir et blanc. La zone Noir correspond
+au fond de l&#8217;image alors que le blanc correspond a la forme du modele.</p>
+<p>c&#8217;est la valeur de la variable &#8216;v_outputFilename&#8217; qui doit etre passe 
+en argument v_img1.</p>
+<p>L&#8217;image creer apres le traitemant se nomme &#8216;cvOut.jpg&#8217; ce nom est sauvegarde
+dans la variable &#8216;i_BWMask&#8217;</p>
+<p>&#8216;i_BWMask&#8217; doit etre passee en argument à &#8216;f_openImage&#8217; lors de son second appel</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.imageContour.imageContour.C_ImageContour.f_imageSubst">
+<code class="descname">f_imageSubst</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.imageContour.imageContour.C_ImageContour.f_imageSubst" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_imageSubst(  )</strong></p>
+<p>Soustraction de l&#8217;image vide (ou du mask Noir et Blanc) par le model</p>
+<p><strong>Dans une une soustrataction photoVide / photoModele</strong>
+Pour ne pas avoir de valeur negative lors de la soustraction (pixel parasites),
+les valeurs de la matrice m_npImg1 (photoVide) sont contraintes
+entre m_npImg1 (lui meme) pour les valeurs hautes et m_npImg2 (photoModele)
+pour les valeurs basses. La soustraction sera :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">m_npSubst</span> <span class="o">=</span> <span class="n">m_npImg2</span> <span class="o">-</span> <span class="n">m_npImg1</span>
+</pre></div>
+</div>
+<p><strong>Dans une une soustrataction photoMask / photoModele</strong>
+Les valeurs de la matrice m_npImg2 (la matrice du modele) sont contraintes
+entre m_npImg2 (lui meme) pour les valeurs hautes et m_npImg1 (photoMask) pour
+les valeurs basses. La soustraction sera :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">m_npSubst</span> <span class="o">=</span> <span class="n">m_npImg1</span> <span class="o">-</span> <span class="n">m_npImg2</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>Pour rappel :</dt>
+<dd><ul class="first last simple">
+<li>Blanc = 255</li>
+<li>Noir = 0</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.imageContour.imageContour.C_ImageContour.f_invert">
+<code class="descname">f_invert</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.imageContour.imageContour.C_ImageContour.f_invert" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_invert( )</strong></p>
+<p>inverce les couleurs de l&#8217;image &#8216;i_imgSubst&#8217;</p>
+<p>Cette methode est appellee par &#8216;f_createImage&#8217; lors de la creation 
+de l&#8217;image finale</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.imageContour.imageContour.C_ImageContour.f_openImage">
+<code class="descname">f_openImage</code><span class="sig-paren">(</span><em>v_img1</em>, <em>v_img2=False</em>, <em>v_maskOn=False</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.imageContour.imageContour.C_ImageContour.f_openImage" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_openImage( str, str, bool )</strong></p>
+<p>Permet d&#8217;ouvrir les photos passees en arguments et de les convertir en Matrice.</p>
+<p>Le format des photos etant obligatoirement au format Jpeg, le nom des photos
+passees en arguments ne doit pas comporter l&#8217;extension &#8216;.jpeg&#8217; car elle sera 
+ajoute automatiquement.</p>
+<p>Seul &#8216;v_img1&#8217; est obligatoire car au minimum, il n&#8217;y a qu&#8217;une seule photo a
+ouvrir (dans le cas d&#8217;un mask par exemple)</p>
+<p>Si v_img1 est un mask (en noir et blanc) la variable &#8216;v_maskOn&#8217;
+doit etre mis a True. l&#8217;argument a donner pour v_img1 doit normalement etre le
+contenu de &#8216;i_BWMask&#8217;.</p>
+<p>v_img1 est soit la photo vide, soit le mask en noir et blanc.
+v_img2 est le modele (elle n&#8217;est declarer qu&#8217;une fois).</p>
+<p>Cette methode doit etre appellee 2 fois. Une premiere fois en declarant
+l&#8217;image vide et le modele. Une seconde fois en declarant simplement le mask.</p>
+<p>&#8216;i_BWMask&#8217; doit etre passee en argument à &#8216;f_openImage&#8217; lors de son second appel</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.imageContour.imageContour.C_ImageContour.f_resetVar">
+<code class="descname">f_resetVar</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.imageContour.imageContour.C_ImageContour.f_resetVar" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_resetVar()</strong></p>
+<p>Reinitialise toutes les variables de l&#8217;instance</p>
+<p>Lors du traitemant d&#8217;une serie de photos, il faut reinitialiser toutes les
+variables entre chaque iteration.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.imageContour.imageContour.C_ImageContour.f_setMask">
+<code class="descname">f_setMask</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.imageContour.imageContour.C_ImageContour.f_setMask" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_setMask()</strong></p>
+<p>Inverse automatiquement la valeur de &#8216;v_maskOn&#8217;</p>
+<p>Cette methode est appellee par &#8216;f_createMask&#8217; et &#8216;f_createMask&#8217;</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="_3_software.myLib.imageContour.imageContour.main">
+<code class="descclassname">_3_software.myLib.imageContour.imageContour.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.imageContour.imageContour.main" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Fonction principale</p>
+<p>Cette fonction permet d&#8217;utiliser se script de facon autonaume.</p>
+<p>Differentes options sont disponibles :</p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">&#8216;&#8211;help&#8217; ou &#8216;-h&#8217;:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"><p class="first">Permet d&#8217;obtenir l&#8217;aide sur les differentes options
+de se script.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">&#8216;&#8211;images&#8217; ou &#8216;-i&#8217;:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><p class="first">Permet de donnee le nom des 2 photos (ou des 2 series)
+qui devrons etre traitee par le script.
+Les 2 parametres, de type string, sont :</p>
+<ol class="arabic simple">
+<li>Le nom de l&#8217;image vide (sans extension)</li>
+<li>Le nom du model (sans extension)</li>
+</ol>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">&#8216;&#8211;debug&#8217; ou &#8216;-d&#8217;:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"><p class="first">Permet d&#8217;afficher les differentes informations des
+methodes utilisees</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">&#8216;&#8211;number&#8217; ou &#8216;-n&#8217;:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><p class="first">Permet de specifier le nombre d&#8217;iteration sur la serie.
+Le parametres est un entier.</p>
+<dl class="last docutils">
+<dt><strong>N.B</strong></dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">l&#8217;iteration formate les noms passee avec &#8216;_000&#8217;</span><dd><p class="first last">( ou 000 est incremente a chaque iterration).
+Ce formatage est arbitraire et ne correspond peut
+etre pas au votre. Il est donc a adaptee en fonction
+de vos besions.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>Attention, les options &#8216;debug&#8217; et &#8216;number&#8217; ne sont pas active sans l&#8217;option &#8216;images&#8217;</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table des Matières</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">imageContour</a><ul>
+<li><a class="reference internal" href="#lexique">lexique</a></li>
+<li><a class="reference internal" href="#librairie-necessaire">Librairie necessaire</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="README_imageContour.html" title="Chapitre précédent">README imageContour</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/imageContour.txt"
+            rel="nofollow">Montrer le code source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Poltergeist42.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/imageContour.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
