@@ -1,34 +1,43 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""
-   :Nom du fichier:     btnPoussoir.py
-   :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160912
+""" 
+
+infos
+=====
+    
+    :Nom du fichier:     btnPoussoir.py
+    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
+    :Version:            20160912
 
 ####
 
-   :Licence:            CC-BY-NC-SA
-   :Liens:              https://creativecommons.org/licenses/by-nc-sa/4.0/
+    :Licence:            CC-BY-NC-SA
+    :Liens:              https://creativecommons.org/licenses/by-nc-sa/4.0/
 
 ####
 
     :dev language:      Python 3.4
-    
+
 ####
 
 lexique
 =======
 
-   :**v_**:                 variable
-   :**l_**:                 list
-   :**t_**:                 tuple
-   :**d_**:                 dictionnaire
-   :**f_**:                 fonction
-   :**C_**:                 Class
-   :**i_**:                 Instance
-   :**m_**:                 matrice
+    :**v_**:                 variable
+    :**l_**:                 list
+    :**t_**:                 tuple
+    :**d_**:                 dictionnaire
+    :**f_**:                 fonction
+    :**C_**:                 Class
+    :**i_**:                 Instance
+    :**m_**:                 matrice
+    
+####
 
+Class C_BtnPoussoir
+===================
+    
 """
 try :
     import os, sys
@@ -44,17 +53,25 @@ try :
     
 except ImportError :
     print("module 'RPi' non charge")
+
+try :    
+    import time, argparse
+    from os import system
     
-import time, argparse
-from os import system
+except ImportError :
+    print("module non charge")
+
+####
 
 class C_BtnPoussoir( object ) :
-    """ **btnPoussoir()**
+    """ **C_BtnPoussoir()**
     
         Class permettant de gerer les boutons poussoirs
     """
     def __init__( self, v_debug=False ) :
-        """ **__init()**
+        """ ::
+        
+                __init()
         
             Creation et initialisation des variables globales de cette Class
         """
@@ -74,7 +91,9 @@ class C_BtnPoussoir( object ) :
 ####
         
     def __del__( self ) :
-        """ **__del__()**
+        """ ::
+        
+                __del__()
         
             Permet de terminer proprement l'instance de la Class courante
         
@@ -97,7 +116,9 @@ class C_BtnPoussoir( object ) :
 ####
         
     def f_gpioInit(self, v_gpio = 21, v_pullUpDown = True, v_pullToUpOrDown = "UP"):
-        """ **f_gpioInit( GPIO_Channel, Boolean, str )
+        """ ::
+        
+                f_gpioInit( GPIO_Channel, Boolean, str )
             
             Methode permettant d'initialiser le bouton poussoir en entree sur une broche
             du raspberry pi. par defaut, le bouton est initialiser sur le GPIO 21 avec
@@ -161,7 +182,10 @@ class C_BtnPoussoir( object ) :
 ####
 
     def f_gpioDestructor(self):
-        """
+        """ ::
+        
+                f_gpioDestructor()
+        
             Methode permettant de fermer proprement la gestion des GPIO du Rpi
             
             Cette methode doit etre appellee a la fin de l'utilisation
@@ -177,7 +201,9 @@ class C_BtnPoussoir( object ) :
 ####
 
     def f_setFront( self, v_front ) :
-        """ **f_setFront( [Etat_attendu_pour_le_declenchement_de_l'evenement -- Type 'str'])**
+        """ ::
+        
+                f_setFront( [Etat_attendu_pour_le_declenchement_de_l'evenement -- Type 'str'])
         
             Cette methode permet de configurer le changement d'etat attendue pour
             l'execution de l'action.
@@ -201,11 +227,13 @@ class C_BtnPoussoir( object ) :
 ####
 
     def f_waitForEvent( self, v_fnToExecute, v_front = "FALLING", v_timeout = 1 ) :
-        """ **f_waitForEvent(
-                                [nom_de_la_fonction_a_executer -- Type 'function'],
-                                [Etat_attendu_pour_le_declenchement_de_l'evenement -- Type 'str'],
-                                [temps_du_time_Out_en_milisecondes -- Type 'int']
-                                )**
+        """ ::
+        
+                f_waitForEvent  (
+                                    [nom_de_la_fonction_a_executer -- Type 'function'],
+                                    [Etat_attendu_pour_le_declenchement_de_l'evenement -- Type 'str'],
+                                    [temps_du_time_Out_en_milisecondes -- Type 'int']
+                                )
         
             Cette methode attend un chagemant d'etat de la broche (front montant,
             front descandant, ou les deux) puis execute la fonction passee en parametre.
@@ -248,10 +276,12 @@ class C_BtnPoussoir( object ) :
                                 v_callBack = False,
                                 v_bouncetime = 250
                             ) :
-        """ **f_addEventDetect**    (
-                                    [Etat_attendu_pour_le_declenchement_de_l'evenement -- Type 'str'],
-                                    [Presence_/_Utilisation_d'un_callback -- Type 'bool' ou 'function.__name__'],
-                                    [Duree_de_l'anti-rebond_(en milisecondes) -- Type 'int']
+        """ ::
+        
+                f_addEventDetect    (
+                                        [Etat_attendu_pour_le_declenchement_de_l'evenement -- Type 'str'],
+                                        [allback -- Type 'bool' ou 'function.__name__'],
+                                        [Duree_de_l'anti-rebond_(en milisecondes) -- Type 'int']
                                     )
                                     
             Cette methode permet d'initaliser le 'event_detect'. 
@@ -293,11 +323,13 @@ class C_BtnPoussoir( object ) :
 ####
         
     def f_onEventDetect( self, v_fnToExecute, v_front = "FALLING" ) :
-        """ **f_onEventDetect(
-                                [nom_de_la_fonction_a_executer -- Type 'function'],
-                                [Etat_attendu_pour_le_declenchement_de_l'evenement -- Type 'str'],
-                                [Duree_de_l'anti-rebond_(en milisecondes) -- Type 'int']
-                                )**
+        """ ::
+            
+                f_onEventDetect(
+                                    [nom_de_la_fonction_a_executer -- Type 'function'],
+                                    [Etat_attendu_pour_le_declenchement_de_l'evenement -- Type 'str'],
+                                    [Duree_de_l'anti-rebond_(en milisecondes) -- Type 'int']
+                                )
         
             Cette methode s'execute lors d'un chagemant d'etat de la broche (front montant,
             front descandant, ou les deux) puis execute la fonction passee en parametre.
@@ -331,8 +363,10 @@ class C_BtnPoussoir( object ) :
 ######
         
         def f_myCallBack( channel ) :
-            """ **f_myCallBack(  GPIO_Channel -- Type 'int',
-                                [nom_de_la_fonction_a_executer -- Type 'function'] )**
+            """ ::
+            
+                    f_myCallBack(   GPIO_Channel -- Type 'int',
+                                    [nom_de_la_fonction_a_executer -- Type 'function'] )
                                 
                 Cette methode permet de ne renvoyer que la fonction passee en argument sans y
                 ajouter le numero de broche en argument 'cache'
@@ -379,11 +413,13 @@ class C_BtnPoussoir( object ) :
                                 v_howManyHit = 2,
                                 v_timeOut = 3
                             ) :
-        """ **f_ifDetected(
+        """ ::
+        
+                f_ifDetected(
                                 [nom_de_la_fonction_a_executer -- Type 'function'],
                                 [nombre_d'impulsions_attendues -- Type 'int'],
                                 [Duree_du_time_Out_(en_secondes) -- Type 'int']
-                                )**
+                            )
         
             Cette methode permet de l'ancer une action apres un certain nombre d'appuis
             sur le bouton pousoir.
