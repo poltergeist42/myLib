@@ -2,9 +2,13 @@
 # -*- coding: utf-8 -*-
 
 """
+
+Infos
+=====
+
    :Nom du fichier:     objJson.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160806
+   :Version:            20160912
 
 ####
 
@@ -27,8 +31,13 @@ lexique
    :**f_**:                 fonction
    :**C_**:                 Class
    :**i_**:                 Instance
-   :**m_**:                 Module
+   :**m_**:                 matrice
+   
+####
 
+Class C_ObjJson
+===============
+   
 """
 try :
     import os, sys

@@ -3,13 +3,12 @@
 
 """
 
-========
-ultrason
-========
+Infos
+=====
 
    :Nom du fichier:     ultrason.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160805
+   :Version:            20160912
 
 ####
 
@@ -32,8 +31,13 @@ lexique
    :**f_**:                 fonction
    :**C_**:                 Class
    :**i_**:                 Instance
-   :**m_**:                 Module
+   :**m_**:                 matrice
    
+####
+
+Class C_ultrasonSensor
+======================
+
 """
 
 import sys

@@ -2,9 +2,13 @@
 # -*- coding: utf-8 -*-
 
 """
+
+Infos
+=====
+
    :Nom du fichier:     imageContour.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160909
+   :Version:            20160912
 
 ####
 
@@ -40,7 +44,12 @@ Les lib suivantes doivent etre installees dans votre environement Python :
     - Pillow
     - Matplot lib
     - OpenCV
+    
+####
 
+Class C_ImageContour
+====================
+    
 """
 try :
     import os, sys

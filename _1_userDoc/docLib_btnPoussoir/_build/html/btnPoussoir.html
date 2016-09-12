@@ -1,0 +1,354 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>btnPoussoir &mdash; documentation btnPoussoir 20160912</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '20160912',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="top" title="documentation btnPoussoir 20160912" href="index.html" />
+    <link rel="prev" title="README btnPoussoir" href="README_btnPoussoir.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-_3_software.myLib.btnPoussoir.btnPoussoir">
+<span id="btnpoussoir"></span><h1>btnPoussoir<a class="headerlink" href="#module-_3_software.myLib.btnPoussoir.btnPoussoir" title="Lien permanent vers ce titre">¶</a></h1>
+<div class="section" id="infos">
+<h2>infos<a class="headerlink" href="#infos" title="Lien permanent vers ce titre">¶</a></h2>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Nom du fichier:</th><td class="field-body">btnPoussoir.py</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Autheur:</th><td class="field-body"><a class="reference external" href="https://github.com/poltergeist42">Poltergeist42</a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Version:</th><td class="field-body">20160912</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<hr class="docutils" />
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Licence:</th><td class="field-body">CC-BY-NC-SA</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Liens:</th><td class="field-body"><a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">https://creativecommons.org/licenses/by-nc-sa/4.0/</a></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<hr class="docutils" />
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">dev language:</th><td class="field-body">Python 3.4</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<hr class="docutils" />
+<div class="section" id="lexique">
+<h2>lexique<a class="headerlink" href="#lexique" title="Lien permanent vers ce titre">¶</a></h2>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name"><strong>v_</strong>:</th><td class="field-body">variable</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>l_</strong>:</th><td class="field-body">list</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><strong>t_</strong>:</th><td class="field-body">tuple</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>d_</strong>:</th><td class="field-body">dictionnaire</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><strong>f_</strong>:</th><td class="field-body">fonction</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>C_</strong>:</th><td class="field-body">Class</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><strong>i_</strong>:</th><td class="field-body">Instance</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>m_</strong>:</th><td class="field-body">matrice</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<hr class="docutils" />
+<div class="section" id="class-c-btnpoussoir">
+<h2>Class C_BtnPoussoir<a class="headerlink" href="#class-c-btnpoussoir" title="Lien permanent vers ce titre">¶</a></h2>
+<dl class="class">
+<dt id="_3_software.myLib.btnPoussoir.btnPoussoir.C_BtnPoussoir">
+<em class="property">class </em><code class="descclassname">_3_software.myLib.btnPoussoir.btnPoussoir.</code><code class="descname">C_BtnPoussoir</code><span class="sig-paren">(</span><em>v_debug=False</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.btnPoussoir.btnPoussoir.C_BtnPoussoir" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>C_BtnPoussoir()</strong></p>
+<p>Class permettant de gerer les boutons poussoirs</p>
+<dl class="method">
+<dt id="_3_software.myLib.btnPoussoir.btnPoussoir.C_BtnPoussoir.f_addEventDetect">
+<code class="descname">f_addEventDetect</code><span class="sig-paren">(</span><em>v_front='FALLING'</em>, <em>v_callBack=False</em>, <em>v_bouncetime=250</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.btnPoussoir.btnPoussoir.C_BtnPoussoir.f_addEventDetect" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">f_addEventDetect</span>    <span class="p">(</span>
+                        <span class="p">[</span><span class="n">Etat_attendu_pour_le_declenchement_de_l</span><span class="s1">&#39;evenement -- Type &#39;</span><span class="nb">str</span><span class="s1">&#39;],</span>
+                        <span class="p">[</span><span class="n">allback</span> <span class="o">--</span> <span class="n">Type</span> <span class="s1">&#39;bool&#39;</span> <span class="n">ou</span> <span class="s1">&#39;function.__name__&#39;</span><span class="p">],</span>
+                        <span class="p">[</span><span class="n">Duree_de_l</span><span class="s1">&#39;anti-rebond_(en milisecondes) -- Type &#39;</span><span class="nb">int</span><span class="s1">&#39;]</span>
+                    <span class="p">)</span>
+</pre></div>
+</div>
+<p>Cette methode permet d&#8217;initaliser le &#8216;event_detect&#8217;.</p>
+<p>Cette methode est appelee par &#8216;f_onEventDetect&#8217; et doit etre appelee 
+specifiquement avant l&#8217;utilisation de &#8216;f_ifDetected&#8217;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.btnPoussoir.btnPoussoir.C_BtnPoussoir.f_gpioDestructor">
+<code class="descname">f_gpioDestructor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.btnPoussoir.btnPoussoir.C_BtnPoussoir.f_gpioDestructor" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">f_gpioDestructor</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Methode permettant de fermer proprement la gestion des GPIO du Rpi</p>
+<p>Cette methode doit etre appellee a la fin de l&#8217;utilisation
+des broches GPIO (avant de quitter le programme).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.btnPoussoir.btnPoussoir.C_BtnPoussoir.f_gpioInit">
+<code class="descname">f_gpioInit</code><span class="sig-paren">(</span><em>v_gpio=21</em>, <em>v_pullUpDown=True</em>, <em>v_pullToUpOrDown='UP'</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.btnPoussoir.btnPoussoir.C_BtnPoussoir.f_gpioInit" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">f_gpioInit</span><span class="p">(</span> <span class="n">GPIO_Channel</span><span class="p">,</span> <span class="n">Boolean</span><span class="p">,</span> <span class="nb">str</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>Methode permettant d&#8217;initialiser le bouton poussoir en entree sur une broche
+du raspberry pi. par defaut, le bouton est initialiser sur le GPIO 21 avec
+la resistance de tirage interne activee en mode pull-up. Les choix pour la
+gestion de la resistance de tirage sont :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">v_pullUpDown</span> <span class="o">=</span> <span class="kc">True</span> <span class="o">/</span> <span class="kc">False</span>
+    <span class="c1"># True siginifie &#39;activee&#39; alors que False signifie &#39;desactive&#39;</span>
+    
+<span class="n">v_pullToUpOrDown</span> <span class="o">=</span> <span class="s1">&#39;UP&#39;</span> <span class="o">/</span> <span class="s1">&#39;DOWN&#39;</span>
+    <span class="c1"># &#39;UP&#39; signifie PULL-UP et &#39;DOWN&#39; signifie PULL-DOWN</span>
+</pre></div>
+</div>
+<p><em>N.B :</em> Pour une configuration en pull-up, le bouton poussoir devra etre
+connecte entre le broche d&#8217;entree et le GND. Pour une configuration en
+pull-down, le bouton poussoir devra etre connecte entre la broche et
+le VCC +3.3v.</p>
+<p>Cette methode est obligatoire est doit etre appellee lors de la creation
+de chaque nouvelle instance de l&#8217;objet.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.btnPoussoir.btnPoussoir.C_BtnPoussoir.f_ifDetected">
+<code class="descname">f_ifDetected</code><span class="sig-paren">(</span><em>v_fnToExecute</em>, <em>v_howManyHit=2</em>, <em>v_timeOut=3</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.btnPoussoir.btnPoussoir.C_BtnPoussoir.f_ifDetected" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">f_ifDetected</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">nom_de_la_fonction_a_executer</span> <span class="o">--</span> <span class="n">Type</span> <span class="s1">&#39;function&#39;</span><span class="p">],</span>
+                <span class="p">[</span><span class="n">nombre_d</span><span class="s1">&#39;impulsions_attendues -- Type &#39;</span><span class="nb">int</span><span class="s1">&#39;],</span>
+                <span class="p">[</span><span class="n">Duree_du_time_Out_</span><span class="p">(</span><span class="n">en_secondes</span><span class="p">)</span> <span class="o">--</span> <span class="n">Type</span> <span class="s1">&#39;int&#39;</span><span class="p">]</span>
+            <span class="p">)</span>
+</pre></div>
+</div>
+<p>Cette methode permet de l&#8217;ancer une action apres un certain nombre d&#8217;appuis
+sur le bouton pousoir.</p>
+<p>La valeur de &#8216;v_howManyHit&#8217; permet de d&#8217;attendre que l&#8217;utilisateur appuie un
+nombre de fois egal a cette valeur avant d&#8217;effectuer l&#8217;action passer par
+&#8216;v_fnToExecute&#8217;</p>
+<p>Le timOut permet de determiner le temps maximum pour effectuer l&#8217;ensemble des
+impulsions</p>
+<p>Si tous les parametres sont laisses par Defaut :</p>
+<ul class="simple">
+<li>le chagemant d&#8217;etat se fait sur le front Descendant car la resistance
+de tirrage est en Pull-UP.</li>
+<li>Le nombre d&#8217;impulsion attendu est de 2</li>
+<li>Le le timeOut est de 3 secondes</li>
+</ul>
+<p>Cette methode peut etre placer dans une boucle</p>
+<p><strong>N.B :</strong> il faut utiliser &#8216;f_addEventDetect&#8217; avant la boucle pour pouvoir
+utiliser cette methode</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.btnPoussoir.btnPoussoir.C_BtnPoussoir.f_onEventDetect">
+<code class="descname">f_onEventDetect</code><span class="sig-paren">(</span><em>v_fnToExecute</em>, <em>v_front='FALLING'</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.btnPoussoir.btnPoussoir.C_BtnPoussoir.f_onEventDetect" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">f_onEventDetect</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">nom_de_la_fonction_a_executer</span> <span class="o">--</span> <span class="n">Type</span> <span class="s1">&#39;function&#39;</span><span class="p">],</span>
+                    <span class="p">[</span><span class="n">Etat_attendu_pour_le_declenchement_de_l</span><span class="s1">&#39;evenement -- Type &#39;</span><span class="nb">str</span><span class="s1">&#39;],</span>
+                    <span class="p">[</span><span class="n">Duree_de_l</span><span class="s1">&#39;anti-rebond_(en milisecondes) -- Type &#39;</span><span class="nb">int</span><span class="s1">&#39;]</span>
+                <span class="p">)</span>
+</pre></div>
+</div>
+<p>Cette methode s&#8217;execute lors d&#8217;un chagemant d&#8217;etat de la broche (front montant,
+front descandant, ou les deux) puis execute la fonction passee en parametre.
+C&#8217;est le callback.</p>
+<p>Le front ecoute est renvoyer par &#8216;f_setFront&#8217;</p>
+<p>Le delais durant lequel la fonction ne sera pas
+reexecute (l&#8217;anti-rebond), se configure lors de l&#8217;appel 
+de la fonction &#8216;f_addEventDetect&#8217;.</p>
+<p>Si tous les parametres sont laisser par Defaut, le chagemant d&#8217;etat se fait
+sur le front Descendant car la resistance de tirrage est en Pull-UP.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.btnPoussoir.btnPoussoir.C_BtnPoussoir.f_setFront">
+<code class="descname">f_setFront</code><span class="sig-paren">(</span><em>v_front</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.btnPoussoir.btnPoussoir.C_BtnPoussoir.f_setFront" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">f_setFront</span><span class="p">(</span> <span class="p">[</span><span class="n">Etat_attendu_pour_le_declenchement_de_l</span><span class="s1">&#39;evenement -- Type &#39;</span><span class="nb">str</span><span class="s1">&#39;])</span>
+</pre></div>
+</div>
+<p>Cette methode permet de configurer le changement d&#8217;etat attendue pour
+l&#8217;execution de l&#8217;action.</p>
+<p>les modes disponibles sont :</p>
+<blockquote>
+<div><ul class="simple">
+<li>&#8216;RISING&#8217; : Front Montant</li>
+<li>&#8216;FALLING&#8217; : Front Descendant</li>
+<li>&#8216;BOTH&#8217; : Front Montant + Front Descendant</li>
+</ul>
+</div></blockquote>
+<p>Si &#8216;v_front == False&#8217; alors &#8216;v_rfb = GPIO.FALLING&#8217;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.btnPoussoir.btnPoussoir.C_BtnPoussoir.f_waitForEvent">
+<code class="descname">f_waitForEvent</code><span class="sig-paren">(</span><em>v_fnToExecute</em>, <em>v_front='FALLING'</em>, <em>v_timeout=1</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.btnPoussoir.btnPoussoir.C_BtnPoussoir.f_waitForEvent" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">f_waitForEvent</span>  <span class="p">(</span>
+                    <span class="p">[</span><span class="n">nom_de_la_fonction_a_executer</span> <span class="o">--</span> <span class="n">Type</span> <span class="s1">&#39;function&#39;</span><span class="p">],</span>
+                    <span class="p">[</span><span class="n">Etat_attendu_pour_le_declenchement_de_l</span><span class="s1">&#39;evenement -- Type &#39;</span><span class="nb">str</span><span class="s1">&#39;],</span>
+                    <span class="p">[</span><span class="n">temps_du_time_Out_en_milisecondes</span> <span class="o">--</span> <span class="n">Type</span> <span class="s1">&#39;int&#39;</span><span class="p">]</span>
+                <span class="p">)</span>
+</pre></div>
+</div>
+<p>Cette methode attend un chagemant d&#8217;etat de la broche (front montant,
+front descandant, ou les deux) puis execute la fonction passee en parametre.</p>
+<p>Il est possible de definir un delais d&#8217;expiration qui lorsqu&#8217;il est atteind
+annule l&#8217;attente d&#8217;une action.</p>
+<p>Si tous les parametres sont laisses par Defaut, le chagemant d&#8217;etat se fait
+sur le front Descendant car la resistance de tirrage est en Pull-UP.</p>
+<p>** Attention :** Cettte fonction est une fonction bloquante</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="_3_software.myLib.btnPoussoir.btnPoussoir.main">
+<code class="descclassname">_3_software.myLib.btnPoussoir.btnPoussoir.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.btnPoussoir.btnPoussoir.main" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Fonction pricipale</p>
+<p>Ici vont etre tester toutes les methodes de la classe.</p>
+<p><strong>Attention !</strong> La fonction de test &#8216;f_fnTest1&#8217; executant un &#8216;input()&#8217;, il ne faut
+pas oubliez d&#8217;appuyer sur la touche &#8216;entree&#8217; lors des appel a cette fonction.</p>
+<p>Chaque fonction testee, attend un appuie sur la touche &#8216;entree&#8217; avant de lancer
+la sequense.</p>
+<p>Le script utilise de options :</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">&#8216;&#8211;help&#8217; ou &#8216;-h&#8217;:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Affiche l&#8217;aide pour les options</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">&#8216;&#8211;debug&#8217; ou &#8216;-d&#8217;:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Active le mode debug sur l&#8217;instance</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">&#8216;&#8211;number&#8217; ou &#8216;-n&#8217;:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Prend un entier en argument.
+Permet d&#8217;executer la fonction correspondant au numero de l&#8217;argument</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table des Matières</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">btnPoussoir</a><ul>
+<li><a class="reference internal" href="#infos">infos</a></li>
+<li><a class="reference internal" href="#lexique">lexique</a></li>
+<li><a class="reference internal" href="#class-c-btnpoussoir">Class C_BtnPoussoir</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="README_btnPoussoir.html" title="Chapitre précédent">README btnPoussoir</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/btnPoussoir.txt"
+            rel="nofollow">Montrer le code source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Poltergeist42.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/btnPoussoir.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
