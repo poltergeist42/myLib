@@ -4,7 +4,7 @@
 """
    :Nom du fichier:     btnPoussoir.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160822
+   :Version:            20160912
 
 ####
 
@@ -27,7 +27,7 @@ lexique
    :**f_**:                 fonction
    :**C_**:                 Class
    :**i_**:                 Instance
-   :**m_**:                 Module
+   :**m_**:                 matrice
 
 """
 try :
@@ -357,12 +357,14 @@ class C_BtnPoussoir( object ) :
 
         if isinstance( v_fnToExecute, list ) :
         
-            ## dbg
-            i_debug( v_dbg, "Type de l'argument ", type(v_fnToExecute) )
-            self.f_addEventDetect( v_broche )
+            # ## dbg
+            # i_debug( v_dbg, "Type de l'argument ", type(v_fnToExecute) )
+            # self.f_addEventDetect( v_broche )
             
-            for i in range( len(v_fnToExecute) ) :
-                GPIO.add_event_callback( v_broche, v_callBack = v_fnToExecute[i] )
+            # for i in range( len(v_fnToExecute) ) :
+                # GPIO.add_event_callback( v_broche, v_callBack = v_fnToExecute[i] )
+                
+            print( "\nLe mode multi-Callback ne fonctionne pas pour l'instant\n" )
 
         else :
             ## dbg
@@ -585,28 +587,28 @@ def main() :
     # Instance et test avec les valeurs modifiees #
     ###############################################
     
-    def f_modifieesFN5() :
-        ## f_onEventDetect : valeurs modifiees
-        input( "f_onEventDetect : valeurs modifiees" )
-        i_testBtn = f_startInstance()
-        # test des fonctions :
-        l_lstFnTest = [ f_fnTest2, f_fnTest3, f_fnTest4 ]
-        i_testBtn.f_gpioInit()
-        i_testBtn.f_onEventDetect( l_lstFnTest )
-        try: 
-            while True :
-                print( "j'attend !" )
-                time.sleep(0.25)
+    # def f_modifieesFN5() :
+        # ## f_onEventDetect : valeurs modifiees
+        # input( "f_onEventDetect : valeurs modifiees" )
+        # i_testBtn = f_startInstance()
+        # # test des fonctions :
+        # l_lstFnTest = [ f_fnTest2, f_fnTest3, f_fnTest4 ]
+        # i_testBtn.f_gpioInit()
+        # i_testBtn.f_onEventDetect( l_lstFnTest )
+        # try: 
+            # while True :
+                # print( "j'attend !" )
+                # time.sleep(0.25)
                 
-        except KeyboardInterrupt :
-                print( "\nInterrompu par l'utilisateur" )
-                pass
+        # except KeyboardInterrupt :
+                # print( "\nInterrompu par l'utilisateur" )
+                # pass
 
-        # destructor
-        del( i_testBtn )
+        # # destructor
+        # del( i_testBtn )
     
     d_args = {  '1':f_defautFN1, '2':f_defautFN2, '3':f_defautFN3,
-                '4':f_defautFN4, '5':f_modifieesFN5 }
+                '4':f_defautFN4 }
 
     d_args[args.number]()
     
