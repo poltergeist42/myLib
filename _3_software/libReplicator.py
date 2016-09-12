@@ -3,13 +3,13 @@
 
 """
 
-=============
-libReplicator
-=============
+
+Infos
+=====
 
    :Nom du fichier:     libReplicator.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160731
+   :Version:            20160912
 
 ####
 
@@ -37,7 +37,12 @@ lexique
    :**f_**:                 fonction
    :**C_**:                 Class
    :**i_**:                 Instance
-   :**m_**:                 Module
+   :**m_**:                 matrice
+   
+####
+
+Class C_bougeTonFile
+====================
    
 """
 
