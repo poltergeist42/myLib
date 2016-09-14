@@ -9,7 +9,7 @@ Infos
 
    :Nom du fichier:     libReplicator.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160912
+   :Version:            20160914
 
 ####
 
@@ -50,6 +50,7 @@ from __future__ import absolute_import  # Permet d'importer en chemin abslolu ou
                                         # doit etre importer en premier
 
 import os, sys
+import argparse
 from os import system
 try :
     from myLib.devChk.devChk import C_DebugMsg
@@ -82,7 +83,7 @@ class C_bougeTonFile(object) :
         l'ensemble des projet auquel elles sont utiles
     """
         
-    def __init__(self) :
+    def __init__(self, v_debug = False) :
         """ Init variables """
         self.v_localDir = os.getcwd()
         self.v_workDir = "./myLib"
@@ -91,7 +92,7 @@ class C_bougeTonFile(object) :
         self.fichierTxt = "projectList.txt"
         self.d_fullFile = {}
         
-        self.i_dbg = C_DebugMsg(False)
+        self.i_dbg = C_DebugMsg(v_debug)
         
 ####
     
@@ -107,24 +108,6 @@ class C_bougeTonFile(object) :
 
 ####
         
-    def f_osIdentifier(self) :
-        """ Permet d'identifier le type de systeme d'exploitation """
-        v_dbg = True
-        
-        v_osType = sys.platform
-        
-        if v_osType == 'linux' :
-            v_clear = "clear"
-        elif  v_osType == "win32" :
-            v_clear = "cls"
-            
-        system(v_clear)
-        
-        #### dbg
-        self.i_dbg.dbgPrint(v_dbg, "v_osType", v_osType)
-
-####
-
     def f_arboList(self) :
         """ parcourrir l'ensemble des sous dossier du dossier 'myLib'
             et copie l'ensemble dans le dictionnaire : d_fullFile
@@ -170,7 +153,7 @@ class C_bougeTonFile(object) :
             
 ####
 
-    def f_libVersionComparator(self, v_localLibFile, v_distLibFile) :
+    def f_libVersionComparator(self, v_localLibFile, v_distLibFile, v_key) :
         """ Permet d'identifier si la version de la lib distante
             est differente de la lib local
         """
@@ -183,11 +166,11 @@ class C_bougeTonFile(object) :
         
         if v_local == v_dist :
             v_copyLib = False
-            print("les deux version sont identiques")
+            print("les deux version sont identiquesde la lib : {}".fomrat(v_key))
         else :
             while v_boucle :
                 print("\n\tversion locale : {} - version distante : {}\n".format(v_local, v_dist))
-                v_question = input("Voulez-vous remplacer la lib distante par la lib locale (O/N) ? ").lower()
+                v_question = input("Voulez-vous remplacer la version distante de {} par la version locale (O/N) ? ".format(v_key)).lower()
                 
                 if v_question == 'o' or v_question == 'y' or v_question == "oui" or v_question == "yes" :
                     v_copyLib = True
@@ -268,22 +251,50 @@ class C_bougeTonFile(object) :
                     v_dest = self.d_fullFile[key][i] + "/" + key
                     v_localLibFile = v_src + "/" + key + ".py"
                     v_distLibFile = v_dest + "/" + key + ".py"
-                    if self.f_libVersionComparator(v_localLibFile, v_distLibFile):
+                    if self.f_libVersionComparator(v_localLibFile, v_distLibFile, key):
                     
                         #### dbg
                         self.i_dbg.dbgPrint(v_dbg, "v_dest", v_dest)
                         dir_util.copy_tree(v_src, v_dest, preserve_mode=1, preserve_times=1, preserve_symlinks=0, update=0, verbose=0, dry_run=0)
                         
+####
+
+def f_osIdentifier(self) :
+    """ Permet d'identifier le type de systeme d'exploitation """
+    v_dbg = True
+    
+    v_osType = sys.platform
+    
+    if v_osType == 'linux' :
+        v_clear = "clear"
+    elif  v_osType == "win32" :
+        v_clear = "cls"
+        
+    system(v_clear)
+
+####
+
 ########
 # Main #
 ########
                         
 def main() :
     """ Fonction principale """
+    parser = argparse.ArgumentParser()
+    parser.add_argument( "-d", "--debug", action='store_true', help="activation du mode debug")
+                        
+    args = parser.parse_args()
+    
+    f_osIdentifier()
+    
     print("\n\t\t## Creation de l'instance ##\n")
-    i_replicator = C_bougeTonFile()
+    
+    if args.debug :
+        print( "Mode Debug activer" )
+        i_replicator = C_bougeTonFile( True )
+    else :
+        i_replicator = C_bougeTonFile( False )
     print("\n\t\t## Debut de f_osIdentifier() ##\n")
-    i_replicator.f_osIdentifier()
     i_git = C_GitChk()
     i_git.f_gitBranchChk()
     print("\n\t\t## Debut de f_arboList() ##\n")
