@@ -8,7 +8,7 @@ Infos
 
    :Nom du fichier:     devChk.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160912
+   :Version:            20160914
 
 ####
 
@@ -72,6 +72,8 @@ class C_DebugMsg(object) :
         self.affichage = v_affichage
         self.debugNumber = 0
         
+        self.d_fnNumber = {}
+        
     def __del__(self) :
         """destructor
         
@@ -85,53 +87,68 @@ class C_DebugMsg(object) :
         
     def dbgPrint(self, v_chk, v_varName, v_varValue, v_endOfLine = "") :
         """
-        Intercept les messages pour les formater de facon homogene.
-        
-            Pour permettre de masquer les messages d'une seule fonction a la fois,
-        il est conseille d'ajouter une variable local initialisee a **True**
-        et de l'appeler a chaque fois que le debug et necessaire. Cette variable doit etre
-        mise a **False** pour que l'affichage local soit desactive.
-        
-        Ex: ::
-                
-                # Affichage active
-                v_dbg = True
-                i_monIstanceDbg.dbgPrint(   v_dbg, 
-                                            ["chaine_de_caractere"],
-                                            [la_variable_a_controller]
-                                        )
-                                    
-                # Affichage desactive
-                v_dbg = False
-                i_monIstanceDbg.dbgPrint(   v_dbg, 
-                                            ["chaine_de_caractere"],
-                                            [la_variable_a_controller]
-                                        )
-                                    
-        Pour desactiver l'affichage d'un seul message a la fois, on peut remplacer la
-        variable locale par une valeur **booleen**. On peut aussi simplement commenter
-        la ligne du message de debug.
-        
-        Ex: ::
-        
-                # Affichage desactive par une valeur booleen
-                v_dbg = True
-                i_monIstanceDbg.dbgPrint(   False, 
-                                            ["chaine_de_caractere"],
-                                            [la_variable_a_controller]
-                                        )
-                                    
-                # Affichage desactive en commentant la ligne
-                v_dbg = True
-                # i_monIstanceDbg.dbgPrint(   v_dbg, 
-                                        # ["chaine_de_caractere" ou varialbe_de_reference],
-                                        # [la_variable_a_controller]
-                                    # )
+            Intercept les messages pour les formater de facon homogene.
+            
+                Pour permettre de masquer les messages d'une seule fonction a la fois,
+            il est conseille d'ajouter une variable local initialisee a **True**
+            et de l'appeler a chaque fois que le debug et necessaire. Cette variable doit etre
+            mise a **False** pour que l'affichage local soit desactive.
+            
+            Ex: ::
+                    
+                    # Affichage active
+                    v_dbg = True
+                    i_monIstanceDbg.dbgPrint(   v_dbg, 
+                                                ["chaine_de_caractere"],
+                                                [la_variable_a_controller]
+                                            )
+                                        
+                    # Affichage desactive
+                    v_dbg = False
+                    i_monIstanceDbg.dbgPrint(   v_dbg, 
+                                                ["chaine_de_caractere"],
+                                                [la_variable_a_controller]
+                                            )
+                                        
+            Pour desactiver l'affichage d'un seul message a la fois, on peut remplacer la
+            variable locale par une valeur **booleen**. On peut aussi simplement commenter
+            la ligne du message de debug.
+            
+            Ex: ::
+            
+                    # Affichage desactive par une valeur booleen
+                    v_dbg = True
+                    i_monIstanceDbg.dbgPrint(   False, 
+                                                ["chaine_de_caractere"],
+                                                [la_variable_a_controller]
+                                            )
+                                        
+                    # Affichage desactive en commentant la ligne
+                    v_dbg = True
+                    # i_monIstanceDbg.dbgPrint(   v_dbg, 
+                                            # ["chaine_de_caractere" ou varialbe_de_reference],
+                                            # [la_variable_a_controller]
+                                        # )
+                                        
+            Pour faciliter la lecture lors du debug un numero unique est attribue
+            a chaque fonction.
         """
         if v_chk and self.affichage :
-            self.debugNumber += 1
-            print( "dbgMsg[{}] : {} - {}{}".format(self.debugNumber, v_varName, v_varValue, v_endOfLine) )
-        
+            if not self.d_fnNumber :
+                # self.debugNumber += 1
+                # print( "dbgMsg[{}] : {} - {}{}".format(self.debugNumber, v_varName, v_varValue, v_endOfLine) )
+                self.d_fnNumber[v_varName] = self.debugNumber
+                print( "dbgMsg[{}] : {} - {}{}".format(self.d_fnNumber[v_varName], v_varName, v_varValue, v_endOfLine) )
+                
+            if v_varName in self.d_fnNumber.keys() :
+                print( "dbgMsg[{}] : {} - {}{}".format(self.d_fnNumber[v_varName], v_varName, v_varValue, v_endOfLine) )
+                
+            else :
+                self.debugNumber += 1
+                self.d_fnNumber[v_varName] = self.debugNumber
+                print( "dbgMsg[{}] : {} - {}{}".format(self.d_fnNumber[v_varName], v_varName, v_varValue, v_endOfLine) )
+                
+
 ####
         
 class C_GitChk(object) :
@@ -146,8 +163,7 @@ class C_GitChk(object) :
     Le constructeur a un argument par defaut de type **booleen** qui est predefinis
     sur **True**. Si se parametres est a **False**, l'ensemble des messages seront masques.
     
-    Creation de l'instance :
-    ::
+    Creation de l'instance : ::
     
         i_monIstanceGitChk = C_GitChk( [booleen (facultatif si == True)] )
 
@@ -214,8 +230,8 @@ def main():
     """ 
     Fonction principale 
     
-    Cette Fonction ne sert que pour tester les différentes Class
-    et méthode de ce projet.
+    Cette Fonction ne sert que pour tester les differentes Class
+    et methode de ce projet.
     """
     system("cls")
 
