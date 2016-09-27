@@ -9,6 +9,9 @@
 test*/
 *_v/
 __pycache__/
+imgSrc/*
+outContour/*
+outSubstract/*
 
 
 ## [ listes des extentions a ignorer ]

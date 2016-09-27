@@ -8,7 +8,7 @@ Infos
 
    :Nom du fichier:     imageContour.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160912
+   :Version:            20160927
 
 ####
 
@@ -92,6 +92,10 @@ class C_ImageContour( object ) :
         
         self.v_maskOn           = False
         self.v_outputFilename   = False
+        self.v_imgSrc           = False
+        self.v_outContour       = False
+        self.v_outSubstract     = False
+        self.v_numberOfImgSrc   = False
         
         self.m_npImg1           = False
         self.m_npImg2           = False
@@ -311,6 +315,8 @@ class C_ImageContour( object ) :
         ## Action
         self.i_imgSubst = ImageOps.invert(self.i_imgSubst)
         
+####
+        
     def f_setMask( self ) :
         """ **f_setMask()**
         
@@ -332,6 +338,8 @@ class C_ImageContour( object ) :
         if not self.v_maskOn :
             self.v_maskOn = True
             i_debug(v_dbg, "v_maskOn", self.v_maskOn)
+            
+####
             
     def f_resetVar( self ) :
         """ **f_resetVar()**
@@ -360,6 +368,47 @@ class C_ImageContour( object ) :
         self.m_npImg2           = False
         self.m_npBWMask         = False
         self.m_npSubst          = False
+       
+####
+
+    def f_setWorkDir( self,
+                    v_imgSrc = "./imgSrc", 
+                    v_outSubstract = "./outSubstract",
+                    v_outContour = "./outContour" )
+        """ **f_setWorkDir( string, string, string)**
+        
+            Permet de choisir le chemin des dossier de travail.
+            Les dossiers de travail sont :
+            
+            - "imgSrc" : C'est le dossier source dans lequel doivent etre placer les
+              photos (le mask + le sujet) qui seront traitee.
+              
+            - "outSubstract" : C'est le dossier dans lequel vont etre generees les photos
+              de la soustraction simple. C'est photos serviront pour la soustraction
+              detourage de contour.
+              
+            - "outContour" : C'est le dossier dans lequel vont etre generee les photos de
+              la soustraction avec detection de contour.
+        """
+        self.v_imgSrc = v_imgSrc
+        self.v_outSubstract = v_outSubstract
+        self.v_outContour = v_outContour
+        
+####
+
+    def f_SetNumberOfImgSrc( self, v_setNumber = False )
+        """ **f_SetNumberOfImgSrc( int )**
+        
+            Permet de determiner le nombre d'image de la sequence.
+            Si la valeur n'est pas fixee de facon arbitraire (v_setNumber), Le nombre
+            d'image du dossier 'imgSrc' est divise par 2 car il y a une paritee entre les
+            les images "sujet" et les images "vide".
+        """
+        if not v_setNumber :
+            self.v_numberOfImgSrc = ( len( os.listdir( self.v_imgSrc ) )) // 2
+        else :
+            if  not isinstance(v_setNumber, "int" ) : int( v_setNumber )
+            self.v_numberOfImgSrc = v_setNumber
        
 #####
 
