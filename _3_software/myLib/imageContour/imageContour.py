@@ -190,7 +190,8 @@ class C_ImageContour( object ) :
         
             Soustraction de l'image vide (ou du mask Noir et Blanc) par le model
             
-            **Dans une une soustrataction photoVide / photoModele**
+            **Dans une soustrataction photoVide / photoModele**
+            
             Pour ne pas avoir de valeur negative lors de la soustraction (pixel parasites),
             les valeurs de la matrice m_npImg1 (photoVide) sont contraintes
             entre m_npImg1 (lui meme) pour les valeurs hautes et m_npImg2 (photoModele)
@@ -198,7 +199,8 @@ class C_ImageContour( object ) :
             
                 m_npSubst = m_npImg2 - m_npImg1
                 
-            **Dans une une soustrataction photoMask / photoModele**
+            **Dans une soustrataction photoMask / photoModele**
+            
             Les valeurs de la matrice m_npImg2 (la matrice du modele) sont contraintes
             entre m_npImg2 (lui meme) pour les valeurs hautes et m_npImg1 (photoMask) pour
             les valeurs basses. La soustraction sera : ::
@@ -235,7 +237,7 @@ class C_ImageContour( object ) :
         """ **f_createImage()**
         
             Permet de creer l'image intermediaire si la variable de l'instance 'v_maskOn'
-            est 'False' et l'image finale si la variable de l'instance 'v_maskOn'
+            est 'False' et si l'image finale si la variable de l'instance 'v_maskOn'
             est 'True'
             
             Le nom l'image generee aura le prefix 'out_' suivie du nom du model (i_img2)
@@ -270,7 +272,7 @@ class C_ImageContour( object ) :
             au fond de l'image alors que le blanc correspond a la forme du modele.
             
             c'est la valeur de la variable 'v_outputFilename' qui doit etre passe 
-            en argument v_img1.
+            en argument dans v_img1.
             
             L'image creer apres le traitemant se nomme 'cvOut.jpg' ce nom est sauvegarde
             dans la variable 'i_BWMask'
@@ -439,7 +441,7 @@ class C_ImageContour( object ) :
             Permet de determiner le nombre d'image de la sequence.
             Si la valeur n'est pas fixee de facon arbitraire (v_setNumber), Le nombre
             d'image du dossier 'imgSrc' est divise par 2 car il y a une paritee entre les
-            les images "sujet" et les images "vide".
+            images "sujet" et les images 'vide'.
         """
         ## dbg
         v_dbg = 1
@@ -486,7 +488,8 @@ class C_ImageContour( object ) :
             *N.B1* : les noms doivent etre saisie sans le numero car il sera ajouter dans
                    le traitemant pendant la boucle.
                   
-            *N.B2* : La numerotation etant arbitraire, elle doit etre adaptee a vos besoin
+            *N.B2* : La numerotation etant arbitraire, elle doit etre adaptee 
+                   a vos besoin
         """
         ## dbg
         v_dbg = 1
