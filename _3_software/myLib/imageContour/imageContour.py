@@ -8,7 +8,7 @@ Infos
 
    :Nom du fichier:     imageContour.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160930
+   :Version:            20161001
 
 ####
 
@@ -441,11 +441,80 @@ class C_ImageContour( object ) :
             d'image du dossier 'imgSrc' est divise par 2 car il y a une paritee entre les
             les images "sujet" et les images "vide".
         """
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug(v_dbg2, "f_SetNumberOfImgSrc", self.f_SetNumberOfImgSrc)
+        
+        ## Action
         if not v_setNumber :
-            self.v_numberOfImgSrc = ( len( os.listdir( self.v_imgSrc ) )) // 2
+            v_setNumber = ( len( os.listdir( self.v_imgSrc ) ))
+            if v_setNumber < 2 :
+                v_msg = "Vous devez mettre au moins 2 photos dans le dossier 'imgSrc' !\n" \
+                        "Ce dossier en comporte actuellement {}".format( v_setNumber )
+                raise ValueError(v_msg)
+                
+            self.v_numberOfImgSrc  = v_setNumber // 2
+            
+            ## dbg
+            i_debug(v_dbg2, "v_setNumber", v_setNumber)
+            i_debug(v_dbg2, "v_numberOfImgSrc", self.v_numberOfImgSrc)
+            
+        ## Action
         else :
             if  not isinstance(v_setNumber, "int" ) : int( v_setNumber )
+            if v_setNumber < 1 :
+                v_msg = "Vous devez mettre une valeur au moin egale a '1' !"
+                raise ValueError(v_msg)
+                
             self.v_numberOfImgSrc = v_setNumber
+            
+            ## dbg
+            i_debug(v_dbg2, "v_setNumber", v_setNumber)
+            i_debug(v_dbg2, "v_numberOfImgSrc", self.v_numberOfImgSrc)            
+####
+            
+    def f_runSequence( self, v_maskPrim, v_modelPrim ) :
+        """ **f_runSequence( str, str )**
+        
+            Permet de lancer la sequence complete depuis un autre programme
+            
+            - v_maskPrim : c'est le mask (l'image vide)
+            - v_modelPrim : c'est le model
+            
+            *N.B1* : les noms doivent etre saisie sans le numero car il sera ajouter dans
+                   le traitemant pendant la boucle.
+                  
+            *N.B2* : La numerotation etant arbitraire, elle doit etre adaptee a vos besoin
+        """
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug(v_dbg2, "f_runSequence", self.f_runSequence)
+        
+        ## Action        
+        self.f_setWorkDir()
+        self.f_SetNumberOfImgSrc()
+            
+        for n in range( self.v_numberOfImgSrc ) :
+            print( "traitement d'image {} / {}".format( n+1, self.v_numberOfImgSrc ))
+            
+            v_mask = v_maskPrim + "_{:03}".format(n)
+            v_model = v_modelPrim + "_{:03}".format(n)
+            
+            self.f_openImage( v_mask, v_img2 = v_model )
+            self.f_imageSubst()
+            self.f_createImage()
+                               
+            self.f_createMask( self.v_outputFilename )
+            self.f_openImage( self.i_BWMask, v_maskOn = True )
+            self.f_imageSubst()
+            self.f_createImage()
+            
+            self.f_resetVar()
+
        
 #####
 
