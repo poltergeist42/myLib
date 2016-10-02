@@ -2,6 +2,7 @@
   dev
   devChk
   doc
+  fakeLib
   imageContour
 * libReplicator
   master

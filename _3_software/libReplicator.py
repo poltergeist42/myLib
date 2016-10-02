@@ -104,10 +104,11 @@ class C_bougeTonFile(object) :
         self.l_listDir              = os.listdir(self.v_workDir)
         self.l_docListDir           = os.listdir(self.v_docDir)
         self.l_subDirProjectList    = []
-        self.t_distDirPath          = ("_1_userDoc/", "_3_software/")
+        self.t_distDirPath          = ("_1_userDoc", "_3_software")
         self.fichierTxt             = "projectList.txt"
         self.d_fullFile             = {}
         self.d_docPath              = {}
+        self.v_testMode             = False
         
 ####
     
@@ -128,53 +129,74 @@ class C_bougeTonFile(object) :
             et copie l'ensemble dans le dictionnaire : d_fullFile
         """
         ## dbg
-        v_dbg = 0
-        v_dbg2 = 0
+        v_dbg = 1
+        v_dbg2 = 1
         i_debug = self.i_dbg.dbgPrint 
         i_debug(v_dbg2, "f_arboList", self.f_arboList)
         i_debug(v_dbg, "l_listDir", self.l_listDir)
         
         ## Action
-        for i in self.l_listDir :
-            if i == "__pycache__" or i == "__init__.py" :
-                pass
-            else :
-                v_subDirLocal = self.v_workDir + "/" + i
-                
-                ## Action
-                v_project = v_subDirLocal + "/" + self.fichierTxt
-                self.l_subDirProjectList.append(v_project)
-                
-                ## Action
-                l_parcourProject = [1]
-                            # On initialise la list 'l_parcourProject[0]' a 1
-                            # L'index [0] est incremente de 1 a chaque nouvelle entree.
-                            # se conteur permet de servir de reference pour la boucle
-                            # de copie.
-                v_chk = True
-                
-                try :
-                    v_projectTxt = open(v_project,'r')
-                    
-                    for line in v_projectTxt :
-                        l_parcourProject[0] += 1
-                        l_parcourProject.append(line.replace("\n", ""))
+        if not self.v_testMode :
+            for i in self.l_listDir :
+                if i == "__pycache__" or i == "__init__.py" :
+                    pass
+                else :
+                    self.f_subProcessArboList( i )
+        else :
+            for i in self.l_listDir :
+                if i != "fakeLib" :
+                    pass
+                else :
+                    self.f_subProcessArboList( i )
+####
 
-                except FileNotFoundError :
-                    print("fichier non trouve")
-                    v_chk = False
+    def f_subProcessArboList( self, v_boucleIteration ) :
+        """ Sous processus de la methode 'f_arboList'.
+        
+            Permet d'effectuer la routine de traitemant
+        """
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        i_debug = self.i_dbg.dbgPrint 
+        i_debug(v_dbg2, "f_subProcessArboList", self.f_subProcessArboList)
+        
+        ## Action
+        v_subDirLocal = self.v_workDir + "/" + v_boucleIteration
+        v_project = v_subDirLocal + "/" + self.fichierTxt
+        self.l_subDirProjectList.append(v_project)
+        l_parcourProject = [1]
+                    # On initialise la list 'l_parcourProject[0]' a 1
+                    # L'index [0] est incremente de 1 a chaque nouvelle entree.
+                    # se conteur permet de servir de reference pour la boucle
+                    # de copie.
+        v_chk = True
+        
+        try :
+            v_projectTxt = open(v_project,'r')
+            
+            for line in v_projectTxt :
+                l_parcourProject[0] += 1
+                l_parcourProject.append(line.replace("\n", ""))
 
-                finally :
-                    if v_chk : v_projectTxt.close()
+        except FileNotFoundError :
+            print("fichier non trouve")
+            v_chk = False
 
-                self.d_fullFile[i] = l_parcourProject
-                self.d_docPath[i] = "docLib_" + i
-                
-                ## dbg
-                i_debug(v_dbg, "v_subDirLocal", v_subDirLocal)
-                i_debug(v_dbg, "v_project", v_project)
-                i_debug(v_dbg, "l_subDirProjectList", self.l_subDirProjectList)
-                i_debug(v_dbg, "d_docPath", self.d_docPath)
+        finally :
+            if v_chk : v_projectTxt.close()
+
+        self.d_fullFile[v_boucleIteration] = l_parcourProject
+        self.d_docPath[v_boucleIteration] = "docLib_" + v_boucleIteration
+                    # remplissage des dictionnaires en fonction du contenu
+                    # du fichier 'projectList.txt' de chacun des dossier examines
+        
+        ## dbg
+        i_debug(v_dbg, "v_subDirLocal", v_subDirLocal)
+        i_debug(v_dbg, "v_project", v_project)
+        i_debug(v_dbg, "l_subDirProjectList", self.l_subDirProjectList)
+        i_debug(v_dbg, "d_docPath", self.d_docPath)
+
             
 ####
 
@@ -183,8 +205,8 @@ class C_bougeTonFile(object) :
             est differente de la lib local
         """
         ## dbg
-        v_dbg = 0
-        v_dbg2 = 0
+        v_dbg = 1
+        v_dbg2 = 1
         i_debug = self.i_dbg.dbgPrint 
         i_debug(v_dbg2, "f_libVersionComparator", self.f_libVersionComparator)
         
@@ -224,8 +246,8 @@ class C_bougeTonFile(object) :
     def f_libVersion(self, v_libFile) :
         """ renvoie la version contenu dans la lib qui est passe en argument """
         ## dbg
-        v_dbg = 0
-        v_dbg2 = 0
+        v_dbg = 1
+        v_dbg2 = 1
         i_debug = self.i_dbg.dbgPrint 
         i_debug(v_dbg2, "f_libVersion", self.f_libVersion)
 
@@ -267,16 +289,18 @@ class C_bougeTonFile(object) :
         v_dbg2 = 1
         i_debug = self.i_dbg.dbgPrint 
         i_debug(v_dbg2, "f_copyAll", self.f_copyAll)
-        i_debug(v_dbg2, "d_fullFile", self.d_fullFile)
+        i_debug(v_dbg, "d_fullFile", self.d_fullFile)
         
         ## Action
         for key in self.d_fullFile :
             v_src = self.v_workDir + "/" + key
+            v_docSrc = "../"+ self.t_distDirPath[0] + "/" + self.d_docPath[key]
             
             ## dbg
             i_debug(v_dbg, "key", key)
             i_debug(v_dbg, "self.d_fullFile[key][0]", self.d_fullFile[key][0])
-            i_debug(v_dbg, "type(v_src)", type(v_src))           
+            # i_debug(v_dbg, "type(v_src)", type(v_src))           
+            i_debug(v_dbg, "v_docSrc", v_docSrc)           
             
             ## Action
             for i in range(self.d_fullFile[key][0]) :
@@ -284,35 +308,70 @@ class C_bougeTonFile(object) :
                 ## dbg
                 i_debug(v_dbg, "i", i)
                 i_debug(v_dbg, "self.d_fullFile[key][i]", self.d_fullFile[key][i])
-                i_debug(v_dbg, "type(self.d_fullFile[key][i])", type(self.d_fullFile[key][i]))
+                # i_debug(v_dbg, "type(self.d_fullFile[key][i])", type(self.d_fullFile[key][i]))
                 
                 ## Action
                 if i == 0 or self.d_fullFile[key][1] == False :
                     pass
                 else :
-                    v_dest = self.d_fullFile[key][i] + "/" + key
+                    v_dest =    (   self.d_fullFile[key][i]+ "/" +
+                                    self.t_distDirPath[1] + "/" + key
+                                )
+                    v_docDest = (   self.d_fullFile[key][i] + "/" +
+                                    self.t_distDirPath[0] + "/" +
+                                    self.d_docPath[key]
+                                )
+
                     v_localLibFile = v_src + "/" + key + ".py"
                     v_distLibFile = v_dest + "/" + key + ".py"
                     
+                    ## dbg
                     i_debug(v_dbg, "v_localLibFile", v_localLibFile)
                     i_debug(v_dbg, "v_distLibFile", v_distLibFile)
                     
-                    
+                    ## Action
                     if self.f_libVersionComparator(v_localLibFile, v_distLibFile, key):
                     
                         ## dbg
                         i_debug(v_dbg, "v_dest", v_dest)
+                        i_debug(v_dbg, "v_docDest", v_docDest)
                         
                         ## Action
-                        # dir_util.copy_tree  (   v_src, 
-                                                # v_dest, preserve_mode=1, 
-                                                # preserve_times=1, 
-                                                # preserve_symlinks=0, 
-                                                # update=0, 
-                                                # verbose=0, 
-                                                # dry_run=0
-                                            # )
-                        
+                        dir_util.copy_tree  (   v_src, 
+                                                v_dest, preserve_mode=1, 
+                                                preserve_times=1, 
+                                                preserve_symlinks=0, 
+                                                update=0, 
+                                                verbose=0, 
+                                                dry_run=0
+                                            )
+                                            
+                        dir_util.copy_tree  (   v_docSrc, 
+                                                v_docDest, preserve_mode=1, 
+                                                preserve_times=1, 
+                                                preserve_symlinks=0, 
+                                                update=0, 
+                                                verbose=0, 
+                                                dry_run=0
+                                            )
+
+####
+
+    def f_setTestOn( self ) :
+        """ active le mode Test.
+        
+            Lorsque se mode est active, seul le travail sur 'fakeLib' sera effectue
+        """
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        i_debug = self.i_dbg.dbgPrint 
+        i_debug(v_dbg2, "f_setTestOn", self.f_setTestOn)
+        
+        ## Action
+        self.v_testMode = True
+        print( "Vous etes maintenant en mode Test" )
+                                            
 ####
 
 def f_osIdentifier() :
@@ -337,16 +396,19 @@ def main() :
     """ Fonction principale """
     parser = argparse.ArgumentParser()
     parser.add_argument( "-d", "--debug", action='store_true', help="activation du mode debug")
+    parser.add_argument( "-t", "--test", action='store_true', help="activation du mode Test")
                         
     args = parser.parse_args()
     
     f_osIdentifier()
     
     if args.debug :
-        print( "Mode Debug activer" )
+        print( "Mode Debug active" )
         i_replicator = C_bougeTonFile( True )
     else :
         i_replicator = C_bougeTonFile( False )
+        
+    if args.test : i_replicator.f_setTestOn()
 
     i_git = C_GitChk()
     i_git.f_gitBranchChk()

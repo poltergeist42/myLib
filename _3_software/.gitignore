@@ -2,6 +2,7 @@
 
 ## Liste des fichiers et dossiers à ignorer
 _3_software/chkBranch*
+chkBranch*.*
 
 #.gitignore
 
