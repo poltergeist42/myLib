@@ -8,7 +8,7 @@ Infos
 
    :Nom du fichier:     imageContour.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160912
+   :Version:            20161001
 
 ####
 
@@ -92,6 +92,10 @@ class C_ImageContour( object ) :
         
         self.v_maskOn           = False
         self.v_outputFilename   = False
+        self.v_imgSrc           = False
+        self.v_outContour       = False
+        self.v_outSubstract     = False
+        self.v_numberOfImgSrc   = False
         
         self.m_npImg1           = False
         self.m_npImg2           = False
@@ -156,19 +160,22 @@ class C_ImageContour( object ) :
         i_debug(v_dbg2, "f_openImage", self.f_openImage)
         
         ## Action
+        v_workDir = self.v_imgSrc
         if v_img1 and not v_maskOn :
             self.i_img1 = v_img1 + ".jpg"
-            self.m_npImg1 = np.array(Image.open(self.i_img1), dtype = np.uint8)
+            
+            self.m_npImg1 = np.array(Image.open(v_workDir + self.i_img1), dtype = np.uint8)
         
         if v_img2 :
             self.i_img2 = v_img2 + ".jpg"
-            self.m_npImg2 = np.array(Image.open(self.i_img2), dtype = np.uint8)
+            self.m_npImg2 = np.array(Image.open(v_workDir + self.i_img2), dtype = np.uint8)
 
         if v_maskOn and not v_img2 :
             ## Creation d'une matrice de la taille de m_npImg2 et remplissage de cette matrice
             ## avec le contenu de m_npImg1
+            v_workDir = self.v_outSubstract
             self.i_img1 = v_img1 + ".jpg"
-            self.m_npImg1 = np.array(Image.open(self.i_img1), dtype = np.uint8)
+            self.m_npImg1 = np.array(Image.open(v_workDir + self.i_img1), dtype = np.uint8)
             self.m_npBWMask = np.zeros(self.m_npImg2.shape, dtype = np.uint8)
             for rowIdx, row in enumerate( self.m_npImg1 ) :
                 for colIdx, val in enumerate( row ) :
@@ -183,7 +190,8 @@ class C_ImageContour( object ) :
         
             Soustraction de l'image vide (ou du mask Noir et Blanc) par le model
             
-            **Dans une une soustrataction photoVide / photoModele**
+            **Dans une soustrataction photoVide / photoModele**
+            
             Pour ne pas avoir de valeur negative lors de la soustraction (pixel parasites),
             les valeurs de la matrice m_npImg1 (photoVide) sont contraintes
             entre m_npImg1 (lui meme) pour les valeurs hautes et m_npImg2 (photoModele)
@@ -191,7 +199,8 @@ class C_ImageContour( object ) :
             
                 m_npSubst = m_npImg2 - m_npImg1
                 
-            **Dans une une soustrataction photoMask / photoModele**
+            **Dans une soustrataction photoMask / photoModele**
+            
             Les valeurs de la matrice m_npImg2 (la matrice du modele) sont contraintes
             entre m_npImg2 (lui meme) pour les valeurs hautes et m_npImg1 (photoMask) pour
             les valeurs basses. La soustraction sera : ::
@@ -228,7 +237,7 @@ class C_ImageContour( object ) :
         """ **f_createImage()**
         
             Permet de creer l'image intermediaire si la variable de l'instance 'v_maskOn'
-            est 'False' et l'image finale si la variable de l'instance 'v_maskOn'
+            est 'False' et si l'image finale si la variable de l'instance 'v_maskOn'
             est 'True'
             
             Le nom l'image generee aura le prefix 'out_' suivie du nom du model (i_img2)
@@ -247,8 +256,11 @@ class C_ImageContour( object ) :
         if self.v_maskOn :
             self.f_invert()
             self.f_setMask()
+            v_workDir = self.v_outContour
+        else :
+            v_workDir = self.v_outSubstract
             
-        self.i_imgSubst.save(self.v_outputFilename)
+        self.i_imgSubst.save(v_workDir + self.v_outputFilename)
         
 ####
 
@@ -260,7 +272,7 @@ class C_ImageContour( object ) :
             au fond de l'image alors que le blanc correspond a la forme du modele.
             
             c'est la valeur de la variable 'v_outputFilename' qui doit etre passe 
-            en argument v_img1.
+            en argument dans v_img1.
             
             L'image creer apres le traitemant se nomme 'cvOut.jpg' ce nom est sauvegarde
             dans la variable 'i_BWMask'
@@ -274,9 +286,10 @@ class C_ImageContour( object ) :
         i_debug(v_dbg2, "f_createMask", self.f_createMask)
         
         ## Action
+        v_workDir = self.v_outSubstract
         
         # charger l'image, la convertir en niveaux de gris, et la brouiller legerement
-        i_image = cv2.imread(v_img1)
+        i_image = cv2.imread(v_workDir + v_img1)
         i_gray = cv2.cvtColor(i_image, cv2.COLOR_BGR2GRAY)
         i_gray = cv2.GaussianBlur(i_gray, (5, 5), 0)
 
@@ -286,7 +299,7 @@ class C_ImageContour( object ) :
         i_work = cv2.threshold(i_gray, 45, 255, cv2.THRESH_BINARY)[1]
         i_work = cv2.erode(i_work, None, iterations=2)
         i_work = cv2.dilate(i_work, None, iterations=2)
-        cv2.imwrite("cvOut.jpg", i_work)
+        cv2.imwrite(v_workDir + "cvOut.jpg", i_work)
         self.i_BWMask = "cvOut"
         
         self.f_setMask()
@@ -311,6 +324,8 @@ class C_ImageContour( object ) :
         ## Action
         self.i_imgSubst = ImageOps.invert(self.i_imgSubst)
         
+####
+        
     def f_setMask( self ) :
         """ **f_setMask()**
         
@@ -332,6 +347,8 @@ class C_ImageContour( object ) :
         if not self.v_maskOn :
             self.v_maskOn = True
             i_debug(v_dbg, "v_maskOn", self.v_maskOn)
+            
+####
             
     def f_resetVar( self ) :
         """ **f_resetVar()**
@@ -360,6 +377,147 @@ class C_ImageContour( object ) :
         self.m_npImg2           = False
         self.m_npBWMask         = False
         self.m_npSubst          = False
+       
+####
+
+    def f_setWorkDir(   self,
+                        v_imgSrc = "./imgSrc", 
+                        v_outSubstract = "./outSubstract",
+                        v_outContour = "./outContour"
+                    ) :
+        """ **f_setWorkDir( string, string, string)**
+        
+            Permet de choisir le chemin des dossier de travail.
+            Les dossiers de travail sont :
+            
+            - "imgSrc" : C'est le dossier source dans lequel doivent etre placer les
+              photos (le mask + le sujet) qui seront traitee.
+              
+            - "outSubstract" : C'est le dossier dans lequel vont etre generees les photos
+              de la soustraction simple. C'est photos serviront pour la soustraction
+              detourage de contour.
+              
+            - "outContour" : C'est le dossier dans lequel vont etre generee les photos de
+              la soustraction avec detection de contour.
+              
+            Si le dossier n'existe pas, il sera automatiquement creer. Si il existe deja,
+            aucune action ne sera execute et les donnees presentes dans le dossier ne
+            seront pas ecrasee.
+        """
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug(v_dbg2, "f_setWorkDir", self.f_setWorkDir)
+        
+        ## Action
+        self.v_imgSrc = v_imgSrc + "/"
+        self.v_outSubstract = v_outSubstract + "/"
+        self.v_outContour = v_outContour + "/"
+                
+        ## dbg
+        i_debug(v_dbg2, "v_imgSrc", self.v_imgSrc)
+        i_debug(v_dbg2, "v_outSubstract", self.v_outSubstract)
+        i_debug(v_dbg2, "v_outContour", self.v_outContour)
+        
+        ## Action
+        os.makedirs(os.path.normpath(self.v_imgSrc), mode=0o777, exist_ok=True)
+        os.makedirs(os.path.normpath(self.v_outSubstract), mode=0o777, exist_ok=True)
+        os.makedirs(os.path.normpath(self.v_outContour), mode=0o777, exist_ok=True)
+                # os.makedirs() : Permet de creer le repertoire. Si les 
+                # repertoires parents n'existent pas, os.makedirs
+                # les creera automatiquement
+                #
+                # os.path.normpath() permet de normaliser la syntaxe du
+                # chemin indiquer par v_target.
+                # N.B : pour windows, les "\\" et '/' seront remplacer
+                # par '\'
+        
+####
+
+    def f_SetNumberOfImgSrc( self, v_setNumber = False ) :
+        """ **f_SetNumberOfImgSrc( int )**
+        
+            Permet de determiner le nombre d'image de la sequence.
+            Si la valeur n'est pas fixee de facon arbitraire (v_setNumber), Le nombre
+            d'image du dossier 'imgSrc' est divise par 2 car il y a une paritee entre les
+            images "sujet" et les images 'vide'.
+        """
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug(v_dbg2, "f_SetNumberOfImgSrc", self.f_SetNumberOfImgSrc)
+        
+        ## Action
+        if not v_setNumber :
+            v_setNumber = ( len( os.listdir( self.v_imgSrc ) ))
+            if v_setNumber < 2 :
+                v_msg = "Vous devez mettre au moins 2 photos dans le dossier 'imgSrc' !\n" \
+                        "Ce dossier en comporte actuellement {}".format( v_setNumber )
+                raise ValueError(v_msg)
+                
+            self.v_numberOfImgSrc  = v_setNumber // 2
+            
+            ## dbg
+            i_debug(v_dbg2, "v_setNumber", v_setNumber)
+            i_debug(v_dbg2, "v_numberOfImgSrc", self.v_numberOfImgSrc)
+            
+        ## Action
+        else :
+            if  not isinstance(v_setNumber, "int" ) : int( v_setNumber )
+            if v_setNumber < 1 :
+                v_msg = "Vous devez mettre une valeur au moin egale a '1' !"
+                raise ValueError(v_msg)
+                
+            self.v_numberOfImgSrc = v_setNumber
+            
+            ## dbg
+            i_debug(v_dbg2, "v_setNumber", v_setNumber)
+            i_debug(v_dbg2, "v_numberOfImgSrc", self.v_numberOfImgSrc)            
+####
+            
+    def f_runSequence( self, v_maskPrim, v_modelPrim ) :
+        """ **f_runSequence( str, str )**
+        
+            Permet de lancer la sequence complete depuis un autre programme
+            
+            - v_maskPrim : c'est le mask (l'image vide)
+            - v_modelPrim : c'est le model
+            
+            *N.B1* : les noms doivent etre saisie sans le numero car il sera ajouter dans
+                   le traitemant pendant la boucle.
+                  
+            *N.B2* : La numerotation etant arbitraire, elle doit etre adaptee 
+                   a vos besoin
+        """
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug(v_dbg2, "f_runSequence", self.f_runSequence)
+        
+        ## Action        
+        self.f_setWorkDir()
+        self.f_SetNumberOfImgSrc()
+            
+        for n in range( self.v_numberOfImgSrc ) :
+            print( "traitement d'image {} / {}".format( n+1, self.v_numberOfImgSrc ))
+            
+            v_mask = v_maskPrim + "_{:03}".format(n)
+            v_model = v_modelPrim + "_{:03}".format(n)
+            
+            self.f_openImage( v_mask, v_img2 = v_model )
+            self.f_imageSubst()
+            self.f_createImage()
+                               
+            self.f_createMask( self.v_outputFilename )
+            self.f_openImage( self.i_BWMask, v_maskOn = True )
+            self.f_imageSubst()
+            self.f_createImage()
+            
+            self.f_resetVar()
+
        
 #####
 
@@ -413,6 +571,7 @@ def main() :
                     "\tle 1er\t: Le nom de l'image servant de mask\n",
                     "\tle 2eme\t: le nom de l'image servant de modele" )
         else :
+            i_ic.f_setWorkDir()
             l_lstArgsImage = []
             for i in args.images :
                 l_lstArgsImage.append( i )
@@ -420,6 +579,8 @@ def main() :
             v_maskPrim, v_modelPrim = l_lstArgsImage
             if args.number :
                 for n in range( args.number ) :
+                    print( "traitement d'image {} / {}".format( n+1, args.number ))
+                    
                     v_mask = v_maskPrim + "_{:03}".format(n)
                     v_model = v_modelPrim + "_{:03}".format(n)
                     
@@ -433,6 +594,7 @@ def main() :
                     i_ic.f_createImage()
                     
                     i_ic.f_resetVar()
+                    
             
             else :
                 v_mask = v_maskPrim

@@ -1,17 +1,17 @@
 ## [ .gitignore ]
 
 ## Liste des fichiers et dossiers à ignorer
-
+_3_software/chkBranch*
 
 #.gitignore
 
 ## [ Dossiers a ignorer ]
-test*/
+_3_software/_3-1_test*/
+_5_*/
+_6_*/
+_7_*/
 *_v/
 __pycache__/
-imgSrc/*
-outContour/*
-outSubstract/*
 
 
 ## [ listes des extentions a ignorer ]
@@ -21,6 +21,4 @@ outSubstract/*
 *.mkv
 *.mp4
 *.json
-*.jpeg
-*.jpg
 Thumbs.db

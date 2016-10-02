@@ -53,7 +53,7 @@
 </tr>
 <tr class="field-even field"><th class="field-name">Autheur:</th><td class="field-body"><a class="reference external" href="https://github.com/poltergeist42">Poltergeist42</a></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Version:</th><td class="field-body">20160912</td>
+<tr class="field-odd field"><th class="field-name">Version:</th><td class="field-body">20161001</td>
 </tr>
 </tbody>
 </table>
@@ -134,11 +134,21 @@
 <p>Class permettant de detourer et d&#8217;isoler la forme exterieur d&#8217;un sujet pris sur
 fond unie.</p>
 <dl class="method">
+<dt id="_3_software.myLib.imageContour.imageContour.C_ImageContour.f_SetNumberOfImgSrc">
+<code class="descname">f_SetNumberOfImgSrc</code><span class="sig-paren">(</span><em>v_setNumber=False</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.imageContour.imageContour.C_ImageContour.f_SetNumberOfImgSrc" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_SetNumberOfImgSrc( int )</strong></p>
+<p>Permet de determiner le nombre d&#8217;image de la sequence.
+Si la valeur n&#8217;est pas fixee de facon arbitraire (v_setNumber), Le nombre
+d&#8217;image du dossier &#8216;imgSrc&#8217; est divise par 2 car il y a une paritee entre les
+images &#8220;sujet&#8221; et les images &#8216;vide&#8217;.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="_3_software.myLib.imageContour.imageContour.C_ImageContour.f_createImage">
 <code class="descname">f_createImage</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.imageContour.imageContour.C_ImageContour.f_createImage" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p><strong>f_createImage()</strong></p>
 <p>Permet de creer l&#8217;image intermediaire si la variable de l&#8217;instance &#8216;v_maskOn&#8217;
-est &#8216;False&#8217; et l&#8217;image finale si la variable de l&#8217;instance &#8216;v_maskOn&#8217;
+est &#8216;False&#8217; et si l&#8217;image finale si la variable de l&#8217;instance &#8216;v_maskOn&#8217;
 est &#8216;True&#8217;</p>
 <p>Le nom l&#8217;image generee aura le prefix &#8216;<a href="#id1"><span class="problematic" id="id2">out_</span></a>&#8216; suivie du nom du model (i_img2)
 et l&#8217;extension &#8216;jpg&#8217;</p>
@@ -152,7 +162,7 @@ et l&#8217;extension &#8216;jpg&#8217;</p>
 Ces traitemant convertissent l&#8217;image en Noir et blanc. La zone Noir correspond
 au fond de l&#8217;image alors que le blanc correspond a la forme du modele.</p>
 <p>c&#8217;est la valeur de la variable &#8216;v_outputFilename&#8217; qui doit etre passe 
-en argument v_img1.</p>
+en argument dans v_img1.</p>
 <p>L&#8217;image creer apres le traitemant se nomme &#8216;cvOut.jpg&#8217; ce nom est sauvegarde
 dans la variable &#8216;i_BWMask&#8217;</p>
 <p>&#8216;i_BWMask&#8217; doit etre passee en argument à &#8216;f_openImage&#8217; lors de son second appel</p>
@@ -163,16 +173,16 @@ dans la variable &#8216;i_BWMask&#8217;</p>
 <code class="descname">f_imageSubst</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.imageContour.imageContour.C_ImageContour.f_imageSubst" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p><strong>f_imageSubst(  )</strong></p>
 <p>Soustraction de l&#8217;image vide (ou du mask Noir et Blanc) par le model</p>
-<p><strong>Dans une une soustrataction photoVide / photoModele</strong>
-Pour ne pas avoir de valeur negative lors de la soustraction (pixel parasites),
+<p><strong>Dans une soustrataction photoVide / photoModele</strong></p>
+<p>Pour ne pas avoir de valeur negative lors de la soustraction (pixel parasites),
 les valeurs de la matrice m_npImg1 (photoVide) sont contraintes
 entre m_npImg1 (lui meme) pour les valeurs hautes et m_npImg2 (photoModele)
 pour les valeurs basses. La soustraction sera :</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">m_npSubst</span> <span class="o">=</span> <span class="n">m_npImg2</span> <span class="o">-</span> <span class="n">m_npImg1</span>
 </pre></div>
 </div>
-<p><strong>Dans une une soustrataction photoMask / photoModele</strong>
-Les valeurs de la matrice m_npImg2 (la matrice du modele) sont contraintes
+<p><strong>Dans une soustrataction photoMask / photoModele</strong></p>
+<p>Les valeurs de la matrice m_npImg2 (la matrice du modele) sont contraintes
 entre m_npImg2 (lui meme) pour les valeurs hautes et m_npImg1 (photoMask) pour
 les valeurs basses. La soustraction sera :</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">m_npSubst</span> <span class="o">=</span> <span class="n">m_npImg1</span> <span class="o">-</span> <span class="n">m_npImg2</span>
@@ -227,11 +237,48 @@ variables entre chaque iteration.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="_3_software.myLib.imageContour.imageContour.C_ImageContour.f_runSequence">
+<code class="descname">f_runSequence</code><span class="sig-paren">(</span><em>v_maskPrim</em>, <em>v_modelPrim</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.imageContour.imageContour.C_ImageContour.f_runSequence" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_runSequence( str, str )</strong></p>
+<p>Permet de lancer la sequence complete depuis un autre programme</p>
+<ul class="simple">
+<li>v_maskPrim : c&#8217;est le mask (l&#8217;image vide)</li>
+<li>v_modelPrim : c&#8217;est le model</li>
+</ul>
+<dl class="docutils">
+<dt><em>N.B1</em></dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">les noms doivent etre saisie sans le numero car il sera ajouter dans</span><dd>le traitemant pendant la boucle.</dd>
+<dt><em>N.B2</em></dt>
+ <span class="classifier-delimiter">:</span> <span class="classifier">La numerotation etant arbitraire, elle doit etre adaptee </span><dd>a vos besoin</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="_3_software.myLib.imageContour.imageContour.C_ImageContour.f_setMask">
 <code class="descname">f_setMask</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.imageContour.imageContour.C_ImageContour.f_setMask" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p><strong>f_setMask()</strong></p>
 <p>Inverse automatiquement la valeur de &#8216;v_maskOn&#8217;</p>
 <p>Cette methode est appellee par &#8216;f_createMask&#8217; et &#8216;f_createMask&#8217;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.imageContour.imageContour.C_ImageContour.f_setWorkDir">
+<code class="descname">f_setWorkDir</code><span class="sig-paren">(</span><em>v_imgSrc='./imgSrc'</em>, <em>v_outSubstract='./outSubstract'</em>, <em>v_outContour='./outContour'</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.imageContour.imageContour.C_ImageContour.f_setWorkDir" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_setWorkDir( string, string, string)</strong></p>
+<p>Permet de choisir le chemin des dossier de travail.
+Les dossiers de travail sont :</p>
+<ul class="simple">
+<li>&#8220;imgSrc&#8221; : C&#8217;est le dossier source dans lequel doivent etre placer les
+photos (le mask + le sujet) qui seront traitee.</li>
+<li>&#8220;outSubstract&#8221; : C&#8217;est le dossier dans lequel vont etre generees les photos
+de la soustraction simple. C&#8217;est photos serviront pour la soustraction
+detourage de contour.</li>
+<li>&#8220;outContour&#8221; : C&#8217;est le dossier dans lequel vont etre generee les photos de
+la soustraction avec detection de contour.</li>
+</ul>
+<p>Si le dossier n&#8217;existe pas, il sera automatiquement creer. Si il existe deja,
+aucune action ne sera execute et les donnees presentes dans le dossier ne
+seront pas ecrasee.</p>
 </dd></dl>
 
 </dd></dl>

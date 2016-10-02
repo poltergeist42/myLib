@@ -3,6 +3,7 @@
   devChk
   doc
   imageContour
-* master
+* libReplicator
+  master
   objJson
   ultrason

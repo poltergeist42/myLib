@@ -9,7 +9,7 @@ Infos
 
    :Nom du fichier:     libReplicator.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160925
+   :Version:            20161002
 
 ####
 
@@ -50,6 +50,9 @@ from __future__ import absolute_import  # Permet d'importer en chemin abslolu ou
                                         # doit etre importer en premier
 
 import os, sys
+sys.path.insert(0,'..')                 # ajouter le repertoire precedent au path (non définitif)
+                                        # pour pouvoir importer les modules et paquets parent
+import argparse
 from os import system
 try :
     from myLib.devChk.devChk import C_DebugMsg
@@ -84,8 +87,7 @@ class C_bougeTonFile(object) :
         l'ensemble des projet auquel elles sont utiles
     """
         
-    def __init__(self) :
-        """ Init variables """    def __init__( self, v_debug=False ) :
+    def __init__( self, v_debug=False ) :
         """ 
             **__init()**
         
@@ -96,13 +98,16 @@ class C_bougeTonFile(object) :
         self.i_dbg = C_DebugMsg(v_debug)
                 
         ## declaration des variables
-        self.v_localDir = os.getcwd()
-        self.v_workDir = "./myLib"
-        self.l_listDir = os.listdir(self.v_workDir)
-        self.l_subDirProjectList = []
-        self.fichierTxt = "projectList.txt"
-        self.d_fullFile = {}
-
+        self.v_localDir             = os.getcwd()
+        self.v_workDir              = "./myLib"
+        self.v_docDir               = "../_1_userDoc"
+        self.l_listDir              = os.listdir(self.v_workDir)
+        self.l_docListDir           = os.listdir(self.v_docDir)
+        self.l_subDirProjectList    = []
+        self.t_distDirPath          = ("_1_userDoc/", "_3_software/")
+        self.fichierTxt             = "projectList.txt"
+        self.d_fullFile             = {}
+        self.d_docPath              = {}
         
 ####
     
@@ -117,58 +122,30 @@ class C_bougeTonFile(object) :
         print("\n\t\tL'instance de la class {} est terminee".format(v_className))
 
 ####
-        
-    def f_osIdentifier(self) :
-        """ Permet d'identifier le type de systeme d'exploitation """
-        ## dbg
-        v_dbg = 1
-        v_dbg2 = 1
-        i_debug = self.i_dbg.dbgPrint 
-        i_debug(v_dbg2, "f_osIdentifier", f_osIdentifier)
-
-        
-        v_osType = sys.platform
-        
-        if v_osType == 'linux' :
-            v_clear = "clear"
-        elif  v_osType == "win32" :
-            v_clear = "cls"
-            
-        system(v_clear)
-        
-        ## dbg
-        i_debug(v_dbg, "v_osType", v_osType)
-
-####
 
     def f_arboList(self) :
         """ parcourrir l'ensemble des sous dossier du dossier 'myLib'
             et copie l'ensemble dans le dictionnaire : d_fullFile
         """
         ## dbg
-        v_dbg = 1
-        v_dbg2 = 1
+        v_dbg = 0
+        v_dbg2 = 0
         i_debug = self.i_dbg.dbgPrint 
-        i_debug(v_dbg2, "f_arboList", f_arboList)
-        
-        ## dbg
+        i_debug(v_dbg2, "f_arboList", self.f_arboList)
         i_debug(v_dbg, "l_listDir", self.l_listDir)
         
+        ## Action
         for i in self.l_listDir :
             if i == "__pycache__" or i == "__init__.py" :
                 pass
             else :
                 v_subDirLocal = self.v_workDir + "/" + i
                 
-                ## dbg
-                i_debugt(v_dbg, "v_subDirLocal", v_subDirLocal)
-                
+                ## Action
                 v_project = v_subDirLocal + "/" + self.fichierTxt
                 self.l_subDirProjectList.append(v_project)
                 
-                ## dbg
-                i_debug(v_dbg, "v_project", v_project)
-                
+                ## Action
                 l_parcourProject = [1]
                             # On initialise la list 'l_parcourProject[0]' a 1
                             # L'index [0] est incremente de 1 a chaque nouvelle entree.
@@ -191,23 +168,27 @@ class C_bougeTonFile(object) :
                     if v_chk : v_projectTxt.close()
 
                 self.d_fullFile[i] = l_parcourProject
+                self.d_docPath[i] = "docLib_" + i
                 
                 ## dbg
+                i_debug(v_dbg, "v_subDirLocal", v_subDirLocal)
+                i_debug(v_dbg, "v_project", v_project)
                 i_debug(v_dbg, "l_subDirProjectList", self.l_subDirProjectList)
+                i_debug(v_dbg, "d_docPath", self.d_docPath)
             
 ####
 
-    def f_libVersionComparator(self, v_localLibFile, v_distLibFile) :
+    def f_libVersionComparator(self, v_localLibFile, v_distLibFile, v_key) :
         """ Permet d'identifier si la version de la lib distante
             est differente de la lib local
         """
         ## dbg
-        v_dbg = 1
-        v_dbg2 = 1
+        v_dbg = 0
+        v_dbg2 = 0
         i_debug = self.i_dbg.dbgPrint 
-        i_debug(v_dbg2, "f_libVersionComparator", f_libVersionComparator)
+        i_debug(v_dbg2, "f_libVersionComparator", self.f_libVersionComparator)
         
-        
+        ## Action
         v_boucle = True
         v_copyLib = False
         v_local = self.f_libVersion(v_localLibFile)
@@ -215,11 +196,11 @@ class C_bougeTonFile(object) :
         
         if v_local == v_dist :
             v_copyLib = False
-            print("les deux version sont identiques")
+            print("les deux versions de la lib {} sont identiques".format(v_key))
         else :
             while v_boucle :
                 print("\n\tversion locale : {} - version distante : {}\n".format(v_local, v_dist))
-                v_question = input("Voulez-vous remplacer la lib distante par la lib locale (O/N) ? ").lower()
+                v_question = input("Voulez-vous remplacer la version distante de {} par la version locale (O/N) ? ".format(v_key)).lower()
                 
                 if v_question == 'o' or v_question == 'y' or v_question == "oui" or v_question == "yes" :
                     v_copyLib = True
@@ -232,6 +213,7 @@ class C_bougeTonFile(object) :
                     ## dbg
                     i_debug(v_dbg, "v_copyLib", v_copyLib)
                     
+                ## Action    
                 else :
                     print("repondre par O ou N !")
                     
@@ -241,11 +223,14 @@ class C_bougeTonFile(object) :
 
     def f_libVersion(self, v_libFile) :
         """ renvoie la version contenu dans la lib qui est passe en argument """
-        v_dbg = 1
-        v_dbg2 = 1
+        ## dbg
+        v_dbg = 0
+        v_dbg2 = 0
         i_debug = self.i_dbg.dbgPrint 
-        i_debug(v_dbg2, "f_libVersion", f_libVersion)
+        i_debug(v_dbg2, "f_libVersion", self.f_libVersion)
 
+        
+        ## Action
         v_chaine = ":Version:"
         v_compteur = 0
         v_chk = True
@@ -277,25 +262,23 @@ class C_bougeTonFile(object) :
 
     def f_copyAll(self) :
         """ Copie les differentes librairies dans les projet aux quels elles appartiennent """
+        ## dbg
         v_dbg = 1
         v_dbg2 = 1
         i_debug = self.i_dbg.dbgPrint 
-        i_debug(v_dbg2, "f_copyAll", f_copyAll)
-        
-        ##dbg
+        i_debug(v_dbg2, "f_copyAll", self.f_copyAll)
         i_debug(v_dbg2, "d_fullFile", self.d_fullFile)
         
+        ## Action
         for key in self.d_fullFile :
-        
-            ## dbg
-            i_debug(v_dbg, "key", key)
-            i_debug(v_dbg, "self.d_fullFile[key][0]", self.d_fullFile[key][0])
-            
             v_src = self.v_workDir + "/" + key
             
             ## dbg
-            i_debug(v_dbg, "type(v_src)", type(v_src))
+            i_debug(v_dbg, "key", key)
+            i_debug(v_dbg, "self.d_fullFile[key][0]", self.d_fullFile[key][0])
+            i_debug(v_dbg, "type(v_src)", type(v_src))           
             
+            ## Action
             for i in range(self.d_fullFile[key][0]) :
             
                 ## dbg
@@ -303,19 +286,49 @@ class C_bougeTonFile(object) :
                 i_debug(v_dbg, "self.d_fullFile[key][i]", self.d_fullFile[key][i])
                 i_debug(v_dbg, "type(self.d_fullFile[key][i])", type(self.d_fullFile[key][i]))
                 
+                ## Action
                 if i == 0 or self.d_fullFile[key][1] == False :
-                        pass
+                    pass
                 else :
                     v_dest = self.d_fullFile[key][i] + "/" + key
                     v_localLibFile = v_src + "/" + key + ".py"
                     v_distLibFile = v_dest + "/" + key + ".py"
-                    if self.f_libVersionComparator(v_localLibFile, v_distLibFile):
+                    
+                    i_debug(v_dbg, "v_localLibFile", v_localLibFile)
+                    i_debug(v_dbg, "v_distLibFile", v_distLibFile)
+                    
+                    
+                    if self.f_libVersionComparator(v_localLibFile, v_distLibFile, key):
                     
                         ## dbg
                         i_debug(v_dbg, "v_dest", v_dest)
                         
-                        dir_util.copy_tree(v_src, v_dest, preserve_mode=1, preserve_times=1, preserve_symlinks=0, update=0, verbose=0, dry_run=0)
+                        ## Action
+                        # dir_util.copy_tree  (   v_src, 
+                                                # v_dest, preserve_mode=1, 
+                                                # preserve_times=1, 
+                                                # preserve_symlinks=0, 
+                                                # update=0, 
+                                                # verbose=0, 
+                                                # dry_run=0
+                                            # )
                         
+####
+
+def f_osIdentifier() :
+    """ Permet d'identifier le type de systeme d'exploitation """
+    
+    v_osType = sys.platform
+    
+    if v_osType == 'linux' :
+        v_clear = "clear"
+    elif  v_osType == "win32" :
+        v_clear = "cls"
+        
+    system(v_clear)
+
+####
+
 ########
 # Main #
 ########
@@ -327,7 +340,7 @@ def main() :
                         
     args = parser.parse_args()
     
-    print("\n\t\t## Creation de l'instance ##\n")
+    f_osIdentifier()
     
     if args.debug :
         print( "Mode Debug activer" )
@@ -335,13 +348,12 @@ def main() :
     else :
         i_replicator = C_bougeTonFile( False )
 
-    i_replicator.f_osIdentifier()
     i_git = C_GitChk()
     i_git.f_gitBranchChk()
     i_replicator.f_arboList()
     i_replicator.f_copyAll()
     
-    input("\n\n\t\t fin de la sequence ")
+    print("\n\n\t\t fin de la sequence ")
     
 
 if __name__ == '__main__':
