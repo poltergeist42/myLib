@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -38,13 +38,12 @@ lexique
 objectif
 ========
 
-Cette Librairie ne fait rien. Elle n'existe que pour pouvoir tester certain
-elements des autres lib en cours de developpement.
+    Cette Librairie ne fait rien. Elle n'existe que pour pouvoir tester certain
+    elements des autres lib en cours de developpement.
 
-La class est fictive, mais elle doit tout de meme etre commenter pour pourvoir generer la
-documentation de facon automatique avec Sphinx et et ainsi pouvoir tester des elements de
-traitemant de la documentation.
-    
+    La class est fictive, mais elle doit tout de meme etre commenter pour pourvoir generer
+    la documentation de facon automatique avec Sphinx et ainsi pouvoir tester des elements
+    de traitemant de la documentation.
     
 """
 
@@ -65,7 +64,7 @@ class C_FakeLib( object ) :
     """
     def __init__( self, v_debug=False ) :
         """ 
-            **__init()**
+            **__init__()**
         
             Creation et initialisation des variables globales de cette Class
         """
@@ -99,7 +98,7 @@ class C_FakeLib( object ) :
         print("\n\t\tL'instance de la class {} est terminee".format(v_className))
         
     def f_doNothing( self ) :
-        """ Cette fonction ne fait rien d'autre que de retourner 'True" """
+        """ Cette fonction ne fait rien d'autre que de retourner 'True' """
         return True
         
 def main() :

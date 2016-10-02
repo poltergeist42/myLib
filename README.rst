@@ -42,6 +42,14 @@ Liste des bibliothèques
         * Gestion du mode Pull-UP / Pull-DOWN en interne et possibilité de la gérer en
           dehors du Pi.
         * Gestion des interruptions (action bloquante ou thread parallèle)
+        
+:fakeLib:
+    Cette Librairie ne fait rien. Elle n'existe que pour pouvoir tester certain
+    elements des autres lib en cours de developpement.
+
+    La class est fictive, mais elle doit tout de meme etre commenter pour pourvoir generer
+    la documentation de facon automatique avec Sphinx et ainsi pouvoir tester des elements
+    de traitemant de la documentation.
 
 :imageContour:
     Permet de détourer proprement une image (ou une série) pour ne laisser que le sujet de
