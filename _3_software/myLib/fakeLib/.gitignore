@@ -3,7 +3,7 @@
 ## Liste des fichiers et dossiers à ignorer
 _3_software/chkBranch*
 chkBranch*.*
-Bug_TODOList.rst
+Bug_TODOList*.*
 
 #.gitignore
 
