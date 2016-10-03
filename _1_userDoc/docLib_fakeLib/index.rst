@@ -13,4 +13,5 @@ Contents:
    
    README_fakeLib
    fakeLib
+   Bug_TODOList
 

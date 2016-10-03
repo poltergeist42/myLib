@@ -15,10 +15,10 @@ Model Type
 Bug identifies
 ==============
 
-    :Date de saisie:        
+    :Date de saisie:        20161003
     :Date de traitemant:    
-    :Status:                
-    :Problematique:         
+    :Status:                NONE
+    :Problematique:         La doc automatique avec sphinx ne marche pas.
     
 ------------------------------------------------------------------------------------------
 

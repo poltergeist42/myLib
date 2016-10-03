@@ -13,4 +13,5 @@ Contents:
 
    README_devChk
    devChk
+   Bug_TODOList
 
