@@ -13,4 +13,7 @@ Contents:
 
    README_libReplicator
    libReplicator
+   Bug_TODOList
+
+   
 
