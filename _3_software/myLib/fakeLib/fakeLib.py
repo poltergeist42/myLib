@@ -8,7 +8,7 @@ Infos
 
    :Nom du fichier:     fakeLib.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20161002
+   :Version:            20161004
 
 ####
 
