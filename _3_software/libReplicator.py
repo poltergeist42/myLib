@@ -9,7 +9,7 @@ Infos
 
    :Nom du fichier:     libReplicator.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20161002
+   :Version:            20161004
 
 ####
 
@@ -219,6 +219,15 @@ class C_bougeTonFile(object) :
         if v_local == v_dist :
             v_copyLib = False
             print("les deux versions de la lib {} sont identiques".format(v_key))
+        elif not v_dist :
+            v_msg = """
+                La version de la lib : {}
+            
+                est figee dans la destination suivante :
+                {}
+            """.format( v_key, v_distLibFile )
+            print( v_msg )
+
         else :
             while v_boucle :
                 print("\n\tversion locale : {} - version distante : {}\n".format(v_local, v_dist))
@@ -264,6 +273,10 @@ class C_bougeTonFile(object) :
             for line in v_localLib : 
                 if v_chaine in line :                   
                     for i in line :
+                        if (i == 'f') or (i == 'F') :
+                            v_vers = False
+                            break
+
                         if i == '2' :
                             v_vers = line[v_compteur:].replace("\n", "")
                             break
@@ -277,6 +290,8 @@ class C_bougeTonFile(object) :
 
         finally :
             if v_chk : v_localLib.close()
+            
+        i_debug(v_dbg, "v_vers", v_vers)
             
         return v_vers
         
