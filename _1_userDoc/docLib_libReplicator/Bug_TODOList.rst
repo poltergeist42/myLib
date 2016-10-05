@@ -8,7 +8,8 @@ Model Type
     :Date de saisie:        
     :Date de traitemant:    
     :Status:                [NONE, WIP, DONE]
-    :Problematique:        
+    
+    :Problematique:         
 
 ------------------------------------------------------------------------------------------
 
@@ -18,7 +19,8 @@ Bug identifies
     :Date de saisie:        
     :Date de traitemant:    
     :Status:                
-    :Problematique:          
+    
+    :Problematique:         
     
 ------------------------------------------------------------------------------------------
 
@@ -40,3 +42,22 @@ ToDo-list
     :Status:                NONE
     
     :Problematique:         Ajouter un journal de traitemant
+    
+------------------------------------------------------------------------------------------
+
+    :Date de saisie:        20161005
+    :Date de traitemant:    
+    :Status:                NONE
+    
+    :Problematique:         Ajouter l'option 'Yes to all' lors de la copie / MAJ des
+                            lib distantes
+    
+------------------------------------------------------------------------------------------
+    
+    :Date de saisie:        20161005
+    :Date de traitemant:    
+    :Status:                NONE
+    
+    :Problematique:         Renonmer la copie distante de la lib avant de copier
+                            la nouvelle version. le nom du dossier renomer devrat etre
+                            sous la forme : yyyymmdd_[nom_de_la_lib]
