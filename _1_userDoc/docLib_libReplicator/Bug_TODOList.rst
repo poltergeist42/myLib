@@ -55,9 +55,11 @@ ToDo-list
 ------------------------------------------------------------------------------------------
     
     :Date de saisie:        20161005
-    :Date de traitemant:    
-    :Status:                NONE
+    :Date de traitemant:    20161005
+    :Status:                DONE
     
     :Problematique:         Renonmer la copie distante de la lib avant de copier
                             la nouvelle version. le nom du dossier renomer devrat etre
-                            sous la forme : yyyymmdd_[nom_de_la_lib]
+                            sous la forme : yyyymmdd_[nom_de_la_lib] ou 'yyyymmdd'
+                            correspond au numero de version de la lib a metrte a jour
+                            dans le dossier distant.

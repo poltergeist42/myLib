@@ -9,7 +9,7 @@ Infos
 
    :Nom du fichier:     libReplicator.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20161004
+   :Version:            20161005
 
 ####
 
@@ -53,6 +53,8 @@ import os, sys
 sys.path.insert(0,'..')                 # ajouter le repertoire precedent au path (non définitif)
                                         # pour pouvoir importer les modules et paquets parent
 import argparse
+import shutil
+
 from os import system
 try :
     from myLib.devChk.devChk import C_DebugMsg
@@ -109,6 +111,7 @@ class C_bougeTonFile(object) :
         self.d_fullFile             = {}
         self.d_docPath              = {}
         self.v_testMode             = False
+        self.v_versDist             = False
         
 ####
     
@@ -215,6 +218,7 @@ class C_bougeTonFile(object) :
         v_copyLib = False
         v_local = self.f_libVersion(v_localLibFile)
         v_dist = self.f_libVersion(v_distLibFile)
+        self.v_versDist = v_dist
         
         if v_local == v_dist :
             v_copyLib = False
@@ -291,8 +295,10 @@ class C_bougeTonFile(object) :
         finally :
             if v_chk : v_localLib.close()
             
+        ## dbg
         i_debug(v_dbg, "v_vers", v_vers)
-            
+        
+        ## Action
         return v_vers
         
 ####
@@ -346,7 +352,24 @@ class C_bougeTonFile(object) :
                     
                     ## Action
                     if self.f_libVersionComparator(v_localLibFile, v_distLibFile, key):
+                        v_destOld = (   self.d_fullFile[key][i]+ "/" +
+                                        self.t_distDirPath[1] +
+                                        "/oldLibVers/" + self.v_versDist + "_" + key
+                                    )
+                        if os.path.isdir(v_dest) :
+                            # os.path.isdir(path) renvoie 'True' si le dossier existe
+                            v_msg = """ 
+                                        le dossier :
+                                        {}
+                                        
+                                        vas etre deplace vers :
+                                        {}
+                                    """.format( v_dest, v_destOld )
+                                    
+                            print( v_msg )
+                            shutil.move(v_dest, v_destOld)
                     
+                        
                         ## dbg
                         i_debug(v_dbg, "v_dest", v_dest)
                         i_debug(v_dbg, "v_docDest", v_docDest)
