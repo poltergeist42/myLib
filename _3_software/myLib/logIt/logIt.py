@@ -8,7 +8,7 @@ Infos
 
    :Nom du fichier:     logIt.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20161008
+   :Version:            20161010
 
 ####
 
@@ -53,9 +53,11 @@ class C_logIt( object ) :
         self.i_dbg = C_DebugMsg(v_debug)
                 
         ## declaration des variables
-        self.v_timeCode     = False
-        self.l_taskTitle    = []
-        self.d_task         = {}
+        self.v_timeCode         = False
+        self.v_shortTimeCode    = False
+        self.v_msg              = False
+        self.l_taskTitle        = []
+        self.d_task             = {}
         
 ####
         
@@ -89,7 +91,7 @@ class C_logIt( object ) :
         
             Permet de creer le timeCode qui sera ajouter devant chaque nouvelle entree du
             journal. Se Time code est sous la forme : ::
-                [ yyyyMMdd-hh.mm.ss ]
+                '[ yyyyMMdd-hh.mm.ss ] : '
                 
             avec :
                 :yyyy:      l'annee (sur 4 digit)
@@ -98,6 +100,9 @@ class C_logIt( object ) :
                 :hh:        l'heure (sur 2 digit)
                 :mm:        les minutes (sur 2 digit)
                 :ss:        Les secondes (sur 2 gigits)
+                
+            **N.B** : la version courte (v_shortTimeCode) et sous la forme : ::
+                'yyyyMMdd-hh.mm'
         """
         ## dbg
         v_dbg = 1
@@ -115,6 +120,13 @@ class C_logIt( object ) :
                                                                             v_date.minute,
                                                                             v_date.second
                                                                         )
+                                                                        
+        self.v_shortTimeCode = "{}{:02}{:02}-{:02}.{:02}".format(   v_date.year,
+                                                                    v_date.month,
+                                                                    v_date.day,
+                                                                    v_date.hour,
+                                                                    v_date.minute,
+                                                                )
         ## dbg
         i_debug(v_dbg, "v_timeCode", self.v_timeCode)
 
@@ -124,7 +136,7 @@ class C_logIt( object ) :
         """ **f_setTaskTitle**( self, str)
         
             Permet de recuperer le nom de la tache en cours et de l'ajouter
-            a la liste 'l_setTaskTitle'
+            a la liste 'l_setTaskTitle'.
         """
         ## dbg
         v_dbg = 1
@@ -139,8 +151,13 @@ class C_logIt( object ) :
             ## dbg
             i_debug(v_dbg, "l_taskTitle", self.l_taskTitle)
             
-    def f_setDTask(self, v_taskTitle,, v_task, v_taskDetail = False ) :
-        """ **f_setDTask**()
+####
+            
+    def f_setDTask(self, v_taskTitle, v_task, v_taskDetail = False ) :
+        """ **f_setDTask**(str, str, str)
+        
+            Permet de creer un dictionnaire comportant les informations qui devrons etre
+            journalisee.
         """
         if not v_taskTitle in self.d_task.keys() :
             l_taskList = []
@@ -153,6 +170,36 @@ class C_logIt( object ) :
             
         if not v_task in self.d_task[v_taskTitle][0] :
             self.d_task[v_taskTitle][0].append( v_task )
+####
+
+    def f_setMsg( self ) :
+        """ **f_setMsg**()
+        
+            Permet de creer le message qui sera utilise par la methode 'makeLog'
+        """
+        for key in self.d_task.keys() :
+            self.v_msg = "{}\n{}\n\n".format( key, '=' * len( key ) )
+            
+            if len( self.d_task[key] ) == 2 :
+                self.v_msg += "{}\n\n".format( self.d_task[key][1] )
+            
+            for i in range( len( self.d_task[key][0] ) :
+                self.v_msg += "{}{}\n".format( self.v_timeCode, self.d_task[key][0][i] )
+                
+            self.v_msg = "\n{}\n\n".format( '#' * 80 )
+            
+
+    def f_makeLog( self ) :
+        """ **f_makeLog**()
+        
+            Permet de creer le fichier journal. Le nom du fichier sera sous la forme : ::
+                'shortTimeCode.log'.
+        """
+        v_logDest = "/log/{}.log".format( self.shortTimeCode)
+        with open(v_logDest, 'a') as i_logFile :
+            
+        
+        
 ####
 
 def main() :
