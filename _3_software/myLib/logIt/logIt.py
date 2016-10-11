@@ -8,7 +8,7 @@ Infos
 
    :Nom du fichier:     logIt.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20161010
+   :Version:            20161011
 
 ####
 
@@ -129,6 +129,7 @@ class C_logIt( object ) :
                                                                 )
         ## dbg
         i_debug(v_dbg, "v_timeCode", self.v_timeCode)
+        i_debug(v_dbg, "v_shortTimeCode", self.v_shortTimeCode)
 
 ####
                                                                         
@@ -159,6 +160,13 @@ class C_logIt( object ) :
             Permet de creer un dictionnaire comportant les informations qui devrons etre
             journalisee.
         """
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug(v_dbg2, "f_setDTask", self.f_setDTask)
+        
+        ## Action
         if not v_taskTitle in self.d_task.keys() :
             l_taskList = []
             self.d_task[v_taskTitle] = deepcopy(l_taskList)
@@ -170,6 +178,10 @@ class C_logIt( object ) :
             
         if not v_task in self.d_task[v_taskTitle][0] :
             self.d_task[v_taskTitle][0].append( v_task )
+
+        ## dbg
+        i_debug(v_dbg, "d_task", self.d_task)
+            
 ####
 
     def f_setMsg( self ) :
@@ -178,7 +190,11 @@ class C_logIt( object ) :
             Permet de creer le message qui sera utilise par la methode 'makeLog'
         """
         for key in self.d_task.keys() :
-            self.v_msg = "{}\n{}\n\n".format( key, '=' * len( key ) )
+            if not self.v_msg :
+                self.v_msg = "{}\n{}\n\n".format( key, '=' * len( key ) )
+            else :
+                self.v_msg += "{}\n{}\n\n".format( key, '=' * len( key ) )
+                
             
             if len( self.d_task[key] ) == 2 :
                 self.v_msg += "{}\n\n".format( self.d_task[key][1] )
@@ -186,18 +202,29 @@ class C_logIt( object ) :
             for i in range( len( self.d_task[key][0] ) :
                 self.v_msg += "{}{}\n".format( self.v_timeCode, self.d_task[key][0][i] )
                 
-            self.v_msg = "\n{}\n\n".format( '#' * 80 )
+            self.v_msg += "\n{}\n\n".format( '#' * 80 )
             
+        ## dbg
+        i_debug(v_dbg, "v_msg", self.v_msg)
+        
+####
 
-    def f_makeLog( self ) :
+    def f_wrLog( self ) :
         """ **f_makeLog**()
         
             Permet de creer le fichier journal. Le nom du fichier sera sous la forme : ::
                 'shortTimeCode.log'.
         """
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        i_debug = self.i_dbg.dbgPrint
+        i_debug(v_dbg2, "f_wrLog", self.f_wrLog)
+        
+        ## Action
         v_logDest = "/log/{}.log".format( self.shortTimeCode)
         with open(v_logDest, 'a') as i_logFile :
-            
+            i_logFile.write( self.v_msg )
         
         
 ####
