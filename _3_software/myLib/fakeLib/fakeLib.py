@@ -8,7 +8,7 @@ Infos
 
    :Nom du fichier:     fakeLib.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20161004
+   :Version:            20161010
 
 ####
 
@@ -38,7 +38,7 @@ lexique
 objectif
 ========
 
-    Cette Librairie ne fait rien. Elle n'existe que pour pouvoir tester certain
+    Cette Librairie ne fait rien. Elle n'existe que pour pouvoir tester certains
     elements des autres lib en cours de developpement.
 
     La class est fictive, mais elle doit tout de meme etre commenter pour pourvoir generer
@@ -49,7 +49,7 @@ objectif
 
 try :
     import os, sys
-    sys.path.insert(0,'..')         # ajouter le repertoire precedent au path (non définitif)
+    sys.path.insert(0,'../')        # ajouter le repertoire precedent au path (non definitif)
                                     # pour pouvoir importer les modules et paquets parent
     from devChk.devChk import C_DebugMsg
    
@@ -59,12 +59,12 @@ except ImportError :
 import argparse
 
 class C_FakeLib( object ) :
-    """ Class fictive permettant de faire des teste pour les autres lib
+    """ Class fictive permettant de faire des tests pour les autres lib
         en cours de developement.
     """
+    
     def __init__( self, v_debug=False ) :
-        """ 
-            **__init__()**
+        """ **__init__()**
         
             Creation et initialisation des variables globales de cette Class
         """
@@ -75,8 +75,7 @@ class C_FakeLib( object ) :
 ####
         
     def __del__(self) :
-        """
-            **__del__()**
+        """ **__del__()**
         
             Permet de terminer proprement l'instance de la Class courante
         
@@ -97,12 +96,18 @@ class C_FakeLib( object ) :
         v_className = self.__class__.__name__
         print("\n\t\tL'instance de la class {} est terminee".format(v_className))
         
+####
+        
     def f_doNothing( self ) :
         """ Cette fonction ne fait rien d'autre que de retourner 'True' """
+        
         return True
+        
+####
         
 def main() :
     """ Fonction principale """
+    
     parser = argparse.ArgumentParser()
     parser.add_argument( "-d", "--debug", action='store_true', help="activation du mode debug")
                         
