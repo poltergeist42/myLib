@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>logIt &#8212; documentation logIt 20161011</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '20161011',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="top" title="documentation logIt 20161011" href="index.html" />
+    <link rel="next" title="Bug et ToDo-list" href="Bug_TODOList.html" />
+    <link rel="prev" title="README logIt" href="README_logIt.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-_3_software.myLib.logIt.logIt">
+<span id="logit"></span><h1>logIt<a class="headerlink" href="#module-_3_software.myLib.logIt.logIt" title="Lien permanent vers ce titre">¶</a></h1>
+<div class="section" id="infos">
+<h2>Infos<a class="headerlink" href="#infos" title="Lien permanent vers ce titre">¶</a></h2>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Nom du fichier:</th><td class="field-body">logIt.py</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Autheur:</th><td class="field-body"><a class="reference external" href="https://github.com/poltergeist42">Poltergeist42</a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Version:</th><td class="field-body">20161011</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<hr class="docutils" />
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Licence:</th><td class="field-body">CC-BY-NC-SA</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Liens:</th><td class="field-body"><a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">https://creativecommons.org/licenses/by-nc-sa/4.0/</a></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<hr class="docutils" />
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">dev langage:</th><td class="field-body">Python 3.4</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<hr class="docutils" />
+<div class="section" id="lexique">
+<h2>lexique<a class="headerlink" href="#lexique" title="Lien permanent vers ce titre">¶</a></h2>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name"><strong>v_</strong>:</th><td class="field-body">variable</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>l_</strong>:</th><td class="field-body">list</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><strong>t_</strong>:</th><td class="field-body">tuple</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>d_</strong>:</th><td class="field-body">dictionnaire</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><strong>f_</strong>:</th><td class="field-body">fonction</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>C_</strong>:</th><td class="field-body">Class</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><strong>i_</strong>:</th><td class="field-body">Instance</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>m_</strong>:</th><td class="field-body">matrice</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<hr class="docutils" />
+<div class="section" id="class-c-logit">
+<h2>Class C_logIt<a class="headerlink" href="#class-c-logit" title="Lien permanent vers ce titre">¶</a></h2>
+<dl class="class">
+<dt id="_3_software.myLib.logIt.logIt.C_logIt">
+<em class="property">class </em><code class="descclassname">_3_software.myLib.logIt.logIt.</code><code class="descname">C_logIt</code><a class="headerlink" href="#_3_software.myLib.logIt.logIt.C_logIt" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Classe permettant lister et de journaliser des evenement externe</p>
+<dl class="method">
+<dt id="_3_software.myLib.logIt.logIt.C_logIt.f_setDTask">
+<code class="descname">f_setDTask</code><span class="sig-paren">(</span><em>v_taskTitle</em>, <em>v_task</em>, <em>v_taskDetail=False</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.logIt.logIt.C_logIt.f_setDTask" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_setDTask(str, str, str)</strong></p>
+<p>Permet de creer un dictionnaire comportant les informations qui devrons etres
+journalisee.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.logIt.logIt.C_logIt.f_setMsg">
+<code class="descname">f_setMsg</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.logIt.logIt.C_logIt.f_setMsg" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_setMsg()</strong></p>
+<p>Permet de creer le message qui sera utilise par la methode &#8216;makeLog&#8217;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.logIt.logIt.C_logIt.f_setTaskTitle">
+<code class="descname">f_setTaskTitle</code><span class="sig-paren">(</span><em>v_taskTitle</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.logIt.logIt.C_logIt.f_setTaskTitle" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_setTaskTitle( self, str)</strong></p>
+<p>Permet de recuperer le nom de la tache en cours et de l&#8217;ajouter
+a la liste &#8216;l_setTaskTitle&#8217;.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.logIt.logIt.C_logIt.f_setTimeCode">
+<code class="descname">f_setTimeCode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.logIt.logIt.C_logIt.f_setTimeCode" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>setTimeCode()</strong></p>
+<p>Permet de creer le timeCode qui sera ajouter devant chaque nouvelle entree du
+journal. Se Time code est sous la forme :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="s1">&#39;[ yyyyMMdd-hh.mm.ss ] : &#39;</span>
+</pre></div>
+</div>
+<p>avec :</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Yyyy:</th><td class="field-body">l&#8217;annee (sur 4 digit)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">MM:</th><td class="field-body">le mois (sur 2 digit)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Dd:</th><td class="field-body">le jour (sur 2 digit)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Hh:</th><td class="field-body">l&#8217;heure (sur 2 digit)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Mm:</th><td class="field-body">les minutes (sur 2 digit)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Ss:</th><td class="field-body">Les secondes (sur 2 gigits)</td>
+</tr>
+</tbody>
+</table>
+<p>La version courte (v_shortTimeCode) et sous la forme :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="s1">&#39;yyyyMMdd-hh.mm&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.logIt.logIt.C_logIt.f_wrLog">
+<code class="descname">f_wrLog</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.logIt.logIt.C_logIt.f_wrLog" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_wrLog()</strong></p>
+<p>Permet de creer le fichier journal. Le nom du fichier sera sous la forme :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="s1">&#39;shortTimeCode.log&#39;</span><span class="o">.</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="_3_software.myLib.logIt.logIt.main">
+<code class="descclassname">_3_software.myLib.logIt.logIt.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.logIt.logIt.main" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Fonction principale</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table des Matières</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">logIt</a><ul>
+<li><a class="reference internal" href="#infos">Infos</a></li>
+<li><a class="reference internal" href="#lexique">lexique</a></li>
+<li><a class="reference internal" href="#class-c-logit">Class C_logIt</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="README_logIt.html" title="Chapitre précédent">README logIt</a></li>
+      <li>Next: <a href="Bug_TODOList.html" title="Chapitre suivant">Bug et ToDo-list</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/logIt.txt"
+            rel="nofollow">Montrer le code source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Poltergeist42.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.8</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/logIt.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

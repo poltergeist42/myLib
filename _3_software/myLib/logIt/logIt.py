@@ -8,7 +8,7 @@ Infos
 
    :Nom du fichier:     logIt.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20161011
+   :Version:            20161012
 
 ####
 
@@ -17,17 +17,31 @@ Infos
 
 ####
 
-    :dev language:      Python 3.4
-    
+    :dev langage:       Python 3.4
+
+####
+
+lexique
+=======
+
+   :**v_**:                 variable
+   :**l_**:                 list
+   :**t_**:                 tuple
+   :**d_**:                 dictionnaire
+   :**f_**:                 fonction
+   :**C_**:                 Class
+   :**i_**:                 Instance
+   :**m_**:                 matrice
+   
 ####
 
 Class C_logIt
 =============
-    
+
 """
 try :
     import os, sys
-    sys.path.insert(0,'..')         # ajouter le repertoire precedent au path (non définitif)
+    sys.path.insert(0,'../')        # ajouter le repertoire precedent au path (non definitif)
                                     # pour pouvoir importer les modules et paquets parent
     from devChk.devChk import C_DebugMsg
    
@@ -40,11 +54,12 @@ from datetime import datetime
 from copy import deepcopy
 
 #####
+
 class C_logIt( object ) :
     """ Classe permettant lister et de journaliser des evenement externe """
+    
     def __init__( self ) :
-       """ 
-            **__init()**
+        """ **__init()**
         
             Creation et initialisation des variables globales de cette Class
         """
@@ -62,8 +77,7 @@ class C_logIt( object ) :
 ####
         
     def __del__(self) :
-        """
-            **__del__()**
+        """ **__del__()**
         
             Permet de terminer proprement l'instance de la Class courante
         
@@ -74,6 +88,7 @@ class C_logIt( object ) :
             *N.B :* Si l'instance n'est plus utilisee, cette methode est appellee 
             automatiquement.
         """
+        
         ## dbg
         v_dbg = 1
         v_dbg2 = 1
@@ -87,23 +102,28 @@ class C_logIt( object ) :
 ####
 
     def f_setTimeCode( self ) :
-        """ **setTimeCode**()
+        """ **setTimeCode()**
         
             Permet de creer le timeCode qui sera ajouter devant chaque nouvelle entree du
             journal. Se Time code est sous la forme : ::
+            
                 '[ yyyyMMdd-hh.mm.ss ] : '
                 
             avec :
-                :yyyy:      l'annee (sur 4 digit)
-                :MM:        le mois (sur 2 digit)
-                :dd:        le jour (sur 2 digit)
-                :hh:        l'heure (sur 2 digit)
-                :mm:        les minutes (sur 2 digit)
-                :ss:        Les secondes (sur 2 gigits)
+            
+            :yyyy:      l'annee (sur 4 digit)
+            :MM:        le mois (sur 2 digit)
+            :dd:        le jour (sur 2 digit)
+            :hh:        l'heure (sur 2 digit)
+            :mm:        les minutes (sur 2 digit)
+            :ss:        Les secondes (sur 2 gigits)
                 
-            **N.B** : la version courte (v_shortTimeCode) et sous la forme : ::
+            La version courte (v_shortTimeCode) et sous la forme : ::
+            
                 'yyyyMMdd-hh.mm'
+                
         """
+        
         ## dbg
         v_dbg = 1
         v_dbg2 = 1
@@ -134,11 +154,12 @@ class C_logIt( object ) :
 ####
                                                                         
     def f_setTaskTitle(self, v_taskTitle ) :
-        """ **f_setTaskTitle**( self, str)
+        """ **f_setTaskTitle( self, str)**
         
             Permet de recuperer le nom de la tache en cours et de l'ajouter
             a la liste 'l_setTaskTitle'.
         """
+        
         ## dbg
         v_dbg = 1
         v_dbg2 = 1
@@ -155,11 +176,12 @@ class C_logIt( object ) :
 ####
             
     def f_setDTask(self, v_taskTitle, v_task, v_taskDetail = False ) :
-        """ **f_setDTask**(str, str, str)
+        """ **f_setDTask(str, str, str)**
         
-            Permet de creer un dictionnaire comportant les informations qui devrons etre
+            Permet de creer un dictionnaire comportant les informations qui devrons etres
             journalisee.
         """
+        
         ## dbg
         v_dbg = 1
         v_dbg2 = 1
@@ -185,10 +207,11 @@ class C_logIt( object ) :
 ####
 
     def f_setMsg( self ) :
-        """ **f_setMsg**()
+        """ **f_setMsg()**
         
             Permet de creer le message qui sera utilise par la methode 'makeLog'
         """
+        
         for key in self.d_task.keys() :
             if not self.v_msg :
                 self.v_msg = "{}\n{}\n\n".format( key, '=' * len( key ) )
@@ -199,7 +222,7 @@ class C_logIt( object ) :
             if len( self.d_task[key] ) == 2 :
                 self.v_msg += "{}\n\n".format( self.d_task[key][1] )
             
-            for i in range( len( self.d_task[key][0] ) :
+            for i in range( len( self.d_task[key][0] )) :
                 self.v_msg += "{}{}\n".format( self.v_timeCode, self.d_task[key][0][i] )
                 
             self.v_msg += "\n{}\n\n".format( '#' * 80 )
@@ -210,11 +233,13 @@ class C_logIt( object ) :
 ####
 
     def f_wrLog( self ) :
-        """ **f_makeLog**()
+        """ **f_wrLog()**
         
             Permet de creer le fichier journal. Le nom du fichier sera sous la forme : ::
+            
                 'shortTimeCode.log'.
         """
+        
         ## dbg
         v_dbg = 1
         v_dbg2 = 1
@@ -232,7 +257,7 @@ class C_logIt( object ) :
 def main() :
     """ Fonction principale """
     
-####ü
+####
 
 if __name__ == '__main__':
     main()
