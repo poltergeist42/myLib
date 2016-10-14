@@ -8,7 +8,7 @@ Infos
 
    :Nom du fichier:     logIt.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20161012
+   :Version:            20161014
 
 ####
 
@@ -19,6 +19,16 @@ Infos
 
     :dev langage:       Python 3.4
 
+####
+
+List des Libs
+=============
+
+    * sys
+    * devChk
+    * datetime
+    * copy
+    
 ####
 
 lexique
@@ -40,7 +50,7 @@ Class C_logIt
 
 """
 try :
-    import os, sys
+    import sys
     sys.path.insert(0,'../')        # ajouter le repertoire precedent au path (non definitif)
                                     # pour pouvoir importer les modules et paquets parent
     from devChk.devChk import C_DebugMsg
@@ -48,8 +58,6 @@ try :
 except ImportError :
     print( "module non present" )
     
-
-import argparse
 from datetime import datetime
 from copy import deepcopy
 
@@ -58,7 +66,7 @@ from copy import deepcopy
 class C_logIt( object ) :
     """ Classe permettant lister et de journaliser des evenement externe """
     
-    def __init__( self ) :
+    def __init__( self, v_debug = False ) :
         """ **__init()**
         
             Creation et initialisation des variables globales de cette Class
@@ -223,6 +231,7 @@ class C_logIt( object ) :
                 self.v_msg += "{}\n\n".format( self.d_task[key][1] )
             
             for i in range( len( self.d_task[key][0] )) :
+                self.f_setTimeCode()
                 self.v_msg += "{}{}\n".format( self.v_timeCode, self.d_task[key][0][i] )
                 
             self.v_msg += "\n{}\n\n".format( '#' * 80 )
@@ -247,6 +256,7 @@ class C_logIt( object ) :
         i_debug(v_dbg2, "f_wrLog", self.f_wrLog)
         
         ## Action
+        self.f_setMsg()
         v_logDest = "/log/{}.log".format( self.shortTimeCode)
         with open(v_logDest, 'a') as i_logFile :
             i_logFile.write( self.v_msg )
