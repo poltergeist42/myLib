@@ -9,7 +9,7 @@ Infos
 
    :Nom du fichier:     libReplicator.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20161005
+   :Version:            20161014
 
 ####
 
@@ -112,6 +112,7 @@ class C_bougeTonFile(object) :
         self.d_docPath              = {}
         self.v_testMode             = False
         self.v_versDist             = False
+        self.v_yesToAll             = False
         
 ####
     
@@ -229,28 +230,51 @@ class C_bougeTonFile(object) :
             
                 est figee dans la destination suivante :
                 {}
-            """.format( v_key, v_distLibFile )
+                """.format( v_key, v_distLibFile )
             print( v_msg )
 
         else :
             while v_boucle :
-                print("\n\tversion locale : {} - version distante : {}\n".format(v_local, v_dist))
-                v_question = input("Voulez-vous remplacer la version distante de {} par la version locale (O/N) ? ".format(v_key)).lower()
-                
-                if v_question == 'o' or v_question == 'y' or v_question == "oui" or v_question == "yes" :
+                if not self.v_yesToAll :
+                    ## dbg
+                    i_debug(v_dbg, "v_yesToAll", self.v_yesToAll)
+                    
+                    ## Action
+                    print("\n\tversion locale : {} - version distante : {}\n".format(v_local, v_dist))
+                    v_question = input("Voulez-vous remplacer la version distante de {} par la version locale (O/N), oui pour toutes (A) ? ".format(v_key)).lower()
+                    
+                    if v_question == 'a' or v_question == 'A' :
+                        self.v_yesToAll = True
+                        v_copyLib = True
+                        v_boucle = False
+                    
+                        ## dbg
+                        i_debug(v_dbg, "v_copyLib", v_copyLib)
+                        
+                    elif v_question == 'o' or v_question == 'y' or v_question == "oui" or v_question == "yes" :
+                        v_copyLib = True
+                        v_boucle = False
+                        
+                        ## dbg
+                        i_debug(v_dbg, "v_copyLib", v_copyLib)
+                        
+                    elif v_question == 'n' or v_question == "non" or v_question == "no" :
+                        v_copyLib = False
+                        v_boucle = False
+                        
+                        ## dbg
+                        i_debug(v_dbg, "v_copyLib", v_copyLib)
+                        
+                    ## Action    
+                    else :
+                        print("repondre par O ou N ! ('A' pour : oui pour toutes)")
+                        
+                else :
                     v_copyLib = True
-                    v_boucle = False
-                    print("v_copyLib = ", v_copyLib)
-                elif v_question == 'n' or v_question == "non" or v_question == "no" :
-                    v_copyLib = False
                     v_boucle = False
                     
                     ## dbg
-                    i_debug(v_dbg, "v_copyLib", v_copyLib)
-                    
-                ## Action    
-                else :
-                    print("repondre par O ou N !")
+                    i_debug(v_dbg, "v_yesToAll", self.v_yesToAll)
                     
         return v_copyLib
 

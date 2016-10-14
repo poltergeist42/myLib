@@ -1,10 +1,11 @@
   btnPoussoir
-  dev
+* dev
   devChk
   doc
   fakeLib
   imageContour
-* libReplicator
+  libReplicator
+  logIt
   master
   objJson
   ultrason

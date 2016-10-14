@@ -59,6 +59,20 @@ Liste des bibliothèques
 :libReplicator:
     Permet de copier et de mettre a jours les diferentes librairies dans
     l'ensemble des projet aux quels elles sont utiles.
+    
+:logIt:
+    Permet de creer un fichier journal. Ce journal ce presente sous la forme suivante : ::
+    
+        'Titre de l'action'
+         =================
+    
+        Descriptif
+        
+        [ TimeCode ] : action effectuee
+        
+        ################################################################################
+        
+    **N.B** : La library 'logging' fait déjà tous ça bien mieu.
 
 :moteurPap:
     moteurPap est une bibliothèque permettant de manipuler un moteur Pas à Pas de type :
