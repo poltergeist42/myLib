@@ -49,14 +49,18 @@ Class C_logIt
 =============
 
 """
-try :
-    import sys
-    sys.path.insert(0,'../')        # ajouter le repertoire precedent au path (non definitif)
-                                    # pour pouvoir importer les modules et paquets parent
-    from devChk.devChk import C_DebugMsg
+
+# from __future__ import absolute_import  # Permet d'importer en chemin abslolu ou relatif
+                                        # # doit etre importer en premier
+
+# try :
+    # import os, sys
+    # sys.path.insert(0,'..')         # ajouter le repertoire precedent au path (non definitif)
+                                    # # pour pouvoir importer les modules et paquets parent
+    # from devChk.devChk import C_DebugMsg
    
-except ImportError :
-    print( "module non present" )
+# except ImportError :
+    # print( "module non present" )
     
 from datetime import datetime
 from copy import deepcopy
@@ -72,8 +76,8 @@ class C_logIt( object ) :
             Creation et initialisation des variables globales de cette Class
         """
         
-        ## Creation de l'instance pour les message de debug
-        self.i_dbg = C_DebugMsg(v_debug)
+        # ## Creation de l'instance pour les message de debug
+        # self.i_dbg = C_DebugMsg( v_debug )
                 
         ## declaration des variables
         self.v_timeCode         = False
@@ -97,11 +101,11 @@ class C_logIt( object ) :
             automatiquement.
         """
         
-        ## dbg
-        v_dbg = 1
-        v_dbg2 = 1
-        i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg2, "__del__", self.__del__)
+        # ## dbg
+        # v_dbg = 1
+        # v_dbg2 = 1
+        # i_debug = self.i_dbg.dbgPrint
+        # i_debug(v_dbg2, "__del__", self.__del__)
         
         ## Action
         v_className = self.__class__.__name__
@@ -132,11 +136,11 @@ class C_logIt( object ) :
                 
         """
         
-        ## dbg
-        v_dbg = 1
-        v_dbg2 = 1
-        i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg2, "f_setTimeCode", self.f_setTimeCode)
+        # ## dbg
+        # v_dbg = 1
+        # v_dbg2 = 1
+        # i_debug = self.i_dbg.dbgPrint
+        # i_debug(v_dbg2, "f_setTimeCode", self.f_setTimeCode)
         
         ## Action
         v_date = datetime.now()
@@ -155,9 +159,9 @@ class C_logIt( object ) :
                                                                     v_date.hour,
                                                                     v_date.minute,
                                                                 )
-        ## dbg
-        i_debug(v_dbg, "v_timeCode", self.v_timeCode)
-        i_debug(v_dbg, "v_shortTimeCode", self.v_shortTimeCode)
+        # ## dbg
+        # i_debug(v_dbg, "v_timeCode", self.v_timeCode)
+        # i_debug(v_dbg, "v_shortTimeCode", self.v_shortTimeCode)
 
 ####
                                                                         
@@ -168,18 +172,18 @@ class C_logIt( object ) :
             a la liste 'l_setTaskTitle'.
         """
         
-        ## dbg
-        v_dbg = 1
-        v_dbg2 = 1
-        i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg2, "f_setTaskTitle", self.f_setTaskTitle)
+        # ## dbg
+        # v_dbg = 1
+        # v_dbg2 = 1
+        # i_debug = self.i_dbg.dbgPrint
+        # i_debug(v_dbg2, "f_setTaskTitle", self.f_setTaskTitle)
         
         ## Action
         if not v_taskTitle in self.l_taskTitle :
             self.l_taskTitle.append( v_taskTitle)
             
-            ## dbg
-            i_debug(v_dbg, "l_taskTitle", self.l_taskTitle)
+            # ## dbg
+            # i_debug(v_dbg, "l_taskTitle", self.l_taskTitle)
             
 ####
             
@@ -190,27 +194,32 @@ class C_logIt( object ) :
             journalisee.
         """
         
-        ## dbg
-        v_dbg = 1
-        v_dbg2 = 1
-        i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg2, "f_setDTask", self.f_setDTask)
+        # ## dbg
+        # v_dbg = 1
+        # v_dbg2 = 1
+        # i_debug = self.i_dbg.dbgPrint
+        # i_debug(v_dbg2, "f_setDTask", self.f_setDTask)
         
         ## Action
         if not v_taskTitle in self.d_task.keys() :
             l_taskList = []
             self.d_task[v_taskTitle] = deepcopy(l_taskList)
             self.d_task[v_taskTitle].append( deepcopy(l_taskList))
-            
+            self.f_setTimeCode()
+            self.d_task[v_taskTitle].append( self.v_timeCode )
+
         if v_taskDetail :
             if not v_taskDetail in self.d_task[v_taskTitle] :
-                self.d_task[v_taskTitle].append( v_taskDetail )
-            
+                if len( self.d_task[v_taskTitle] ) == 3 :
+                    self.d_task[v_taskTitle][2] = v_taskDetail
+                else :
+                    self.d_task[v_taskTitle].append( v_taskDetail )
+
         if not v_task in self.d_task[v_taskTitle][0] :
             self.d_task[v_taskTitle][0].append( v_task )
 
-        ## dbg
-        i_debug(v_dbg, "d_task", self.d_task)
+        # ## dbg
+        # i_debug(v_dbg, "d_task", self.d_task)
             
 ####
 
@@ -227,17 +236,16 @@ class C_logIt( object ) :
                 self.v_msg += "{}\n{}\n\n".format( key, '=' * len( key ) )
                 
             
-            if len( self.d_task[key] ) == 2 :
-                self.v_msg += "{}\n\n".format( self.d_task[key][1] )
+            if len( self.d_task[key] ) == 3 :
+                self.v_msg += "{}\n\n".format( self.d_task[key][2] )
             
             for i in range( len( self.d_task[key][0] )) :
-                self.f_setTimeCode()
-                self.v_msg += "{}{}\n".format( self.v_timeCode, self.d_task[key][0][i] )
+                self.v_msg += "{}{}\n".format( self.d_task[key][1], self.d_task[key][0][i] )
                 
             self.v_msg += "\n{}\n\n".format( '#' * 80 )
             
-        ## dbg
-        i_debug(v_dbg, "v_msg", self.v_msg)
+        # ## dbg
+        # i_debug(v_dbg, "v_msg", self.v_msg)
         
 ####
 
@@ -249,15 +257,15 @@ class C_logIt( object ) :
                 'shortTimeCode.log'.
         """
         
-        ## dbg
-        v_dbg = 1
-        v_dbg2 = 1
-        i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg2, "f_wrLog", self.f_wrLog)
+        # ## dbg
+        # v_dbg = 1
+        # v_dbg2 = 1
+        # i_debug = self.i_dbg.dbgPrint
+        # i_debug(v_dbg2, "f_wrLog", self.f_wrLog)
         
         ## Action
         self.f_setMsg()
-        v_logDest = "/log/{}.log".format( self.shortTimeCode)
+        v_logDest = "{}.log".format( self.v_shortTimeCode)
         with open(v_logDest, 'a') as i_logFile :
             i_logFile.write( self.v_msg )
         

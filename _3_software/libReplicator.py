@@ -9,7 +9,7 @@ Infos
 
    :Nom du fichier:     libReplicator.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20161014
+   :Version:            20161015
 
 ####
 
@@ -56,6 +56,7 @@ import argparse
 import shutil
 
 from os import system
+
 try :
     from myLib.devChk.devChk import C_DebugMsg
     from myLib.devChk.devChk import C_GitChk
@@ -70,8 +71,15 @@ try :
                                             #  |  |  |  |
                                             #  |  |  |  +- C_GitChk <-- class 
                                             #                           de la lib devChk.py   
+
 except ImportError :
     print("module 'devChk' non charge")
+
+try : 
+    from myLib.logIt.logIt import C_logIt
+    
+except ImportError :
+    print("module 'logIt' non charge")
     
 from distutils import dir_util
 import argparse
@@ -96,8 +104,9 @@ class C_bougeTonFile(object) :
             Creation et initialisation des variables globales de cette Class
         """
         
-        ## Creation de l'instance pour les message de debug
+        ## Creation des instances de debug et de log
         self.i_dbg = C_DebugMsg(v_debug)
+        self.i_log = C_logIt()
                 
         ## declaration des variables
         self.v_localDir             = os.getcwd()
@@ -113,6 +122,7 @@ class C_bougeTonFile(object) :
         self.v_testMode             = False
         self.v_versDist             = False
         self.v_yesToAll             = False
+        self.v_curKey               = False
         
 ####
     
@@ -214,6 +224,9 @@ class C_bougeTonFile(object) :
         i_debug = self.i_dbg.dbgPrint 
         i_debug(v_dbg2, "f_libVersionComparator", self.f_libVersionComparator)
         
+        ## log
+        i_logSetD = self.i_log.f_setDTask
+        
         ## Action
         v_boucle = True
         v_copyLib = False
@@ -224,7 +237,13 @@ class C_bougeTonFile(object) :
         if v_local == v_dist :
             v_copyLib = False
             print("les deux versions de la lib {} sont identiques".format(v_key))
-        elif not v_dist :
+            
+            ## log
+            i_logSetD("f_libVersionComparator", "{} : vers dist = vers loc pour la dest : {}".format(self.v_curKey, v_distLibFile))
+
+        elif v_dist == "fix" :
+            v_copyLib = False
+            
             v_msg = """
                 La version de la lib : {}
             
@@ -232,6 +251,9 @@ class C_bougeTonFile(object) :
                 {}
                 """.format( v_key, v_distLibFile )
             print( v_msg )
+            
+            ## log
+            i_logSetD("f_libVersionComparator", "{} : vers dist figee : {}".format(self.v_curKey, v_distLibFile))
 
         else :
             while v_boucle :
@@ -302,7 +324,7 @@ class C_bougeTonFile(object) :
                 if v_chaine in line :                   
                     for i in line :
                         if (i == 'f') or (i == 'F') :
-                            v_vers = False
+                            v_vers = "fix"
                             break
 
                         if i == '2' :
@@ -314,6 +336,7 @@ class C_bougeTonFile(object) :
         except FileNotFoundError :
             print("fichier non trouve")
             v_chk = False
+            v_vers = "empty"
             
 
         finally :
@@ -336,8 +359,12 @@ class C_bougeTonFile(object) :
         i_debug(v_dbg2, "f_copyAll", self.f_copyAll)
         i_debug(v_dbg, "d_fullFile", self.d_fullFile)
         
+        ## log
+        i_logSetD = self.i_log.f_setDTask
+        
         ## Action
         for key in self.d_fullFile :
+            self.v_curKey = key
             v_src = self.v_workDir + "/" + key
             v_docSrc = "../"+ self.t_distDirPath[0] + "/" + self.d_docPath[key]
             
@@ -376,22 +403,26 @@ class C_bougeTonFile(object) :
                     
                     ## Action
                     if self.f_libVersionComparator(v_localLibFile, v_distLibFile, key):
-                        v_destOld = (   self.d_fullFile[key][i]+ "/" +
-                                        self.t_distDirPath[1] +
-                                        "/oldLibVers/" + self.v_versDist + "_" + key
-                                    )
-                        if os.path.isdir(v_dest) :
-                            # os.path.isdir(path) renvoie 'True' si le dossier existe
-                            v_msg = """ 
-                                        le dossier :
-                                        {}
+                        if self.v_versDist == "empty" :
+                            pass
+                            
+                        else :
+                            v_destOld = (   self.d_fullFile[key][i]+ "/" +
+                                            self.t_distDirPath[1] +
+                                            "/oldLibVers/" + self.v_versDist + "_" + key
+                                        )
+                            if os.path.isdir(v_dest) :
+                                # os.path.isdir(path) renvoie 'True' si le dossier existe
+                                v_msg = """ 
+                                            le dossier :
+                                            {}
+                                            
+                                            vas etre deplace vers :
+                                            {}
+                                        """.format( v_dest, v_destOld )
                                         
-                                        vas etre deplace vers :
-                                        {}
-                                    """.format( v_dest, v_destOld )
-                                    
-                            print( v_msg )
-                            shutil.move(v_dest, v_destOld)
+                                print( v_msg )
+                                shutil.move(v_dest, v_destOld)
                     
                         
                         ## dbg
@@ -416,6 +447,12 @@ class C_bougeTonFile(object) :
                                                 verbose=0, 
                                                 dry_run=0
                                             )
+                                            
+                        ## log
+                        i_logSetD("Copie de Lib", v_dest, v_taskDetail = "copie de la lib : {}".format(self.v_curKey))
+                        i_logSetD("Copie de Lib", v_docDest, v_taskDetail = "copie de la lib : {}".format(self.v_curKey))
+        # ## log
+        # i_logWr()
 
 ####
 
@@ -476,6 +513,7 @@ def main() :
     i_git.f_gitBranchChk()
     i_replicator.f_arboList()
     i_replicator.f_copyAll()
+    i_replicator.i_log.f_wrLog()
     
     print("\n\n\t\t fin de la sequence ")
     

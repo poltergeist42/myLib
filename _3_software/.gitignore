@@ -2,6 +2,7 @@
 
 ## Liste des fichiers et dossiers à ignorer
 _3_software/chkBranch*.*
+chkBranch/
 chkBranch*.*
 
 Bug_TODOList*.*
@@ -9,12 +10,10 @@ Bug_TODOList*.*
 #.gitignore
 
 ## [ Dossiers a ignorer ]
-_3_software/_3-1_test*/
-_5_*/
-_6_*/
-_7_*/
+
 *_v/
 __pycache__/
+log/
 
 
 ## [ listes des extentions a ignorer ]
@@ -25,3 +24,4 @@ __pycache__/
 *.mp4
 *.json
 Thumbs.db
+*.log
