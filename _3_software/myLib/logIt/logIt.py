@@ -8,7 +8,7 @@ Infos
 
    :Nom du fichier:     logIt.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20161014
+   :Version:            20161016
 
 ####
 
@@ -53,10 +53,10 @@ Class C_logIt
 # from __future__ import absolute_import  # Permet d'importer en chemin abslolu ou relatif
                                         # # doit etre importer en premier
 
+import os, sys
+sys.path.insert(0,'..')         # ajouter le repertoire precedent au path (non definitif)
+                                # pour pouvoir importer les modules et paquets parent
 # try :
-    # import os, sys
-    # sys.path.insert(0,'..')         # ajouter le repertoire precedent au path (non definitif)
-                                    # # pour pouvoir importer les modules et paquets parent
     # from devChk.devChk import C_DebugMsg
    
 # except ImportError :
@@ -265,11 +265,22 @@ class C_logIt( object ) :
         
         ## Action
         self.f_setMsg()
-        v_logDest = "{}.log".format( self.v_shortTimeCode)
+        self.f_makeDir()
+        v_logDest = "./log/{}.log".format( self.v_shortTimeCode)
         with open(v_logDest, 'a') as i_logFile :
             i_logFile.write( self.v_msg )
+            
+####
+
+    def f_makeDir( self ) :
+        """ **f_makeDir()**
         
-        
+            Permet de creer le dossier 'log' si il n'existe pas
+        """
+    l_listDir = os.listdir()
+    if not 'log' in l_listDir :
+        os.makedirs(os.path.normpath('./log'), mode=0o777, exist_ok=True)
+               
 ####
 
 def main() :
