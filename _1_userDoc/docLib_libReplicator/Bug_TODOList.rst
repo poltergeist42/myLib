@@ -38,16 +38,16 @@ ToDo-list
 ------------------------------------------------------------------------------------------
                             
     :Date de saisie:        20161003
-    :Date de traitemant:    
-    :Status:                NONE
+    :Date de traitemant:    20161016
+    :Status:                DONE
     
     :Problematique:         Ajouter un journal de traitemant
     
 ------------------------------------------------------------------------------------------
 
     :Date de saisie:        20161005
-    :Date de traitemant:    
-    :Status:                NONE
+    :Date de traitemant:    20161014
+    :Status:                DONE
     
     :Problematique:         Ajouter l'option 'Yes to all' lors de la copie / MAJ des
                             lib distantes
