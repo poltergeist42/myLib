@@ -34,7 +34,7 @@ ToDo-list
 ------------------------------------------------------------------------------------------
     
     :Date de saisie:        20161003
-    :Date de traitemant:    
-    :Status:                NONE
+    :Date de traitemant:    20161016
+    :Status:                DONE
     :Problematique:         Faire en sorte que le fichier 'chkBranch' soit supprimer après
                             chaque utilisation

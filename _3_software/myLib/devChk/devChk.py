@@ -8,7 +8,7 @@ Infos
 
    :Nom du fichier:     devChk.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160914
+   :Version:            20161016
 
 ####
 
@@ -17,8 +17,15 @@ Infos
 
 ####
 
-    :dev language:      Python 3.4
-    
+    :dev langage:       Python 3.4
+
+####
+
+List des Libs
+=============
+
+    * os
+
 ####
 
 lexique
@@ -35,16 +42,12 @@ lexique
    
 ####
 
-Liste des Class
-===============
-
-Ensemble de class permettant le control et le debug.
-
+Class C_DebugMsg
+================
 
 """
-#################### Taille maximum des commentaires (90 caracteres)######################
 
-from os import system
+from os import system, remove
 
 
 class C_DebugMsg(object) :
@@ -135,8 +138,6 @@ class C_DebugMsg(object) :
         """
         if v_chk and self.affichage :
             if not self.d_fnNumber :
-                # self.debugNumber += 1
-                # print( "dbgMsg[{}] : {} - {}{}".format(self.debugNumber, v_varName, v_varValue, v_endOfLine) )
                 self.d_fnNumber[v_varName] = self.debugNumber
                 print( "dbgMsg[{}] : {} - {}{}".format(self.d_fnNumber[v_varName], v_varName, v_varValue, v_endOfLine) )
                 
@@ -180,6 +181,7 @@ class C_GitChk(object) :
             
                 del [nom_de_l'_instance]
         """
+        remove( "./chkBranch" )
         v_className = self.__class__.__name__
         print("\n\t\tL'instance de la class {} est terminee".format(v_className))
         
