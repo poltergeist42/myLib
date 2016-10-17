@@ -8,7 +8,7 @@ Infos
 
    :Nom du fichier:     fakeLib.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20161015
+   :Version:            20161017
 
 ####
 
@@ -34,6 +34,16 @@ lexique
    :**m_**:                 Matrice
    
 ####
+
+Liste des libs
+==============
+
+    - os
+    - sys
+    - devChk
+    - argparse
+    
+####
    
 objectif
 ========
@@ -52,25 +62,30 @@ try :
     sys.path.insert(0,'../')        # ajouter le repertoire precedent au path (non definitif)
                                     # pour pouvoir importer les modules et paquets parent
     from devChk.devChk import C_DebugMsg
+    v_dbgChk = True
+    i_dbg = C_DebugMsg()
    
 except ImportError :
-    print( "module non present" )
+    print( "module devChk non present" )
+    v_dbgChk = False
     
 import argparse
+
+####
 
 class C_FakeLib( object ) :
     """ Class fictive permettant de faire des tests pour les autres lib
         en cours de developement.
     """
     
-    def __init__( self, v_debug=False ) :
+    def __init__( self ) :
         """ **__init__()**
         
             Creation et initialisation des variables globales de cette Class
         """
         
         ## Creation de l'instance pour les message de debug
-        self.i_dbg = C_DebugMsg(v_debug)
+        # self.i_dbg = C_DebugMsg(v_debug)
         
 ####
         
@@ -89,8 +104,7 @@ class C_FakeLib( object ) :
         ## dbg
         v_dbg = 1
         v_dbg2 = 1
-        i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg2, "__del__", self.__del__)
+        f_dbg(v_dbg2, "__del__", self.__del__)
         
         ## Action
         v_className = self.__class__.__name__
@@ -101,10 +115,21 @@ class C_FakeLib( object ) :
     def f_doNothing( self ) :
         """ Cette fonction ne fait rien d'autre que de retourner 'True' """
         
+        v_dbg = 1
+        v_dbg2 = 1
+        f_dbg(v_dbg2, "f_doNothing", self.f_doNothing)
+        
+        print( "\neuh ... non, non, rien !\n" )
         return True
         
 ####
+
+def f_dbg( v_bool, v_tittle, v_data ) :
+    if v_dbgChk :
+        i_dbg.dbgPrint( v_bool, v_tittle, v_data )
         
+####
+
 def main() :
     """ Fonction principale """
     
@@ -112,11 +137,20 @@ def main() :
     parser.add_argument( "-d", "--debug", action='store_true', help="activation du mode debug")
                         
     args = parser.parse_args()
+    
     if args.debug :
-        print( "Mode Debug activer" )
-        i_ist = C_FakeLib( True )
-    else :
-        i_ist = C_FakeLib( False )
+        if v_dbgChk :
+            i_dbg.f_setAffichage( True )
+            print( "Mode Debug activer" )
+        else :
+            print( "Le mode Debug ne peut pas etre active car le module n'est pas present")
+
+    
+    i_ist = C_FakeLib()
     
     i_ist.f_doNothing()
+    
+if __name__ == '__main__':
+    main()
+
         

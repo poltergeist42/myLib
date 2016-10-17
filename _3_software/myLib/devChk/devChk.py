@@ -8,7 +8,7 @@ Infos
 
    :Nom du fichier:     devChk.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20161016
+   :Version:            20161017
 
 ####
 
@@ -70,12 +70,14 @@ class C_DebugMsg(object) :
 
     """
     
-    def __init__(self, v_affichage = True) :
+    def __init__( self ) :
         """ Init variables """
-        self.affichage = v_affichage
+        self.affichage = False
         self.debugNumber = 0
         
         self.d_fnNumber = {}
+        
+####
         
     def __del__(self) :
         """destructor
@@ -87,6 +89,16 @@ class C_DebugMsg(object) :
         """
         v_className = self.__class__.__name__
         print("\n\t\tL'instance de la class {} est terminee".format(v_className))
+        
+####
+
+    def f_setAffichage( self, v_bool ) :
+        """ **f_setAffichage( bool )
+        
+            permet d'activer ( True ) ou de desactiver ( False ) l'affichage.
+        """
+        self.affichage = bool( v_bool )
+
         
     def dbgPrint(self, v_chk, v_varName, v_varValue, v_endOfLine = "") :
         """
@@ -142,7 +154,8 @@ class C_DebugMsg(object) :
                 print( "dbgMsg[{}] : {} - {}{}".format(self.d_fnNumber[v_varName], v_varName, v_varValue, v_endOfLine) )
                 
             if v_varName in self.d_fnNumber.keys() :
-                print( "dbgMsg[{}] : {} - {}{}".format(self.d_fnNumber[v_varName], v_varName, v_varValue, v_endOfLine) )
+                if self.debugNumber :
+                    print( "dbgMsg[{}] : {} - {}{}".format(self.d_fnNumber[v_varName], v_varName, v_varValue, v_endOfLine) )
                 
             else :
                 self.debugNumber += 1
