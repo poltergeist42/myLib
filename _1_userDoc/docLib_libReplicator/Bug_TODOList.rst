@@ -63,3 +63,15 @@ ToDo-list
                             sous la forme : yyyymmdd_[nom_de_la_lib] ou 'yyyymmdd'
                             correspond au numero de version de la lib a metrte a jour
                             dans le dossier distant.
+                            
+------------------------------------------------------------------------------------------
+                            
+    :Date de saisie:        20161016
+    :Date de traitemant:    
+    :Status:                NONE
+    
+    :Problematique:         Parcourir les fichiers locaux '.gitignore' et ignorer sur la
+                            MAJ distante les fichiers et dossier poitez dans le '.gitignore'
+                            
+                            
+
