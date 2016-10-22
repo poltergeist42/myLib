@@ -8,7 +8,7 @@ infos
     
     :Nom du fichier:     btnPoussoir.py
     :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-    :Version:            20161017
+    :Version:            20161022
 
 ####
 
@@ -525,16 +525,16 @@ def main() :
     args = parser.parse_args()
     
     def f_startInstance() :
-    if args.debug :
-        if v_dbgChk :
-            i_dbg.f_setAffichage( True )
-            print( "Mode Debug activer" )
-        else :
-            print( "Le mode Debug ne peut pas etre active car le module n'est pas present")
+        if args.debug :
+            if v_dbgChk :
+                i_dbg.f_setAffichage( True )
+                print( "Mode Debug activer" )
+            else :
+                print( "Le mode Debug ne peut pas etre active car le module n'est pas present")
 
-        i_testBtn = C_BtnPoussoir()
-            
-        return i_testBtn
+            i_testBtn = C_BtnPoussoir()
+                
+            return i_testBtn
             
     system( "clear" )
     

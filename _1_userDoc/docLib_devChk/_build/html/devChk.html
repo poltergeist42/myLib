@@ -57,7 +57,7 @@
 </tr>
 <tr class="field-even field"><th class="field-name">Autheur:</th><td class="field-body"><a class="reference external" href="https://github.com/poltergeist42">Poltergeist42</a></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Version:</th><td class="field-body">20160914</td>
+<tr class="field-odd field"><th class="field-name">Version:</th><td class="field-body">20161022</td>
 </tr>
 </tbody>
 </table>
@@ -81,10 +81,19 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">dev language:</th><td class="field-body">Python 3.4</td>
+<tr class="field-odd field"><th class="field-name">dev langage:</th><td class="field-body">Python 3.4</td>
 </tr>
 </tbody>
 </table>
+</div></blockquote>
+</div>
+<hr class="docutils" />
+<div class="section" id="list-des-libs">
+<h2>List des Libs<a class="headerlink" href="#list-des-libs" title="Lien permanent vers ce titre">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>os</li>
+</ul>
 </div></blockquote>
 </div>
 <hr class="docutils" />
@@ -116,12 +125,11 @@
 </div></blockquote>
 </div>
 <hr class="docutils" />
-<div class="section" id="liste-des-class">
-<h2>Liste des Class<a class="headerlink" href="#liste-des-class" title="Lien permanent vers ce titre">¶</a></h2>
-<p>Ensemble de class permettant le control et le debug.</p>
+<div class="section" id="class-c-debugmsg">
+<h2>Class C_DebugMsg<a class="headerlink" href="#class-c-debugmsg" title="Lien permanent vers ce titre">¶</a></h2>
 <dl class="class">
 <dt id="_3_software.myLib.devChk.devChk.C_DebugMsg">
-<em class="property">class </em><code class="descclassname">_3_software.myLib.devChk.devChk.</code><code class="descname">C_DebugMsg</code><span class="sig-paren">(</span><em>v_affichage=True</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.devChk.devChk.C_DebugMsg" title="Lien permanent vers cette définition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">_3_software.myLib.devChk.devChk.</code><code class="descname">C_DebugMsg</code><a class="headerlink" href="#_3_software.myLib.devChk.devChk.C_DebugMsg" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p><strong>C_DebugMsg(object)</strong></p>
 <p>Class permettant d&#8217;intercepter et d&#8217;afficher les message de debug.</p>
 <p>Cette Class doit être instancier dans la fonction <strong>__init__()</strong> pour une Class
@@ -138,9 +146,8 @@ l&#8217;ensemble des messages seront masques.</p>
 <dt id="_3_software.myLib.devChk.devChk.C_DebugMsg.dbgPrint">
 <code class="descname">dbgPrint</code><span class="sig-paren">(</span><em>v_chk</em>, <em>v_varName</em>, <em>v_varValue</em>, <em>v_endOfLine=''</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.devChk.devChk.C_DebugMsg.dbgPrint" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Intercept les messages pour les formater de facon homogene.</p>
-<blockquote>
-<div>Pour permettre de masquer les messages d&#8217;une seule fonction a la fois,</div></blockquote>
-<p>il est conseille d&#8217;ajouter une variable local initialisee a <strong>True</strong>
+<p>Pour permettre de masquer les messages d&#8217;une seule fonction a la fois,
+il est conseille d&#8217;ajouter une variable local initialisee a <strong>True</strong>
 et de l&#8217;appeler a chaque fois que le debug et necessaire. Cette variable doit etre
 mise a <strong>False</strong> pour que l&#8217;affichage local soit desactive.</p>
 <p>Ex:</p>
@@ -180,6 +187,13 @@ la ligne du message de debug.</p>
 </div>
 <p>Pour faciliter la lecture lors du debug un numero unique est attribue
 a chaque fonction.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.devChk.devChk.C_DebugMsg.f_setAffichage">
+<code class="descname">f_setAffichage</code><span class="sig-paren">(</span><em>v_bool</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.devChk.devChk.C_DebugMsg.f_setAffichage" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_setAffichage( bool )</strong></p>
+<p>permet d&#8217;activer ( True ) ou de desactiver ( False ) l&#8217;affichage.</p>
 </dd></dl>
 
 </dd></dl>
@@ -229,8 +243,9 @@ et methode de ce projet.</p>
   <ul>
 <li><a class="reference internal" href="#">devChk</a><ul>
 <li><a class="reference internal" href="#infos">Infos</a></li>
+<li><a class="reference internal" href="#list-des-libs">List des Libs</a></li>
 <li><a class="reference internal" href="#lexique">lexique</a></li>
-<li><a class="reference internal" href="#liste-des-class">Liste des Class</a></li>
+<li><a class="reference internal" href="#class-c-debugmsg">Class C_DebugMsg</a></li>
 </ul>
 </li>
 </ul>

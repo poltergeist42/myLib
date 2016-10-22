@@ -8,7 +8,7 @@ Infos
 
    :Nom du fichier:     devChk.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20161017
+   :Version:            20161022
 
 ####
 
@@ -93,7 +93,7 @@ class C_DebugMsg(object) :
 ####
 
     def f_setAffichage( self, v_bool ) :
-        """ **f_setAffichage( bool )
+        """ **f_setAffichage( bool )**
         
             permet d'activer ( True ) ou de desactiver ( False ) l'affichage.
         """
@@ -104,7 +104,7 @@ class C_DebugMsg(object) :
         """
             Intercept les messages pour les formater de facon homogene.
             
-                Pour permettre de masquer les messages d'une seule fonction a la fois,
+            Pour permettre de masquer les messages d'une seule fonction a la fois,
             il est conseille d'ajouter une variable local initialisee a **True**
             et de l'appeler a chaque fois que le debug et necessaire. Cette variable doit etre
             mise a **False** pour que l'affichage local soit desactive.
