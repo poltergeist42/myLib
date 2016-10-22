@@ -57,10 +57,10 @@ objectif
     
 """
 
+import os, sys
+sys.path.insert(0,'..')        # ajouter le repertoire precedent au path (non definitif)
+                                # pour pouvoir importer les modules et paquets parent
 try :
-    import os, sys
-    sys.path.insert(0,'../')        # ajouter le repertoire precedent au path (non definitif)
-                                    # pour pouvoir importer les modules et paquets parent
     from devChk.devChk import C_DebugMsg
     v_dbgChk = True
     i_dbg = C_DebugMsg()
@@ -125,6 +125,7 @@ class C_FakeLib( object ) :
 ####
 
 def f_dbg( v_bool, v_tittle, v_data ) :
+    """ Fonction de traitemant du debug """
     if v_dbgChk :
         i_dbg.dbgPrint( v_bool, v_tittle, v_data )
         
@@ -145,7 +146,6 @@ def main() :
         else :
             print( "Le mode Debug ne peut pas etre active car le module n'est pas present")
 
-    
     i_ist = C_FakeLib()
     
     i_ist.f_doNothing()

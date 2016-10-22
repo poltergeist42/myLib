@@ -39,16 +39,21 @@ Class C_ObjJson
 ===============
    
 """
+import os, sys
+sys.path.insert(0,'..')         # ajouter le repertoire precedent au path (non définitif)
+                                # pour pouvoir importer les modules et paquets parent
 try :
-    import os, sys
-    sys.path.insert(0,'..')         # ajouter le repertoire precedent au path (non définitif)
-                                    # pour pouvoir importer les modules et paquets parent
     from devChk.devChk import C_DebugMsg
-
-    import json, copy
-    
+    v_dbgChk = True
+    i_dbg = C_DebugMsg()
+   
 except ImportError :
-    print( "module non present" )
+    print( "module devChk non present" )
+    v_dbgChk = False
+
+import json, copy
+import argparse
+
 
 class C_ObjJson (object):
     """ **C_ObjJson (object)**
@@ -64,9 +69,6 @@ class C_ObjJson (object):
             Creation et initialisation des variables globales de cette Class
         """
         
-        ## Creation de l'instance pour les message de debug
-        self.i_dbg = C_DebugMsg()
-                
         ## declaration des variables
         self.d_dicoToStuff = {}
         self.d_dicoFunc = {}
@@ -93,8 +95,7 @@ class C_ObjJson (object):
         """
         v_dbg = 1
         v_dbg2 = 0
-        i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg2, "__del__", self.__del__)
+        f_dbg(v_dbg2, "__del__", self.__del__)
         
         v_className = self.__class__.__name__
         print("\n\t\tL'instance de la class {} est terminee".format(v_className))    
@@ -110,13 +111,12 @@ class C_ObjJson (object):
         """
         v_dbg = 1
         v_dbg2 = 0
-        i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg2, "f_setFileName", self.f_setFileName)
+        f_dbg(v_dbg2, "f_setFileName", self.f_setFileName)
         
         os.makedirs(os.path.normpath(v_cheminDuFichier), mode=0o777, exist_ok=True)
         self.v_nomPlusChemin = str( v_cheminDuFichier ) + str( v_nomDuFichier )
         ## dbg
-        i_debug(v_dbg, "v_nomPlusChemin", self.v_nomPlusChemin)
+        f_dbg(v_dbg, "v_nomPlusChemin", self.v_nomPlusChemin)
 
 ###
         
@@ -128,12 +128,11 @@ class C_ObjJson (object):
         """
         v_dbg = 1
         v_dbg2 = 0
-        i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg2, "f_setDicoToStuff", self.f_setDicoToStuff)
+        f_dbg(v_dbg2, "f_setDicoToStuff", self.f_setDicoToStuff)
         
         self.d_dicoToStuff = copy.deepcopy( v_dicoSource )
         ## dbg
-        i_debug(v_dbg, "d_dicoToStuff", self.d_dicoToStuff)
+        f_dbg(v_dbg, "d_dicoToStuff", self.d_dicoToStuff)
 
 ###
         
@@ -145,12 +144,11 @@ class C_ObjJson (object):
         """
         v_dbg = 1
         v_dbg2 = 0
-        i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg2, "f_setDicoFunc", self.f_setDicoFunc)
+        f_dbg(v_dbg2, "f_setDicoFunc", self.f_setDicoFunc)
         
         self.d_dicoFunc = copy.deepcopy( v_dicoSource )
         ## dbg
-        i_debug(v_dbg, "d_dicoFunc", self.d_dicoFunc)
+        f_dbg(v_dbg, "d_dicoFunc", self.d_dicoFunc)
 
         
 ###
@@ -170,8 +168,7 @@ class C_ObjJson (object):
         """
         v_dbg = 1
         v_dbg2 = 0
-        i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg2, "f_openRWFile", self.f_openRWFile)
+        f_dbg(v_dbg2, "f_openRWFile", self.f_openRWFile)
         
 
         v_nomPlusChemin = self.v_nomPlusChemin
@@ -210,13 +207,12 @@ class C_ObjJson (object):
         """
         v_dbg = 1
         v_dbg2 = 0
-        i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg2, "f_dicoFuncRun", self.f_dicoFuncRun)
+        f_dbg(v_dbg2, "f_dicoFuncRun", self.f_dicoFuncRun)
         
         try :
             self.d_dicoFunc[v_dicoValueRead] ()
             ## dbg
-            i_debug(v_dbg, "d_dicoFunc[v_dicoValueRead]", self.d_dicoFunc[v_dicoValueRead])
+            f_dbg(v_dbg, "d_dicoFunc[v_dicoValueRead]", self.d_dicoFunc[v_dicoValueRead])
         except NameError :
             print( "{} n'est pas definie\n".format( self.d_dicoFunc[v_dicoValueRead] ))
         
@@ -230,8 +226,7 @@ class C_ObjJson (object):
         """
         v_dbg = 1
         v_dbg2 = 0
-        i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg2, "f_dicoSort", self.f_dicoSort)
+        f_dbg(v_dbg2, "f_dicoSort", self.f_dicoSort)
         
         d_dicoWorkSpace = self.d_dicoWorkSpace
         l_listSortedWorkSpace = []
@@ -240,7 +235,7 @@ class C_ObjJson (object):
             l_listSortedWorkSpace.append( (clef, d_dicoWorkSpace[clef]) )
             
         #dbg
-        i_debug(v_dbg, "l_listSortedWorkSpace", l_listSortedWorkSpace)
+        f_dbg(v_dbg, "l_listSortedWorkSpace", l_listSortedWorkSpace)
         
         return l_listSortedWorkSpace
         
@@ -257,8 +252,7 @@ class C_ObjJson (object):
         """
         v_dbg = 1
         v_dbg2 = 0
-        i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg2, "f_dumpJsonFile", self.f_dumpJsonFile)
+        f_dbg(v_dbg2, "f_dumpJsonFile", self.f_dumpJsonFile)
         
         self.f_openRWFile(v_mode = 'w')
         json.dump(self.d_dicoToStuff, self.i_monFichier, indent=4)
@@ -273,12 +267,11 @@ class C_ObjJson (object):
         """
         v_dbg = 1
         v_dbg2 = 0
-        i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg2, "f_dumpLocalJson", self.f_dumpLocalJson)
+        f_dbg(v_dbg2, "f_dumpLocalJson", self.f_dumpLocalJson)
         
         self.d_dicoLocalWorkSpace = json.dumps(v_dicoSource, indent=4)
         ## dbg
-        i_debug(v_dbg, "d_dicoWorkSpace", self.d_dicoLocalWorkSpace)
+        f_dbg(v_dbg, "d_dicoWorkSpace", self.d_dicoLocalWorkSpace)
         
 ###
         
@@ -291,14 +284,13 @@ class C_ObjJson (object):
 
         v_dbg = 1
         v_dbg2 = 0
-        i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg2, "f_loadJson", self.f_loadJson)
+        f_dbg(v_dbg2, "f_loadJson", self.f_loadJson)
         
         self.f_openRWFile(v_mode = 'r')
         self.d_dicoWorkSpace = json.load( self.i_monFichier )
         self.i_monFichier.close()
         ## dbg
-        i_debug(v_dbg, "d_dicoWorkSpace", self.d_dicoWorkSpace)
+        f_dbg(v_dbg, "d_dicoWorkSpace", self.d_dicoWorkSpace)
 
 ###
         
@@ -310,17 +302,38 @@ class C_ObjJson (object):
         """
         v_dbg = 1
         v_dbg2 = 0
-        i_debug = self.i_dbg.dbgPrint
-        i_debug(v_dbg2, "f_loadLocalJson", self.f_loadLocalJson)
+        f_dbg(v_dbg2, "f_loadLocalJson", self.f_loadLocalJson)
         
         v_localJson = json.loads( v_dicoSource )
         
         ## dbg
-        i_debug(v_dbg, "v_localJson", v_localJson)
+        f_dbg(v_dbg, "v_localJson", v_localJson)
         return v_localJson
         
+####
+
+def f_dbg( v_bool, v_tittle, v_data ) :
+    """ Fonction de traitemant du debug """
+    if v_dbgChk :
+        i_dbg.dbgPrint( v_bool, v_tittle, v_data )
+        
+####
     
 def main() :
+    """ Fonction principale """
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument( "-d", "--debug", action='store_true', help="activation du mode debug")
+                        
+    args = parser.parse_args()
+    
+    if args.debug :
+        if v_dbgChk :
+            i_dbg.f_setAffichage( True )
+            print( "Mode Debug activer" )
+        else :
+            print( "Le mode Debug ne peut pas etre active car le module n'est pas present")
+
     ##################################
     # Creation des fonctions de test #
     ##################################

@@ -9,7 +9,7 @@ Infos
 
    :Nom du fichier:     libReplicator.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20161015
+   :Version:            20161017
 
 ####
 
@@ -59,6 +59,7 @@ from os import system
 
 try :
     from myLib.devChk.devChk import C_DebugMsg
+    
     from myLib.devChk.devChk import C_GitChk
                                             # Arboressence de l'import :
                                             # _3_software           <-- origin du projet
@@ -71,9 +72,12 @@ try :
                                             #  |  |  |  |
                                             #  |  |  |  +- C_GitChk <-- class 
                                             #                           de la lib devChk.py   
+    v_dbgChk = True
+    i_dbg = C_DebugMsg()
 
 except ImportError :
     print("module 'devChk' non charge")
+    v_dbgChk = True
 
 try : 
     from myLib.logIt.logIt import C_logIt
@@ -97,7 +101,7 @@ class C_bougeTonFile(object) :
         l'ensemble des projet auquel elles sont utiles
     """
         
-    def __init__( self, v_debug=False ) :
+    def __init__( self) :
         """ 
             **__init()**
         
@@ -105,7 +109,6 @@ class C_bougeTonFile(object) :
         """
         
         ## Creation des instances de debug et de log
-        self.i_dbg = C_DebugMsg(v_debug)
         self.i_log = C_logIt()
                 
         ## declaration des variables
@@ -145,9 +148,8 @@ class C_bougeTonFile(object) :
         ## dbg
         v_dbg = 1
         v_dbg2 = 1
-        i_debug = self.i_dbg.dbgPrint 
-        i_debug(v_dbg2, "f_arboList", self.f_arboList)
-        i_debug(v_dbg, "l_listDir", self.l_listDir)
+        f_dbg(v_dbg2, "f_arboList", self.f_arboList)
+        f_dbg(v_dbg, "l_listDir", self.l_listDir)
         
         ## Action
         if not self.v_testMode :
@@ -172,8 +174,7 @@ class C_bougeTonFile(object) :
         ## dbg
         v_dbg = 1
         v_dbg2 = 1
-        i_debug = self.i_dbg.dbgPrint 
-        i_debug(v_dbg2, "f_subProcessArboList", self.f_subProcessArboList)
+        f_dbg(v_dbg2, "f_subProcessArboList", self.f_subProcessArboList)
         
         ## Action
         v_subDirLocal = self.v_workDir + "/" + v_boucleIteration
@@ -206,10 +207,10 @@ class C_bougeTonFile(object) :
                     # du fichier 'projectList.txt' de chacun des dossier examines
         
         ## dbg
-        i_debug(v_dbg, "v_subDirLocal", v_subDirLocal)
-        i_debug(v_dbg, "v_project", v_project)
-        i_debug(v_dbg, "l_subDirProjectList", self.l_subDirProjectList)
-        i_debug(v_dbg, "d_docPath", self.d_docPath)
+        f_dbg(v_dbg, "v_subDirLocal", v_subDirLocal)
+        f_dbg(v_dbg, "v_project", v_project)
+        f_dbg(v_dbg, "l_subDirProjectList", self.l_subDirProjectList)
+        f_dbg(v_dbg, "d_docPath", self.d_docPath)
 
             
 ####
@@ -221,8 +222,7 @@ class C_bougeTonFile(object) :
         ## dbg
         v_dbg = 1
         v_dbg2 = 1
-        i_debug = self.i_dbg.dbgPrint 
-        i_debug(v_dbg2, "f_libVersionComparator", self.f_libVersionComparator)
+        f_dbg(v_dbg2, "f_libVersionComparator", self.f_libVersionComparator)
         
         ## log
         i_logSetD = self.i_log.f_setDTask
@@ -259,7 +259,7 @@ class C_bougeTonFile(object) :
             while v_boucle :
                 if not self.v_yesToAll :
                     ## dbg
-                    i_debug(v_dbg, "v_yesToAll", self.v_yesToAll)
+                    f_dbg(v_dbg, "v_yesToAll", self.v_yesToAll)
                     
                     ## Action
                     print("\n\tversion locale : {} - version distante : {}\n".format(v_local, v_dist))
@@ -271,21 +271,21 @@ class C_bougeTonFile(object) :
                         v_boucle = False
                     
                         ## dbg
-                        i_debug(v_dbg, "v_copyLib", v_copyLib)
+                        f_dbg(v_dbg, "v_copyLib", v_copyLib)
                         
                     elif v_question == 'o' or v_question == 'y' or v_question == "oui" or v_question == "yes" :
                         v_copyLib = True
                         v_boucle = False
                         
                         ## dbg
-                        i_debug(v_dbg, "v_copyLib", v_copyLib)
+                        f_dbg(v_dbg, "v_copyLib", v_copyLib)
                         
                     elif v_question == 'n' or v_question == "non" or v_question == "no" :
                         v_copyLib = False
                         v_boucle = False
                         
                         ## dbg
-                        i_debug(v_dbg, "v_copyLib", v_copyLib)
+                        f_dbg(v_dbg, "v_copyLib", v_copyLib)
                         
                     ## Action    
                     else :
@@ -296,7 +296,7 @@ class C_bougeTonFile(object) :
                     v_boucle = False
                     
                     ## dbg
-                    i_debug(v_dbg, "v_yesToAll", self.v_yesToAll)
+                    f_dbg(v_dbg, "v_yesToAll", self.v_yesToAll)
                     
         return v_copyLib
 
@@ -307,8 +307,7 @@ class C_bougeTonFile(object) :
         ## dbg
         v_dbg = 1
         v_dbg2 = 1
-        i_debug = self.i_dbg.dbgPrint 
-        i_debug(v_dbg2, "f_libVersion", self.f_libVersion)
+        f_dbg(v_dbg2, "f_libVersion", self.f_libVersion)
 
         
         ## Action
@@ -343,7 +342,7 @@ class C_bougeTonFile(object) :
             if v_chk : v_localLib.close()
             
         ## dbg
-        i_debug(v_dbg, "v_vers", v_vers)
+        f_dbg(v_dbg, "v_vers", v_vers)
         
         ## Action
         return v_vers
@@ -355,9 +354,8 @@ class C_bougeTonFile(object) :
         ## dbg
         v_dbg = 1
         v_dbg2 = 1
-        i_debug = self.i_dbg.dbgPrint 
-        i_debug(v_dbg2, "f_copyAll", self.f_copyAll)
-        i_debug(v_dbg, "d_fullFile", self.d_fullFile)
+        f_dbg(v_dbg2, "f_copyAll", self.f_copyAll)
+        f_dbg(v_dbg, "d_fullFile", self.d_fullFile)
         
         ## log
         i_logSetD = self.i_log.f_setDTask
@@ -369,18 +367,18 @@ class C_bougeTonFile(object) :
             v_docSrc = "../"+ self.t_distDirPath[0] + "/" + self.d_docPath[key]
             
             ## dbg
-            i_debug(v_dbg, "key", key)
-            i_debug(v_dbg, "self.d_fullFile[key][0]", self.d_fullFile[key][0])
-            # i_debug(v_dbg, "type(v_src)", type(v_src))           
-            i_debug(v_dbg, "v_docSrc", v_docSrc)           
+            f_dbg(v_dbg, "key", key)
+            f_dbg(v_dbg, "self.d_fullFile[key][0]", self.d_fullFile[key][0])
+            # f_dbg(v_dbg, "type(v_src)", type(v_src))           
+            f_dbg(v_dbg, "v_docSrc", v_docSrc)           
             
             ## Action
             for i in range(self.d_fullFile[key][0]) :
             
                 ## dbg
-                i_debug(v_dbg, "i", i)
-                i_debug(v_dbg, "self.d_fullFile[key][i]", self.d_fullFile[key][i])
-                # i_debug(v_dbg, "type(self.d_fullFile[key][i])", type(self.d_fullFile[key][i]))
+                f_dbg(v_dbg, "i", i)
+                f_dbg(v_dbg, "self.d_fullFile[key][i]", self.d_fullFile[key][i])
+                # f_dbg(v_dbg, "type(self.d_fullFile[key][i])", type(self.d_fullFile[key][i]))
                 
                 ## Action
                 if i == 0 or self.d_fullFile[key][1] == False :
@@ -398,8 +396,8 @@ class C_bougeTonFile(object) :
                     v_distLibFile = v_dest + "/" + key + ".py"
                     
                     ## dbg
-                    i_debug(v_dbg, "v_localLibFile", v_localLibFile)
-                    i_debug(v_dbg, "v_distLibFile", v_distLibFile)
+                    f_dbg(v_dbg, "v_localLibFile", v_localLibFile)
+                    f_dbg(v_dbg, "v_distLibFile", v_distLibFile)
                     
                     ## Action
                     if self.f_libVersionComparator(v_localLibFile, v_distLibFile, key):
@@ -426,8 +424,8 @@ class C_bougeTonFile(object) :
                     
                         
                         ## dbg
-                        i_debug(v_dbg, "v_dest", v_dest)
-                        i_debug(v_dbg, "v_docDest", v_docDest)
+                        f_dbg(v_dbg, "v_dest", v_dest)
+                        f_dbg(v_dbg, "v_docDest", v_docDest)
                         
                         ## Action
                         dir_util.copy_tree  (   v_src, 
@@ -464,8 +462,7 @@ class C_bougeTonFile(object) :
         ## dbg
         v_dbg = 1
         v_dbg2 = 1
-        i_debug = self.i_dbg.dbgPrint 
-        i_debug(v_dbg2, "f_setTestOn", self.f_setTestOn)
+        f_dbg(v_dbg2, "f_setTestOn", self.f_setTestOn)
         
         ## Action
         self.v_testMode = True
@@ -487,6 +484,11 @@ def f_osIdentifier() :
 
 ####
 
+def f_dbg( v_bool, v_tittle, v_data ) :
+    """ Fonction de traitemant du debug """
+    if v_dbgChk :
+        i_dbg.dbgPrint( v_bool, v_tittle, v_data )
+        
 ########
 # Main #
 ########
@@ -503,9 +505,9 @@ def main() :
     
     if args.debug :
         print( "Mode Debug active" )
-        i_replicator = C_bougeTonFile( True )
-    else :
-        i_replicator = C_bougeTonFile( False )
+        i_dbg.f_setAffichage( True )
+    
+    i_replicator = C_bougeTonFile()
         
     if args.test : i_replicator.f_setTestOn()
 

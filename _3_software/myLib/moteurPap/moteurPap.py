@@ -8,7 +8,7 @@ Infos
 
    :Nom du fichier:     moteurPap.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160912
+   :Version:            20161017
 
 ####
 
@@ -92,10 +92,14 @@ moteurPap
 import sys
 sys.path.insert(0,'..')         # ajouter le repertoire precedent au path (non definitif)
 
-try :                           # pour pouvoir importer les modules et paquets parent
+try :
     from devChk.devChk import C_DebugMsg
+    v_dbgChk = True
+    i_dbg = C_DebugMsg()
+   
 except ImportError :
-    print( "module 'devChk' non charge")
+    print( "module devChk non present" )
+    v_dbgChk = False
 
 try :
     import RPi.GPIO as GPIO
@@ -104,6 +108,8 @@ except ImportError :
     print("module 'RPi' non charge")
     
 import time
+import argparse
+
 
 from math import pi
 
@@ -115,8 +121,6 @@ class C_MoteurPap(object):
         """
             Declaration et initialisation des variables
         """
-        # Creation de l'instance pour les message de debug
-        self.i_dbg = C_DebugMsg()
         
         # declaration des variables
         self.v_rotation = v_rotationInit.lower()
@@ -143,7 +147,9 @@ class C_MoteurPap(object):
         self.t_phase[5] = [0,0,1,1]
         self.t_phase[6] = [0,0,0,1]
         self.t_phase[7] = [1,0,0,1]
-        
+
+####
+
     def __del__(self) :
         """destructor
         
@@ -151,10 +157,19 @@ class C_MoteurPap(object):
             
                 del [nom_de_l'_instance]
         """
+        
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        f_dbg(v_dbg2, "__del__", self.__del__)
+        
+        ## Action
         self.f_gpioDestructor()
         v_className = self.__class__.__name__
         print("\n\t\tL'instance de la class {} est terminee".format(v_className))
-        
+
+####
+
     def f_gpioInit(self, v_gpioA=17, v_gpioB=18, v_gpioC=27, v_gpioD=22):
         """
             Methode permettant de selectionner et d'activer les 4 ports du RPi
@@ -171,6 +186,13 @@ class C_MoteurPap(object):
             Cette methode est obligatoire est doit etre appellee lors de la creation
             de chaque nouvelle instance de l'objet.
         """
+        
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        f_dbg(v_dbg2, "f_gpioInit", self.f_gpioInit)
+        
+        ##Action
         # configuration du mode du GPIO
         try :
             GPIO.setmode(GPIO.BCM)
@@ -185,6 +207,7 @@ class C_MoteurPap(object):
         except NameError :
             print("GPIO error : f_gpioInit")
 
+####
 
     def f_gpioDestructor(self):
         """
@@ -193,57 +216,93 @@ class C_MoteurPap(object):
             Cette methode doit etre appellee a la fin de l'utilisation
             des broches GPIO (avant de quitter le programme).
         """
+        
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        f_dbg(v_dbg2, "f_gpioDestructor", self.f_gpioDestructor)
+        
+        ##Action
         try :
             GPIO.cleanup()
             
         except NameError :
             print("GPIO error : f_gpioDestructor")
 
+####
+
     def f_moveDeg(self, v_deg):
         """
             Methode permettant d'effectuer une rotation egale 
             a la valeur fournie degres
         """
-        v_dbg = True
         
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        f_dbg(v_dbg2, "f_moveDeg", self.f_moveDeg)
+        
+        ##Action
         # Récupération d'une valeur donnée en degrés puis conversion
         # de cette valeur en nombre de pas en sortie d'arbre
         self.v_dest = self.f_convertDegToStep( v_deg )
         
         #dbg
-        self.i_dbg.dbgPrint(v_dbg, "self.v_dest [ + ]", self.v_dest)
+        f_dbg(v_dbg, "self.v_dest [ + ]", self.v_dest)
         
         self.f_sensDeRotation()
         self.f_move(self.v_dest, v_deg)
+
+####
 
     def f_moveStep(self, v_step):
         """
             Methode permettant d'effectuer une rotation egale
             a la valeur fournie nombre de pas (en sortie d'arbre)
         """
-        v_dbg = True
         
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        f_dbg(v_dbg2, "f_moveStep", self.f_moveStep)
+        
+        ##Action
         # Recuperation d'une valeur donnee en nombre de pas en sortie d'arbre
         self.v_dest =  v_step
         
         #dbg
-        self.i_dbg.dbgPrint(v_dbg, "self.v_dest [ + ]", self.v_dest)
+        f_dbg(v_dbg, "self.v_dest [ + ]", self.v_dest)
         
+        ## Action
         self.f_sensDeRotation()
         self.f_move(self.v_dest, v_step)
 
+####
+
     def f_moveCm(self, v_cm) :
         """ effectue une rotation egale a une distance en centimetre """
-        v_dbg = True
         
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        f_dbg(v_dbg2, "f_moveCm", self.f_moveCm)
+        
+        ##Action
         self.v_dest = self.f_convertCmToStep(v_cm)
         self.f_sensDeRotation()
         self.f_move(self.v_dest, v_cm)
-                       
+
+####
+
     def f_move(self, v_destMove, v_step) :
         """ Factorisation de la sequence de mouvement des PAP """
-        v_dbg = True
         
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        f_dbg(v_dbg2, "f_move", self.f_move)
+        
+        ##Action
         if v_destMove > 0 :
             v_destMove+= 1
             v_step = 1
@@ -252,12 +311,12 @@ class C_MoteurPap(object):
             v_step = -1
             
             #dbg
-            self.i_dbg.dbgPrint(v_dbg, "self.v_dest [ - ]", self.v_dest)
+            f_dbg(v_dbg, "self.v_dest [ - ]", self.v_dest)
         
         for v_pas in range(0, v_destMove, v_step):
         
             #dbg
-            self.i_dbg.dbgPrint(v_dbg, "v_pas : ", v_pas)
+            f_dbg(v_dbg, "v_pas : ", v_pas)
             
             for v_sortie in range(4):
                 v_sortieN = self.t_broches[v_sortie]
@@ -266,8 +325,8 @@ class C_MoteurPap(object):
                     if self.t_phase[self.v_compteurDePas][v_sortie] !=0 :
                     
                         #dbg
-                        self.i_dbg.dbgPrint(v_dbg, "t_phase", self.v_compteurDePas)
-                        self.i_dbg.dbgPrint(v_dbg, "Activation v_sortie", v_sortieN)
+                        f_dbg(v_dbg, "t_phase", self.v_compteurDePas)
+                        f_dbg(v_dbg, "Activation v_sortie", v_sortieN)
                         
                         GPIO.output(v_sortieN, True)
                     else :
@@ -276,8 +335,8 @@ class C_MoteurPap(object):
                     print("GPIO error : f_move\n")
                     
                     #dbg
-                    self.i_dbg.dbgPrint(v_dbg, "t_phase", self.v_compteurDePas)
-                    self.i_dbg.dbgPrint(v_dbg, "Activation v_sortie", v_sortieN)
+                    f_dbg(v_dbg, "t_phase", self.v_compteurDePas)
+                    f_dbg(v_dbg, "Activation v_sortie", v_sortieN)
                     
             time.sleep(self.v_tempDePause)
             if v_step == 1 : self.v_compteurDePas -= 1
@@ -285,21 +344,41 @@ class C_MoteurPap(object):
         
             if (self.v_compteurDePas == self.v_ndp) : self.v_compteurDePas = 0
             if (self.v_compteurDePas < 0) : self.v_compteurDePas = self.v_ndp-1       
-                
+
+####
+
     def f_convertDegToStep(self, v_degToStep):
         """
             Methode permettant de convertir en nombre de Pas
             une valeur entree en degres
         """
-        return int( v_degToStep //self.v_refAngle)
+                
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        f_dbg(v_dbg2, "f_convertDegToStep", self.f_convertDegToStep)
         
+        ##Action
+        return int( v_degToStep //self.v_refAngle)
+
+####        
+
     def f_convertStepToDeg(self, v_stepToDeg):
         """
             Methode permettant de convertir en degres
             une valeur entree nombre de Pas
         """
-        return v_stepToDeg * self.v_refAngle
+                        
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        f_dbg(v_dbg2, "f_convertStepToDeg", self.f_convertStepToDeg)
         
+        ##Action
+        return v_stepToDeg * self.v_refAngle
+
+####
+
     def f_convertCmToDeg(self, v_cmToDeg) :
         """
             Methode permettant de convertir en centimetre
@@ -324,8 +403,17 @@ class C_MoteurPap(object):
                 |        x        | (x2piR) / (x360) |
                 +-----------------+------------------+
         """
-        return (v_cmToDeg * 360) / self.v_perimetre
+                                
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        f_dbg(v_dbg2, "f_convertCmToDeg", self.f_convertCmToDeg)
         
+        ##Action
+        return (v_cmToDeg * 360) / self.v_perimetre
+
+####
+
     def f_convertDegToCm(self, v_degToCm) :
         """
             Methode permettant de convertir en degres
@@ -350,30 +438,82 @@ class C_MoteurPap(object):
                 |        x        | (x2piR) / (x360) |
                 +-----------------+------------------+
         """
+                                       
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        f_dbg(v_dbg2, "f_convertDegToCm", self.f_convertDegToCm)
+        
+        ##Action
         return (v_degToCm * self.v_perimetre) / 360
-    
+
+####
+
     def f_convertCmToStep(self, v_cmToStep) :
         """ convertit une valeur en centimetre
             en l'equivalent en nombres de pas
         """
-        return int((4096 * v_cmToStep) / self.v_perimetre)
+                                               
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        f_dbg(v_dbg2, "f_convertCmToStep", self.f_convertCmToStep)
         
+        ##Action
+        return int((4096 * v_cmToStep) / self.v_perimetre)
+
+####
+
     def f_convertStepToCm(self, v_stepToCm) :
         """ convertit un nombre de pas en une distance en centimetre """
+                                                      
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        f_dbg(v_dbg2, "f_convertStepToCm", self.f_convertStepToCm)
+        
+        ##Action
         return (v_stepToCm * self.v_perimetre) / 4096
         
-       
+####
+
     def f_sensDeRotation(self) :
         """
             identifie le sens de rotation attendu par l'utilisateur
             et l'affecter au PAP
         """
+                                                              
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        f_dbg(v_dbg2, "f_sensDeRotation", self.f_sensDeRotation)
+        
+        ##Action
         if self.v_rotation == "antihoraire" :
             self.v_dest *= -1
 
+####
 
+def f_dbg( v_bool, v_tittle, v_data ) :
+    """ Fonction de traitemant du debug """
+    if v_dbgChk :
+        i_dbg.dbgPrint( v_bool, v_tittle, v_data )
+        
+####
            
 def main() :
+    parser = argparse.ArgumentParser()
+    parser.add_argument( "-d", "--debug", action='store_true', help="activation du mode debug")
+                        
+    args = parser.parse_args()
+    
+    if args.debug :
+        if v_dbgChk :
+            i_dbg.f_setAffichage( True )
+            print( "Mode Debug activer" )
+        else :
+            print( "Le mode Debug ne peut pas etre active car le module n'est pas present")
+
     #######################
     # Instance par defaut #
     #######################

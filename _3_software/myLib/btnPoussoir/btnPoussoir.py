@@ -8,7 +8,7 @@ infos
     
     :Nom du fichier:     btnPoussoir.py
     :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-    :Version:            20160912
+    :Version:            20161017
 
 ####
 
@@ -39,14 +39,17 @@ Class C_BtnPoussoir
 ===================
     
 """
+import os, sys
+sys.path.insert(0,'..')         # ajouter le repertoire precedent au path (non definitif)
+                                # pour pouvoir importer les modules et paquets parent
 try :
-    import os, sys
-    sys.path.insert(0,'..')         # ajouter le repertoire precedent au path (non definitif)
-                                    # pour pouvoir importer les modules et paquets parent
     from devChk.devChk import C_DebugMsg
+    v_dbgChk = True
+    i_dbg = C_DebugMsg()
    
 except ImportError :
     print( "module devChk non present" )
+    v_dbgChk = False
     
 try :
     import RPi.GPIO as GPIO
@@ -68,7 +71,7 @@ class C_BtnPoussoir( object ) :
     
         Class permettant de gerer les boutons poussoirs
     """
-    def __init__( self, v_debug=False ) :
+    def __init__( self) :
         """ ::
         
                 __init()
@@ -76,9 +79,6 @@ class C_BtnPoussoir( object ) :
             Creation et initialisation des variables globales de cette Class
         """
         
-        ## Creation de l'instance pour les message de debug
-        self.i_dbg = C_DebugMsg(v_debug)
-                
         ## declaration des variables
         self.v_broche = False
         self.v_pudStatus = ""
@@ -106,8 +106,7 @@ class C_BtnPoussoir( object ) :
         """
         v_dbg = 1
         v_dbg2 = 0
-        i_debug = self.i_dbg.dbgPrint
-        i_debug( v_dbg2, "__del__", self.__del__ )
+        f_dbg( v_dbg2, "__del__", self.__del__ )
         
         self.f_gpioDestructor()
         v_className = self.__class__.__name__
@@ -141,8 +140,7 @@ class C_BtnPoussoir( object ) :
         """
         v_dbg = 1
         v_dbg2 = 1
-        i_debug = self.i_dbg.dbgPrint
-        i_debug( v_dbg2, "f_gpioInit", self.f_gpioInit )
+        f_dbg( v_dbg2, "f_gpioInit", self.f_gpioInit )
 
         
         self.v_pudStatus = v_pullToUpOrDown
@@ -154,9 +152,9 @@ class C_BtnPoussoir( object ) :
 
         
         ## dbg
-        i_debug( v_dbg, "v_pudStatus", self.v_pudStatus )
-        i_debug( v_dbg, "v_pudState", self.v_pudState )
-        i_debug( v_dbg, "v_broche", self.v_broche )
+        f_dbg( v_dbg, "v_pudStatus", self.v_pudStatus )
+        f_dbg( v_dbg, "v_pudState", self.v_pudState )
+        f_dbg( v_dbg, "v_broche", self.v_broche )
 
         # configuration du mode du GPIO
         try :
@@ -250,8 +248,7 @@ class C_BtnPoussoir( object ) :
         
         v_dbg = 1
         v_dbg2 = 1
-        i_debug = self.i_dbg.dbgPrint
-        i_debug( v_dbg2, "f_waitForEvent", self.f_waitForEvent )
+        f_dbg( v_dbg2, "f_waitForEvent", self.f_waitForEvent )
         
         ## raccourcis
         v_broche = self.v_broche
@@ -261,9 +258,9 @@ class C_BtnPoussoir( object ) :
 
                
         ## dbg
-        i_debug( v_dbg, "v_fnToExecute", v_fnToExecute )
-        i_debug( v_dbg, "v_rfb", v_rfb )
-        i_debug( v_dbg, "v_timeout", v_timeout )
+        f_dbg( v_dbg, "v_fnToExecute", v_fnToExecute )
+        f_dbg( v_dbg, "v_rfb", v_rfb )
+        f_dbg( v_dbg, "v_timeout", v_timeout )
         
         GPIO.wait_for_edge(v_broche, v_rfb, v_timeout)
         
@@ -292,8 +289,7 @@ class C_BtnPoussoir( object ) :
         """
         v_dbg = 1
         v_dbg2 = 1
-        i_debug = self.i_dbg.dbgPrint
-        i_debug( v_dbg2, "f_addEventDetect", self.f_addEventDetect )
+        f_dbg( v_dbg2, "f_addEventDetect", self.f_addEventDetect )
         
         ## variables
         v_broche    = self.v_broche
@@ -304,7 +300,7 @@ class C_BtnPoussoir( object ) :
         v_rfb = self.f_setFront( v_front )
                
         ## dbg
-        i_debug( v_dbg, "v_rfb", v_rfb )
+        f_dbg( v_dbg, "v_rfb", v_rfb )
         
         ## init Event detect
         if not v_callBack :
@@ -347,8 +343,7 @@ class C_BtnPoussoir( object ) :
         """
         v_dbg = 1
         v_dbg2 = 1
-        i_debug = self.i_dbg.dbgPrint
-        i_debug( v_dbg2, "f_onEventDetect", self.f_onEventDetect )
+        f_dbg( v_dbg2, "f_onEventDetect", self.f_onEventDetect )
         
         ## raccourcis
         v_broche        = self.v_broche
@@ -357,8 +352,8 @@ class C_BtnPoussoir( object ) :
         v_rfb = self.f_setFront( v_front )
 
         ## dbg
-        i_debug( v_dbg, "v_fnToExecute", v_fnToExecute )
-        i_debug( v_dbg, "v_rfb", v_rfb )
+        f_dbg( v_dbg, "v_fnToExecute", v_fnToExecute )
+        f_dbg( v_dbg, "v_rfb", v_rfb )
                 
 ######
         
@@ -375,15 +370,15 @@ class C_BtnPoussoir( object ) :
                 correspond au numero de la broche.
             """
             ##dbg
-            i_debug( v_dbg2, "f_myCallBack", f_myCallBack )
-            i_debug( v_dbg, "v_fnToExecute", v_fnToExecute )
-            i_debug( v_dbg, "channel", channel )
+            f_dbg( v_dbg2, "f_myCallBack", f_myCallBack )
+            f_dbg( v_dbg, "v_fnToExecute", v_fnToExecute )
+            f_dbg( v_dbg, "channel", channel )
             
-            i_debug( v_dbg, "avant la fonction ...",  v_fnToExecute.__name__)
+            f_dbg( v_dbg, "avant la fonction ...",  v_fnToExecute.__name__)
             
             v_fnToExecute()
             
-            i_debug( v_dbg, "... apres la fonction",  v_fnToExecute.__name__)
+            f_dbg( v_dbg, "... apres la fonction",  v_fnToExecute.__name__)
     
 ######
         
@@ -392,7 +387,7 @@ class C_BtnPoussoir( object ) :
         if isinstance( v_fnToExecute, list ) :
         
             # ## dbg
-            # i_debug( v_dbg, "Type de l'argument ", type(v_fnToExecute) )
+            # f_dbg( v_dbg, "Type de l'argument ", type(v_fnToExecute) )
             # self.f_addEventDetect( v_broche )
             
             # for i in range( len(v_fnToExecute) ) :
@@ -402,7 +397,7 @@ class C_BtnPoussoir( object ) :
 
         else :
             ## dbg
-            i_debug( v_dbg, "Type de l'argument ", type(v_fnToExecute) )
+            f_dbg( v_dbg, "Type de l'argument ", type(v_fnToExecute) )
 
             self.f_addEventDetect( v_callBack = f_myCallBack )
 
@@ -448,37 +443,36 @@ class C_BtnPoussoir( object ) :
         v_dbg = 0
         v_dbg2 = 0
         v_dbg3 = 0
-        i_debug = self.i_dbg.dbgPrint
-        i_debug( v_dbg2, "f_ifDetected", self.f_ifDetected )
+        f_dbg( v_dbg2, "f_ifDetected", self.f_ifDetected )
         
         ## variables
         v_dBounce   = self.v_bouncetime / 1000
             
         ## dbg
-        i_debug( v_dbg, "v_fnToExecute", v_fnToExecute )
-        i_debug( v_dbg, "v_howManyHit", v_howManyHit )
+        f_dbg( v_dbg, "v_fnToExecute", v_fnToExecute )
+        f_dbg( v_dbg, "v_howManyHit", v_howManyHit )
         
         ## Event detected
         if GPIO.event_detected( self.v_broche ) :
             v_timeNow = time.time()
             self.v_hit += 1
-            i_debug( v_dbg3, "self.v_hit", self.v_hit )
-            i_debug( v_dbg3, "v_timeNow", v_timeNow )
+            f_dbg( v_dbg3, "self.v_hit", self.v_hit )
+            f_dbg( v_dbg3, "v_timeNow", v_timeNow )
 
             if not self.v_prev :
                 self.v_timeStart = self.v_prev = v_timeNow
-                i_debug( v_dbg3, "not v_prev - v_timeStart : ", self.v_timeStart )
+                f_dbg( v_dbg3, "not v_prev - v_timeStart : ", self.v_timeStart )
 
             v_timeDiff = v_timeNow - self.v_prev
-            i_debug( v_dbg3, "v_timeDiff", v_timeDiff )
+            f_dbg( v_dbg3, "v_timeDiff", v_timeDiff )
 
             if (v_timeDiff >= v_dBounce) :
                 if (v_timeDiff <= v_timeOut) :
                                     
                     ##dbg
-                    i_debug( v_dbg3, "v_dBounce", v_dBounce )
-                    i_debug( v_dbg3, "v_timeDiff", v_timeDiff )
-                    i_debug( v_dbg3, "v_timeOut", v_timeOut )
+                    f_dbg( v_dbg3, "v_dBounce", v_dBounce )
+                    f_dbg( v_dbg3, "v_timeDiff", v_timeDiff )
+                    f_dbg( v_dbg3, "v_timeOut", v_timeOut )
 
                     self.v_prev = v_timeNow
 
@@ -492,6 +486,13 @@ class C_BtnPoussoir( object ) :
                     self.v_prev = self.v_timeStart = False
                     self.v_hit = False
 
+####
+
+def f_dbg( v_bool, v_tittle, v_data ) :
+    """ Fonction de traitemant du debug """
+    if v_dbgChk :
+        i_dbg.dbgPrint( v_bool, v_tittle, v_data )
+        
 ####
         
 def main() :
@@ -524,11 +525,14 @@ def main() :
     args = parser.parse_args()
     
     def f_startInstance() :
-        if args.debug :
-            i_testBtn = C_BtnPoussoir(True)
-            print( "activation du mode debug" )
+    if args.debug :
+        if v_dbgChk :
+            i_dbg.f_setAffichage( True )
+            print( "Mode Debug activer" )
         else :
-            i_testBtn = C_BtnPoussoir()
+            print( "Le mode Debug ne peut pas etre active car le module n'est pas present")
+
+        i_testBtn = C_BtnPoussoir()
             
         return i_testBtn
             

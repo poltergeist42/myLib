@@ -8,7 +8,7 @@ Infos
 
    :Nom du fichier:     ultrason.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160912
+   :Version:            20161022
 
 ####
 
@@ -49,9 +49,12 @@ sys.path.insert(0,'../')
 
 try :
     from devChk.devChk import C_DebugMsg
-
+    v_dbgChk = True
+    i_dbg = C_DebugMsg()
+   
 except ImportError :
-    print("module 'devChk' non charge")
+    print( "module devChk non present" )
+    v_dbgChk = False
 
 
 try :
@@ -61,6 +64,7 @@ except ImportError :
     print("module 'RPi' non charge")
     
 import time
+import argparse
 
 class C_ultrasonSensor(object) :
     """ **C_ultrasonSensor(object)**
@@ -102,9 +106,6 @@ class C_ultrasonSensor(object) :
             Creation et initialisation des variables globales de cette Class
             
         """
-        
-        ## Creation de l'instance pour les message de debug
-        self.i_dbg = C_DebugMsg()
                 
         ## declaration des variables
         self.v_trig = 0
@@ -123,6 +124,12 @@ class C_ultrasonSensor(object) :
                 
         """
         
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        f_dbg(v_dbg2, "__del__", self.__del__)
+        
+        ## Action
         self.f_gpioDestructor()
         v_className = self.__class__.__name__
         print("\n\t\tL'instance de la class {} est terminee".format(v_className))
@@ -138,8 +145,12 @@ class C_ultrasonSensor(object) :
             
         """
         
-        v_dbg = True
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        f_dbg(v_dbg2, "f_gpioDestructor", self.f_gpioDestructor)
         
+        ## Action
         try :
             GPIO.cleanup()
             
@@ -159,8 +170,12 @@ class C_ultrasonSensor(object) :
             
         """
         
-        v_dbg = False
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        f_dbg(v_dbg2, "f_ultraInit", self.f_ultraInit)
         
+        ## Action
         GPIO.setmode(GPIO.BCM)
         
         self.v_trig = v_gpioTrig
@@ -183,52 +198,56 @@ class C_ultrasonSensor(object) :
             *N.B :* valeur en centimetre
             
         """
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        f_dbg(v_dbg2, "f_ultraMesure", self.f_ultraMesure)
         
-        v_dbg = False
-        
+        ## Action
         ## Emission de l'onde radio
         
         GPIO.output(self.v_trig, 1)
         
-        # dbg
-        self.i_dbg.dbgPrint(v_dbg, "self.v_trig", self.v_trig)
+        ## dbg
+        f_dbg(v_dbg, "self.v_trig", self.v_trig)
         
+        ## Action
         time.sleep(0.00001)
         GPIO.output(self.v_trig, 0)
         
-        # dbg
-        self.i_dbg.dbgPrint(v_dbg, "self.v_trig", self.v_trig)
+        ## dbg
+        f_dbg(v_dbg, "self.v_trig", self.v_trig)
         
+        ## Action
         ## reception de l'echo radio
-        
         while GPIO.input(self.v_echo) == 0 :
             pass
             
         v_start = time.time()
         
-        # dbg
-        self.i_dbg.dbgPrint(v_dbg, "v_start", v_start)
+        ## dbg
+        f_dbg(v_dbg, "v_start", v_start)
         
+        ## Action
         while GPIO.input(self.v_echo) == 1 :
             pass
             
         v_stop = time.time()
-        
-        # dbg
-        self.i_dbg.dbgPrint(v_dbg, "v_stop", v_stop)
-        
         v_timeDiff = v_stop - v_start
-        
-        # dbg
-        self.i_dbg.dbgPrint(v_dbg, "v_timeDiff", v_timeDiff)
-        
         v_dist = (v_timeDiff * self.v_timeSpeed)
         
         # dbg
-        self.i_dbg.dbgPrint(v_dbg, "v_dist", v_dist)
+        f_dbg(v_dbg, "v_stop", v_stop)
+        f_dbg(v_dbg, "v_timeDiff", v_timeDiff)
+        f_dbg(v_dbg, "v_dist", v_dist)
         
         return v_dist
  
+ 
+def f_dbg( v_bool, v_tittle, v_data ) :
+    """ Fonction de traitemant du debug """
+    if v_dbgChk :
+        i_dbg.dbgPrint( v_bool, v_tittle, v_data )
  
 def main() :
     """**Fonction main()**
@@ -236,16 +255,25 @@ def main() :
         Cette Fonction affiche en permanence la distance entre le capteur et l'obstacle.
         Pour sortir de la boucle il faut faire une interruption (CTRL - c).
     """
+    parser = argparse.ArgumentParser()
+    parser.add_argument( "-d", "--debug", action='store_true', help="activation du mode debug")
+                        
+    args = parser.parse_args()
+    
+    if args.debug :
+        if v_dbgChk :
+            i_dbg.f_setAffichage( True )
+            print( "Mode Debug activer" )
+        else :
+            print( "Le mode Debug ne peut pas etre active car le module n'est pas present")
+
         
     # Instance par defaut
     
     print("Instance par defaut")
     i_testClass = C_ultrasonSensor()
-    
-    print("f_ultraInit : ")
     i_testClass.f_ultraInit()
     
-    print("f_ultraMesure : ")
     v_boucle = True
     while v_boucle :
     
