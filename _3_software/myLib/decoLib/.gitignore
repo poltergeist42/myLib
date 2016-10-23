@@ -1,0 +1,20 @@
+## [ .gitignore ]
+
+## Liste des fichiers et dossiers à ignorer
+Bug_TODOList*.*
+
+#.gitignore
+
+## [ Dossiers a ignorer ]
+*_v/
+__pycache__/
+
+
+## [ listes des extentions a ignorer ]
+*.*~
+*.FCStd1
+*.264
+*.mkv
+*.mp4
+*.json
+Thumbs.db
