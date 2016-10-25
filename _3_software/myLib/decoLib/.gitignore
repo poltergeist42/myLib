@@ -6,6 +6,7 @@ Bug_TODOList*.*
 #.gitignore
 
 ## [ Dossiers a ignorer ]
+test*/
 *_v/
 __pycache__/
 

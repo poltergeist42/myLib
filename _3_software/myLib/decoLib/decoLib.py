@@ -44,17 +44,7 @@ Liste des libs
     - argparse
     
 ####
-   
-objectif
-========
 
-    Cette Librairie ne fait rien. Elle n'existe que pour pouvoir tester certains
-    elements des autres lib en cours de developpement.
-
-    La class est fictive, mais elle doit tout de meme etre commenter pour pourvoir generer
-    la documentation de facon automatique avec Sphinx et ainsi pouvoir tester des elements
-    de traitemant de la documentation.
-    
 """
 
 import os, sys
@@ -73,8 +63,42 @@ import argparse
 
 ####
 
-
-
+class C_ProgressBar( object ) :
+    """ Class permettant de créer une barre de progression """
+    def __init__( self ) :
+        """ **__init__()**
+        
+            Creation et initialisation des variables globales de cette Class
+        """
+        
+        ## Creation de l'instance pour les message de debug
+        # self.i_dbg = C_DebugMsg(v_debug)
+        
+####
+        
+    def __del__(self) :
+        """ **__del__()**
+        
+            Permet de terminer proprement l'instance de la Class courante
+        
+            il faut utilise : ::
+            
+                del [nom_de_l'_instance]
+                
+            *N.B :* Si l'instance n'est plus utilisee, cette methode est appellee 
+            automatiquement.
+        """
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        f_dbg(v_dbg2, "__del__", self.__del__)
+        
+        ## Action
+        v_className = self.__class__.__name__
+        print("\n\t\tL'instance de la class {} est terminee".format(v_className))
+        
+####
+        
 def f_dbg( v_bool, v_tittle, v_data ) :
     """ Fonction de traitemant du debug """
     if v_dbgChk :
