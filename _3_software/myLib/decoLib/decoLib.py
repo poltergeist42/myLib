@@ -8,7 +8,7 @@ Infos
 
    :Nom du fichier:     decoLib.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20161109
+   :Version:            20161111
 
 ####
 
@@ -248,6 +248,63 @@ class C_ProgressBar( object ) :
         return ((v_value * self.v_width) // v_valueMax)
 
 ####
+
+class C_EnvAdapt( object ) :
+    """ Class permettant d'identifier le système d'exploitation et d'éxecuté des commandes
+        spécifiques à chaque environement.
+    """
+    def __init__( self ) :
+        """ **__init__()**
+        
+            Creation et initialisation des variables globales de cette Class
+        """
+        
+        # declaration des variables
+        self.v_osType    = sys.platform
+        
+####
+        
+    def __del__( self ) :
+        """ **__del__()**
+        
+            Permet de terminer proprement l'instance de la Class courante
+        
+            il faut utilise : ::
+            
+                del [nom_de_l'_instance]
+                
+            *N.B :* Si l'instance n'est plus utilisee, cette methode est appellee 
+            automatiquement.
+        """
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        f_dbg(v_dbg2, "__del__", self.__del__)
+        
+        ## Action
+        v_className = self.__class__.__name__
+        print("\n\t\tL'instance de la class {} est terminee".format(v_className))
+        
+####
+        
+    def f_cls( self ) :
+        """ Permet de faire un 'clearScreen """
+        
+                ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        f_dbg(v_dbg2, "__del__", self.__del__)
+        
+        ## Action
+        if v_osType == 'linux' :
+            v_clear = "clear"
+
+            elif  v_osType == "win32" :
+            v_clear = "cls"
+            
+        os.system(v_clear)
+        
+####
         
 def f_dbg( v_bool, v_tittle, v_data ) :
     """ Fonction de traitemant du debug """
@@ -259,9 +316,15 @@ def f_dbg( v_bool, v_tittle, v_data ) :
 def main() :
     """ Fonction principale """
     
+    v_HelpProgress = """
+    Lancemant de la barre de progression.
+    Utilisez 'percent', pour obtenir une progression en pourcentage
+    et 'ratio', pour obtenir un rapport de progression
+    """
+    
     parser = argparse.ArgumentParser()
     parser.add_argument( "-d", "--debug", action='store_true', help="activation du mode debug")
-    parser.add_argument( "-p", "--progress", action='store_true', help="Lancemant de la barre de progression")
+    parser.add_argument( "-p", "--progress", help=v_HelpProgress)
                         
     args = parser.parse_args()
     
@@ -272,7 +335,16 @@ def main() :
         else :
             print( "Le mode Debug ne peut pas etre active car le module n'est pas present")
             
-    if args.progress :
+    if args.progress ==  "percent" :
+        i_ist = C_ProgressBar(  )
+        v_valueMax = 100
+        for i in range( v_valueMax ) :
+            i_ist.f_pbPercent( v_valueMax, i )
+
+        
+        del i_ist
+
+    if args.progress ==  "ratio" :
         i_ist = C_ProgressBar(  )
         v_valueMax = 100
         for i in range( v_valueMax ) :
