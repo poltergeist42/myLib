@@ -6,9 +6,9 @@
 Infos
 =====
 
-   :Nom du fichier:     fakeLib.py
+   :Nom du fichier:     decoLib.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20161026
+   :Version:            20161109
 
 ####
 
@@ -42,6 +42,7 @@ Liste des libs
     - sys
     - devChk
     - argparse
+    - time
     
 ####
 
@@ -172,11 +173,13 @@ class C_ProgressBar( object ) :
         f_dbg(v_dbg2, "f_pbRatio", self.f_pbRatio)
         
         ## Action
-        v_valueMaxReal = v_valueMax
-        v_vMaxLen = len( str(v_valueMaxReal))
-        v_valueReal = v_value + 1
-        v_valueLen = len( str(v_valueReal) )
-        v_lenDiff = v_vMaxLen - v_valueLen
+        
+        v_valueMaxReal  = v_valueMax
+        v_vMaxLen       = len( str(v_valueMaxReal))
+        v_valueReal     = v_value + 1
+        v_valueLen      = len( str(v_valueReal) )
+        v_lenDiff       = v_vMaxLen - v_valueLen
+        v_etiquetteLen  = len(str(self.v_etiquette))
         
         if not v_value :
             v_ratio = False
@@ -193,44 +196,40 @@ class C_ProgressBar( object ) :
             
         if not v_ratio and not self.v_firstStep :          
             spaces = ' ' * (self.v_width-1)
-            backspace = '\b' * (self.v_width+4)
-            print(" {} [{}] {}/{}{}".format (
-                                                self.v_etiquette,
-                                                spaces,
-                                                '0'* v_vMaxLen,
-                                                v_valueMaxReal,
-                                                backspace),
-                                                end=''
-                                            )
+            # backspace = '\b' * (self.v_width+7) # Valeur de départ fonctionnel avec v_valueMax = 100
+            backspace = '\b' * (self.v_width + 2*v_vMaxLen + 1)
+            print(' {} [{}] {}/{}{}'.format(self.v_etiquette, spaces, '0'*v_vMaxLen, v_valueMaxReal, backspace), end='')
             sys.stdout.flush()
             self.v_firstStep = True
+            # input()
             pass
             
         elif not v_ratio and self.v_firstStep :
             pass
             
         else :
-            spaces = ' ' * ( self.v_width - v_ratio )
-            backspace = '\b' * ((self.v_width+1+v_valueMaxReal*2))
+            spaces = ' ' * (self.v_width - v_ratio )
+            # backspace = '\b' * ((self.v_width+9)) # Valeur de départ fonctionnel avec v_valueMax = 100
+            backspace = '\b' * (self.v_width + 2*v_vMaxLen + 3)
             time.sleep(0.05)
             
             if not v_ratio == self.v_width :
-                print("{}{}] {}{}/{}{}".format  (   self.v_char * v_ratio,
-                                                    spaces,
-                                                    '0'* v_lenDiff, 
-                                                    v_valueReal,
-                                                    v_valueMaxReal,
-                                                    backspace),
-                                                    end=''
-                                                )
+            
+                if v_valueLen < v_vMaxLen :
+                    v_showValue = "{}{}".format( '0'*v_lenDiff, v_valueReal )
+                    
+                elif v_valueLen == v_vMaxLen :
+                    v_showValue = v_valueReal
+                    
+                elif v_valueLen > v_vMaxLen :
+                    raise "La valeur n'as pas le bon format"
+                
+                # print("{}{}] {:03}/{:03}{}".format(self.v_char * v_ratio, spaces, v_ratio+1, v_valueMaxReal, backspace), end='')
+                print("{}{}] {}/{}{}".format(self.v_char * v_ratio, spaces, v_showValue, v_valueMaxReal, backspace), end='')
                 sys.stdout.flush()
             else :
-                print("{}{}] {}/{}".format  (   self.v_char * v_ratio,
-                                                spaces,
-                                                v_valueMaxReal,
-                                                v_valueMaxReal),
-                                                end='\n'
-                                            )
+                print("{}{}] {}/{}".format(self.v_char * v_ratio, spaces, v_valueMaxReal, v_valueMaxReal), end='\n')
+                
 ####
 
     def f_setRatio( self, v_valueMax, v_value ) :
@@ -262,7 +261,7 @@ def main() :
     
     parser = argparse.ArgumentParser()
     parser.add_argument( "-d", "--debug", action='store_true', help="activation du mode debug")
-    parser.add_argument( "-p", "--progress", action='store_true', help="activation du mode debug")
+    parser.add_argument( "-p", "--progress", action='store_true', help="Lancemant de la barre de progression")
                         
     args = parser.parse_args()
     

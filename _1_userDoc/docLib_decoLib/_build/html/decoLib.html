@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>decoLib &#8212; documentation decoLib 20161028</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '20161028',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="top" title="documentation decoLib 20161028" href="index.html" />
+    <link rel="next" title="Bug et ToDo-list" href="Bug_TODOList.html" />
+    <link rel="prev" title="README_decoLib" href="README_decoLib.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-_3_software.myLib.decoLib.decoLib">
+<span id="decolib"></span><h1>decoLib<a class="headerlink" href="#module-_3_software.myLib.decoLib.decoLib" title="Lien permanent vers ce titre">¶</a></h1>
+<div class="section" id="infos">
+<h2>Infos<a class="headerlink" href="#infos" title="Lien permanent vers ce titre">¶</a></h2>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Nom du fichier:</th><td class="field-body">decoLib.py</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Autheur:</th><td class="field-body"><a class="reference external" href="https://github.com/poltergeist42">Poltergeist42</a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Version:</th><td class="field-body">20161028</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<hr class="docutils" />
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Licence:</th><td class="field-body">CC-BY-NC-SA</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Liens:</th><td class="field-body"><a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">https://creativecommons.org/licenses/by-nc-sa/4.0/</a></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<hr class="docutils" />
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">dev language:</th><td class="field-body">Python 3.4</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<hr class="docutils" />
+<div class="section" id="lexique">
+<h2>lexique<a class="headerlink" href="#lexique" title="Lien permanent vers ce titre">¶</a></h2>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name"><strong>v_</strong>:</th><td class="field-body">variable</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>l_</strong>:</th><td class="field-body">list</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><strong>t_</strong>:</th><td class="field-body">tuple</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>d_</strong>:</th><td class="field-body">dictionnaire</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><strong>f_</strong>:</th><td class="field-body">fonction</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>C_</strong>:</th><td class="field-body">Class</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><strong>i_</strong>:</th><td class="field-body">Instance</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>m_</strong>:</th><td class="field-body">Matrice</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<hr class="docutils" />
+<div class="section" id="liste-des-libs">
+<h2>Liste des libs<a class="headerlink" href="#liste-des-libs" title="Lien permanent vers ce titre">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>os</li>
+<li>sys</li>
+<li>devChk</li>
+<li>argparse</li>
+<li>time</li>
+</ul>
+</div></blockquote>
+<hr class="docutils" />
+<dl class="class">
+<dt id="_3_software.myLib.decoLib.decoLib.C_ProgressBar">
+<em class="property">class </em><code class="descclassname">_3_software.myLib.decoLib.decoLib.</code><code class="descname">C_ProgressBar</code><span class="sig-paren">(</span><em>v_etiquette='Progression'</em>, <em>v_char='#'</em>, <em>v_width=100</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.decoLib.decoLib.C_ProgressBar" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Class permettant de créer une barre de progression</p>
+<dl class="method">
+<dt id="_3_software.myLib.decoLib.decoLib.C_ProgressBar.f_pbPercent">
+<code class="descname">f_pbPercent</code><span class="sig-paren">(</span><em>v_valueMax</em>, <em>v_value=0</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.decoLib.decoLib.C_ProgressBar.f_pbPercent" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_progress( int )</strong></p>
+<p>Permet de déssiner la barre de progression et d&#8217;afficher
+le pourcentage d&#8217;avancement</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.decoLib.decoLib.C_ProgressBar.f_pbRatio">
+<code class="descname">f_pbRatio</code><span class="sig-paren">(</span><em>v_valueMax</em>, <em>v_value=0</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.decoLib.decoLib.C_ProgressBar.f_pbRatio" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_progress( int )</strong></p>
+<p>Permet de déssiner la barre de progression et d&#8217;afficher
+l&#8217;avancement sous forme de rapport</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">/</span><span class="mi">25</span>
+<span class="mi">2</span><span class="o">/</span><span class="mi">25</span>
+<span class="mi">3</span><span class="o">/</span><span class="mi">25</span>
+<span class="n">etc</span> <span class="o">...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.myLib.decoLib.decoLib.C_ProgressBar.f_setRatio">
+<code class="descname">f_setRatio</code><span class="sig-paren">(</span><em>v_valueMax</em>, <em>v_value</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.decoLib.decoLib.C_ProgressBar.f_setRatio" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p><strong>f_setRatio( int, int )</strong></p>
+<p>Permet de créer un ratio entre la valeur max, la longueur de la barre de
+progression, et la valeur à atteindre</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="_3_software.myLib.decoLib.decoLib.f_dbg">
+<code class="descclassname">_3_software.myLib.decoLib.decoLib.</code><code class="descname">f_dbg</code><span class="sig-paren">(</span><em>v_bool</em>, <em>v_tittle</em>, <em>v_data</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.decoLib.decoLib.f_dbg" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Fonction de traitemant du debug</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_3_software.myLib.decoLib.decoLib.main">
+<code class="descclassname">_3_software.myLib.decoLib.decoLib.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.decoLib.decoLib.main" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Fonction principale</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table des Matières</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">decoLib</a><ul>
+<li><a class="reference internal" href="#infos">Infos</a></li>
+<li><a class="reference internal" href="#lexique">lexique</a></li>
+<li><a class="reference internal" href="#liste-des-libs">Liste des libs</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="README_decoLib.html" title="Chapitre précédent">README_decoLib</a></li>
+      <li>Next: <a href="Bug_TODOList.html" title="Chapitre suivant">Bug et ToDo-list</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/decoLib.txt"
+            rel="nofollow">Montrer le code source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Poltergeist42.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.8</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/decoLib.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
