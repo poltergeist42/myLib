@@ -8,7 +8,7 @@ Infos
 
    :Nom du fichier:     devChk.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20161022
+   :Version:            20161112
 
 ####
 
@@ -162,7 +162,14 @@ class C_DebugMsg(object) :
                 self.d_fnNumber[v_varName] = self.debugNumber
                 print( "dbgMsg[{}] : {} - {}{}".format(self.d_fnNumber[v_varName], v_varName, v_varValue, v_endOfLine) )
                 
+####
 
+    def dbgDel( self, v_chk, v_varValue )
+        """ permet d'informer de la fin d'une instannce ( methode : '__del__')"""
+        if v_chk and self.affichage :
+                print( "\n\t\tL'instance de la class {} est terminee".format( v_className ))
+                
+                
 ####
         
 class C_GitChk(object) :
