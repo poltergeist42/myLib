@@ -102,7 +102,9 @@ class C_ProgressBar( object ) :
         
         ## Action
         v_className = self.__class__.__name__
-        print("\n\t\tL'instance de la class {} est terminee".format(v_className))
+
+        ## dbg
+        f_dbg( v_dbg, v_className, v_tittle = False  )
         
 ####
 
@@ -283,8 +285,9 @@ class C_EnvAdapt( object ) :
         
         ## Action
         v_className = self.__class__.__name__
-        # if v_dbg2
-            # print("\n\t\tL'instance de la class {} est terminee".format(v_className))
+
+        ## dbg
+        f_dbg( v_dbg, v_className, v_tittle = False  )
         
 ####
         
@@ -307,10 +310,13 @@ class C_EnvAdapt( object ) :
         
 ####
         
-def f_dbg( v_bool, v_tittle, v_data ) :
+def f_dbg( v_bool, v_data, v_tittle = False  ) :
     """ Fonction de traitemant du debug """
-    if v_dbgChk :
+    if v_dbgChk and v_tittle :
         i_dbg.dbgPrint( v_bool, v_tittle, v_data )
+        
+    elif v_dbgChk and not v_tittle :
+        i_dbg.dbgDel( v_bool, v_data)
         
 ####
 

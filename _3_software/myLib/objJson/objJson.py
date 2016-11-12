@@ -8,7 +8,7 @@ Infos
 
    :Nom du fichier:     objJson.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160912
+   :Version:            20161112
 
 ####
 
@@ -93,12 +93,16 @@ class C_ObjJson (object):
             *N.B :* Si l'instance n'est plus utilisee, cette methode est appellee 
             automatiquement.
         """
+        ## dbg
         v_dbg = 1
-        v_dbg2 = 0
+        v_dbg2 = 1
         f_dbg(v_dbg2, "__del__", self.__del__)
         
+        ## Action
         v_className = self.__class__.__name__
-        print("\n\t\tL'instance de la class {} est terminee".format(v_className))    
+
+        ## dbg
+        f_dbg( v_dbg, v_className, v_tittle = False  )
     
 ###
     
@@ -312,10 +316,13 @@ class C_ObjJson (object):
         
 ####
 
-def f_dbg( v_bool, v_tittle, v_data ) :
+def f_dbg( v_bool, v_data, v_tittle = False  ) :
     """ Fonction de traitemant du debug """
-    if v_dbgChk :
+    if v_dbgChk and v_tittle :
         i_dbg.dbgPrint( v_bool, v_tittle, v_data )
+        
+    elif v_dbgChk and not v_tittle :
+        i_dbg.dbgDel( v_bool, v_data)
         
 ####
     

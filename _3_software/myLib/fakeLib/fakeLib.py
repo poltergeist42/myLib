@@ -108,8 +108,8 @@ class C_FakeLib( object ) :
         
         ## Action
         v_className = self.__class__.__name__
-        # print("\n\t\tL'instance de la class {} est terminee".format(v_className))
-        
+
+        ## dbg
         f_dbg( v_dbg, v_className, v_tittle = False  )
         
 ####
