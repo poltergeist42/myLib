@@ -57,7 +57,7 @@
 </tr>
 <tr class="field-even field"><th class="field-name">Autheur:</th><td class="field-body"><a class="reference external" href="https://github.com/poltergeist42">Poltergeist42</a></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Version:</th><td class="field-body">20161028</td>
+<tr class="field-odd field"><th class="field-name">Version:</th><td class="field-body">20161112</td>
 </tr>
 </tbody>
 </table>
@@ -129,13 +129,26 @@
 </div></blockquote>
 <hr class="docutils" />
 <dl class="class">
+<dt id="_3_software.myLib.decoLib.decoLib.C_EnvAdapt">
+<em class="property">class </em><code class="descclassname">_3_software.myLib.decoLib.decoLib.</code><code class="descname">C_EnvAdapt</code><a class="headerlink" href="#_3_software.myLib.decoLib.decoLib.C_EnvAdapt" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Class permettant d&#8217;identifier le système d&#8217;exploitation et d&#8217;éxecuté des commandes
+spécifiques à chaque environement.</p>
+<dl class="method">
+<dt id="_3_software.myLib.decoLib.decoLib.C_EnvAdapt.f_cls">
+<code class="descname">f_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.decoLib.decoLib.C_EnvAdapt.f_cls" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Permet de faire un &#8216;clearScreen&#8217;</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="_3_software.myLib.decoLib.decoLib.C_ProgressBar">
 <em class="property">class </em><code class="descclassname">_3_software.myLib.decoLib.decoLib.</code><code class="descname">C_ProgressBar</code><span class="sig-paren">(</span><em>v_etiquette='Progression'</em>, <em>v_char='#'</em>, <em>v_width=100</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.decoLib.decoLib.C_ProgressBar" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Class permettant de créer une barre de progression</p>
 <dl class="method">
 <dt id="_3_software.myLib.decoLib.decoLib.C_ProgressBar.f_pbPercent">
 <code class="descname">f_pbPercent</code><span class="sig-paren">(</span><em>v_valueMax</em>, <em>v_value=0</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.decoLib.decoLib.C_ProgressBar.f_pbPercent" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p><strong>f_progress( int )</strong></p>
+<dd><p><strong>f_pbPercent( int )</strong></p>
 <p>Permet de déssiner la barre de progression et d&#8217;afficher
 le pourcentage d&#8217;avancement</p>
 </dd></dl>
@@ -143,7 +156,7 @@ le pourcentage d&#8217;avancement</p>
 <dl class="method">
 <dt id="_3_software.myLib.decoLib.decoLib.C_ProgressBar.f_pbRatio">
 <code class="descname">f_pbRatio</code><span class="sig-paren">(</span><em>v_valueMax</em>, <em>v_value=0</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.decoLib.decoLib.C_ProgressBar.f_pbRatio" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p><strong>f_progress( int )</strong></p>
+<dd><p><strong>f_pbRatio( int )</strong></p>
 <p>Permet de déssiner la barre de progression et d&#8217;afficher
 l&#8217;avancement sous forme de rapport</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">/</span><span class="mi">25</span>
@@ -166,7 +179,7 @@ progression, et la valeur à atteindre</p>
 
 <dl class="function">
 <dt id="_3_software.myLib.decoLib.decoLib.f_dbg">
-<code class="descclassname">_3_software.myLib.decoLib.decoLib.</code><code class="descname">f_dbg</code><span class="sig-paren">(</span><em>v_bool</em>, <em>v_tittle</em>, <em>v_data</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.decoLib.decoLib.f_dbg" title="Lien permanent vers cette définition">¶</a></dt>
+<code class="descclassname">_3_software.myLib.decoLib.decoLib.</code><code class="descname">f_dbg</code><span class="sig-paren">(</span><em>v_bool</em>, <em>v_data</em>, <em>v_tittle=False</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.myLib.decoLib.decoLib.f_dbg" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Fonction de traitemant du debug</p>
 </dd></dl>
 

@@ -109,7 +109,7 @@ class C_ProgressBar( object ) :
 ####
 
     def f_pbPercent(self, v_valueMax, v_value = 0):
-        """ **f_progress( int )**
+        """ **f_pbPercent( int )**
         
             Permet de déssiner la barre de progression et d'afficher
             le pourcentage d'avancement
@@ -158,7 +158,7 @@ class C_ProgressBar( object ) :
 ####
 
     def f_pbRatio(self, v_valueMax, v_value = 0):
-        """ **f_progress( int )**
+        """ **f_pbRatio( int )**
         
             Permet de déssiner la barre de progression et d'afficher
             l'avancement sous forme de rapport ::
