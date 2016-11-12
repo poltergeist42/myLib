@@ -8,7 +8,7 @@ Infos
 
    :Nom du fichier:     decoLib.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20161111
+   :Version:            20161112
 
 ####
 
@@ -283,23 +283,24 @@ class C_EnvAdapt( object ) :
         
         ## Action
         v_className = self.__class__.__name__
-        print("\n\t\tL'instance de la class {} est terminee".format(v_className))
+        # if v_dbg2
+            # print("\n\t\tL'instance de la class {} est terminee".format(v_className))
         
 ####
         
     def f_cls( self ) :
-        """ Permet de faire un 'clearScreen """
+        """ Permet de faire un 'clearScreen' """
         
                 ## dbg
         v_dbg = 1
         v_dbg2 = 1
-        f_dbg(v_dbg2, "__del__", self.__del__)
+        f_dbg(v_dbg2, "f_cls", self.f_cls)
         
         ## Action
-        if v_osType == 'linux' :
+        if self.v_osType == 'linux' :
             v_clear = "clear"
 
-            elif  v_osType == "win32" :
+        elif  self.v_osType == "win32" :
             v_clear = "cls"
             
         os.system(v_clear)
@@ -316,15 +317,21 @@ def f_dbg( v_bool, v_tittle, v_data ) :
 def main() :
     """ Fonction principale """
     
-    v_HelpProgress = """
-    Lancemant de la barre de progression.
-    Utilisez 'percent', pour obtenir une progression en pourcentage
-    et 'ratio', pour obtenir un rapport de progression
+    v_helpProgress = """
+      Lancemant de la barre de progression.
+      Utilisez 'percent', pour obtenir une progression en pourcentage
+      et 'ratio', pour obtenir un rapport de progression
+    """
+    
+    v_helpEnv = """
+    Execute différente action 'système' avec la syntaxe spécifique de chaque environement.
+    Utilisez 'cls' pour faire un clearScreen.
     """
     
     parser = argparse.ArgumentParser()
     parser.add_argument( "-d", "--debug", action='store_true', help="activation du mode debug")
-    parser.add_argument( "-p", "--progress", help=v_HelpProgress)
+    parser.add_argument( "-p", "--progress", help=v_helpProgress)
+    parser.add_argument( "-e", "--environement", help=v_helpEnv)
                         
     args = parser.parse_args()
     
@@ -335,23 +342,29 @@ def main() :
         else :
             print( "Le mode Debug ne peut pas etre active car le module n'est pas present")
             
-    if args.progress ==  "percent" :
-        i_ist = C_ProgressBar(  )
+    if args.environement :
+        i_ist = C_EnvAdapt(  )
+        d_argsPB =  {   
+                        "cls" : i_ist.f_cls
+                    }
         v_valueMax = 100
         for i in range( v_valueMax ) :
-            i_ist.f_pbPercent( v_valueMax, i )
-
+            d_argsPB[args.environement]()
         
         del i_ist
-
-    if args.progress ==  "ratio" :
+            
+    if args.progress :
         i_ist = C_ProgressBar(  )
+        d_argsPB =  {   
+                        "percent" : i_ist.f_pbPercent,
+                        "ratio" : i_ist.f_pbRatio
+                    }
         v_valueMax = 100
         for i in range( v_valueMax ) :
-            i_ist.f_pbRatio( v_valueMax, i )
-
+            d_argsPB[args.progress]( v_valueMax, i )
         
         del i_ist
+        
 
 
     
