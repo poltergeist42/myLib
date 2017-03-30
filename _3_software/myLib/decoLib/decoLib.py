@@ -8,7 +8,7 @@ Infos
 
    :Nom du fichier:     decoLib.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20161112
+   :Version:            20161114
 
 ####
 
@@ -308,6 +308,47 @@ class C_EnvAdapt( object ) :
             
         os.system(v_clear)
         
+####
+
+class C_logo( object ) :
+    """
+    """
+    def __init__( self ) :
+        """ **__init__()**
+        
+            Creation et initialisation des variables globales de cette Class
+        """
+        
+        # declaration des variables
+        
+        
+####
+        
+    def __del__( self ) :
+        """ **__del__()**
+        
+            Permet de terminer proprement l'instance de la Class courante
+        
+            il faut utilise : ::
+            
+                del [nom_de_l'_instance]
+                
+            *N.B :* Si l'instance n'est plus utilisee, cette methode est appellee 
+            automatiquement.
+        """
+        ## dbg
+        v_dbg = 1
+        v_dbg2 = 1
+        f_dbg(v_dbg2, "__del__", self.__del__)
+        
+        ## Action
+        v_className = self.__class__.__name__
+
+        ## dbg
+        f_dbg( v_dbg, v_className, v_tittle = False  )
+        
+####
+
 ####
         
 def f_dbg( v_bool, v_data, v_tittle = False  ) :
