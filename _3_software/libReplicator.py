@@ -98,7 +98,11 @@ class C_bougeTonFile(object) :
     """ **C_bougeTonFile(object)**
     
         Class permettant de copier et de mettre a jours les diférentes librairies dans
-        l'ensemble des projet auquel elles sont utiles
+        l'ensemble des projet auquel elles sont utiles.
+        
+        Le chemin renseigné dans le fichier 'projectList.txt' doit être le chemin vers le 
+        dossier racine du projet. les dossier ''_1_userDoc' et '_3_software' seront
+        ajoutés automatiquement lors du traitemant par 'libReplicator'.
     """
         
     def __init__( self) :

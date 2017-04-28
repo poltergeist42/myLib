@@ -1,2 +1,3 @@
 C:/mntJeanCloud/Perso/LAB/Pierre/raspberryPi/projet/scanner3d/
 C:/mntJeanCloud/Perso/LAB/Pierre/raspberryPi/projet/choupyBot/
+C:/mntJeanCloud/Perso/LAB/Pierre/Trouilloteuse/_3_software/devChk
